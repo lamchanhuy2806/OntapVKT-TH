@@ -8,7 +8,7 @@ const MAX_WRONG = 2;
 
 async function loadQuestions() {
   try {
-    const res = await fetch('data/questions.json');
+    const res = await fetch('./assets/data/questions.json');
     if (!res.ok) throw new Error('Không tìm thấy file questions.json');
     questions = await res.json();
     startQuiz();
