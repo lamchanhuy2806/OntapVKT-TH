@@ -1,0 +1,11 @@
+[
+  {
+    "id": "q001",
+    "category": "Đơn bào đường ruột",
+    "image": "images/parasite_001.jpg",
+    "question": "Đây là ký sinh trùng nào?",
+    "answer": "Entamoeba histolytica",
+    "hint": "Amip gây kiết lỵ",
+    "explanation": "Giải thích chi tiết hiển thị sau khi sai quá 2 lần..."
+  }
+]
