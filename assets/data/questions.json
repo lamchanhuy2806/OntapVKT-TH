@@ -1,0 +1,47 @@
+[
+  {
+    "id": "q001",
+    "category": "Đơn bào đường ruột",
+    "image": "images/placeholder.svg",
+    "question": "Đây là ký sinh trùng nào?",
+    "answer": "Entamoeba histolytica",
+    "hint": "Loại amip gây kiết lỵ",
+    "explanation": "Entamoeba histolytica là đơn bào gây bệnh amip lỵ. Thể hoạt động (trophozoite) có kích thước 20–40 µm, di chuyển bằng chân giả, nuốt hồng cầu — đây là đặc điểm nhận dạng quan trọng. Thể kén (cyst) có 4 nhân, bền vững trong môi trường ngoại cảnh."
+  },
+  {
+    "id": "q002",
+    "category": "Đơn bào đường ruột",
+    "image": "images/placeholder.svg",
+    "question": "Đây là ký sinh trùng nào?",
+    "answer": "Giardia lamblia",
+    "hint": "Hình quả lê, có 2 nhân đối xứng",
+    "explanation": "Giardia lamblia (còn gọi G. intestinalis) có hình quả lê đối xứng với 2 nhân, 4 đôi roi và đĩa bám. Gây hội chứng kém hấp thu, tiêu chảy mỡ. Thể kén có 4 nhân, lây qua đường phân–miệng."
+  },
+  {
+    "id": "q003",
+    "category": "Sán dây",
+    "image": "images/placeholder.svg",
+    "question": "Đây là loài sán nào?",
+    "answer": "Taenia solium",
+    "hint": "Sán dây lợn, đầu có móc",
+    "explanation": "Taenia solium (sán dây lợn) có đầu sán (scolex) mang 2 vòng móc và 4 giác bám. Proglottid có tử cung phân nhánh 7–12 nhánh mỗi bên. Ấu trùng Cysticercus cellulosae gây bệnh ấu trùng sán dây nguy hiểm ở não, mắt."
+  },
+  {
+    "id": "q004",
+    "category": "Giun tròn",
+    "image": "images/placeholder.svg",
+    "question": "Đây là loài giun nào?",
+    "answer": "Ascaris lumbricoides",
+    "hint": "Giun đũa, ký sinh ở ruột non",
+    "explanation": "Ascaris lumbricoides là giun đũa người, dài 15–35 cm. Trứng thụ tinh có lớp vỏ protein màu nâu lồi lõm đặc trưng. Vòng đời qua phổi (hội chứng Löffler). Biến chứng: tắc ruột, tắc ống mật."
+  },
+  {
+    "id": "q005",
+    "category": "Ký sinh trùng sốt rét",
+    "image": "images/placeholder.svg",
+    "question": "Đây là loài Plasmodium nào?",
+    "answer": "Plasmodium falciparum",
+    "hint": "Thể nhẫn nhỏ, bám rìa hồng cầu",
+    "explanation": "Plasmodium falciparum gây sốt rét ác tính. Thể nhẫn (ring form) nhỏ, mảnh, thường bám ở rìa hồng cầu (appliqué/accolé). Có thể thấy 2 nhân trong 1 thể nhẫn. Không thấy thể phân liệt trong máu ngoại vi. Hồng cầu nhiễm không phình to."
+  }
+]
