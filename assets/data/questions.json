@@ -9,7 +9,7 @@
     "explanation": "Candida albicans là một loại nấm men thuộc hệ vi sinh vật thường trú ở người. Dưới kính hiển vi, tế bào có dạng hình bầu dục hoặc tròn, sinh sản bằng cách nảy chồi (budding). Trong điều kiện thuận lợi, chúng có thể phát triển thành dạng giả sợi (pseudohyphae), giúp tăng khả năng xâm nhập mô. Đây là tác nhân gây bệnh cơ hội, thường gặp ở miệng (tưa lưỡi), da, âm đạo và các cơ quan khác khi hệ miễn dịch suy giảm."
   },
   {
-          "id": "q002",
+      "id": "q002",
       "category": "Nấm",
       "image": "./assets/images/candida-ongmam.jpg",
       "question": "Đây là gì?",
@@ -53,5 +53,41 @@
   "answer": "Aspergillus fumigatus",
   "hint": "Đầu bào tử dạng cột, thường gây bệnh phổi",
   "explanation": "Aspergillus fumigatus là nấm mốc gây bệnh cơ hội, thường gặp trong nhiễm nấm phổi. Đặc điểm vi thể gồm cuống bào tử (conidiophore) kết thúc bằng túi bào tử (vesicle), các bào tử (conidia) xếp thành chuỗi tạo thành đầu bào tử dạng cột (columnar). Đây là dấu hiệu giúp phân biệt với các loài Aspergillus khác."
+  },
+  {
+    "id": "q007",
+  "category": "Nấm mốc",
+  "image": "./assets/images/aspergillus-flavus.jpg",
+  "question": "Đây là gì?",
+  "answer": "Aspergillus flavus",
+  "hint": "Sinh độc tố aflatoxin, đầu bào tử tỏa tròn",
+  "explanation": "Aspergillus flavus là nấm mốc có khả năng sinh độc tố aflatoxin gây ung thư gan. Dưới kính hiển vi, đầu bào tử có dạng tỏa tròn (radiate), với các chuỗi bào tử phủ xung quanh toàn bộ túi bào tử. Đây là đặc điểm phân biệt với Aspergillus fumigatus."
+  },
+  {
+    "id": "q008",
+  "category": "Nấm mốc",
+  "image": "./assets/images/penicillium.jpg",
+  "question": "Đây là gì?",
+  "answer": "Penicillium",
+  "hint": "Hình dạng giống cây chổi hoặc bàn chải",
+  "explanation": "Penicillium là nấm mốc phổ biến trong môi trường. Đặc điểm nhận dạng là cấu trúc bào tử phân nhánh nhiều cấp, tạo hình giống cây chổi (brush-like). Các bào tử (conidia) xếp thành chuỗi ở đầu các nhánh. Một số loài có vai trò sản xuất kháng sinh penicillin."
+  },
+  {
+    "id": "q009",
+  "category": "Nấm mốc",
+  "image": "./assets/images/fusarium.jpg",
+  "question": "Đây là gì?",
+  "answer": "Fusarium",
+  "hint": "Bào tử hình lưỡi liềm (hình thuyền)",
+  "explanation": "Fusarium là nấm mốc thường gặp trong đất và thực vật, có thể gây nhiễm trùng cơ hội. Đặc điểm vi thể điển hình là đại bào tử (macroconidia) có hình cong như lưỡi liềm hoặc hình thuyền, có nhiều vách ngăn. Đây là dấu hiệu nhận dạng rất đặc trưng."
+  },
+  {
+    "id": "q010",
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/microsporum-gypseum.jpg",
+  "question": "Đây là gì?",
+  "answer": "Microsporum gypseum",
+  "hint": "Dermatophyte, đại bào tử nhiều vách, thành dày",
+  "explanation": "Microsporum gypseum là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da. Đặc điểm vi thể là đại bào tử (macroconidia) hình bầu dục hoặc thoi, thành dày, có nhiều vách ngăn. Đây là đặc điểm giúp phân biệt với các chi dermatophyte khác."
   }
 ]
