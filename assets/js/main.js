@@ -211,6 +211,79 @@ function showDone() {
   }
 }
 
+/* ─── Lightbox ─── */
+function initLightbox() {
+  // Inject CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    #lightbox-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.92);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+      cursor: zoom-out;
+    }
+    #lightbox-overlay.open {
+      opacity: 1; pointer-events: all;
+    }
+    #lightbox-img {
+      max-width: 92vw; max-height: 88vh;
+      object-fit: contain;
+      border-radius: 8px;
+      transform: scale(0.92);
+      transition: transform 0.25s ease;
+      cursor: default;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+    }
+    #lightbox-overlay.open #lightbox-img {
+      transform: scale(1);
+    }
+    #lightbox-close {
+      position: fixed; top: 20px; right: 24px;
+      font-family: monospace; font-size: 14px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px; padding: 6px 12px;
+      cursor: pointer; z-index: 10000;
+      transition: color 0.15s, background 0.15s;
+    }
+    #lightbox-close:hover { color: #fff; background: rgba(255,255,255,0.15); }
+    #question-image { cursor: zoom-in; }
+    .image-wrap:hover #question-image { opacity: 0.9; }
+  `;
+  document.head.appendChild(style);
+
+  // Inject HTML
+  const overlay = document.createElement('div');
+  overlay.id = 'lightbox-overlay';
+  overlay.innerHTML = `
+    <button id="lightbox-close" onclick="closeLightbox()">ESC · Đóng</button>
+    <img id="lightbox-img" src="" alt="Phóng to">
+  `;
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeLightbox();
+  });
+  document.body.appendChild(overlay);
+
+  // Wire up image click
+  document.getElementById('question-image').addEventListener('click', () => {
+    openLightbox(document.getElementById('question-image').src);
+  });
+}
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 /* ─── Helpers ─── */
 const el   = id => document.getElementById(id);
 const show = id => { el(id).style.display = ''; };
@@ -226,7 +299,10 @@ function norm(s) {
 
 /* ─── Keyboard ─── */
 document.addEventListener('DOMContentLoaded', () => {
+  initLightbox();
+
   document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeLightbox(); return; }
     if (e.key !== 'Enter') return;
     const nb = el('next-btn');
     if (nb && nb.classList.contains('visible')) nextQuestion();
