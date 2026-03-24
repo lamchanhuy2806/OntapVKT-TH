@@ -1,7 +1,7 @@
 [
   {
     "id": "q001",
-    "category": "Đơn bào đường ruột",
+    "category": "Nấm",
     "image": "./assets/images/cadida-tbmen.jpg",
     "question": "Đây là gì?",
     "answer": "Candida albicans tế bào men",
@@ -9,39 +9,49 @@
     "explanation": "Candida albicans là một loại nấm men thuộc hệ vi sinh vật thường trú ở người. Dưới kính hiển vi, tế bào có dạng hình bầu dục hoặc tròn, sinh sản bằng cách nảy chồi (budding). Trong điều kiện thuận lợi, chúng có thể phát triển thành dạng giả sợi (pseudohyphae), giúp tăng khả năng xâm nhập mô. Đây là tác nhân gây bệnh cơ hội, thường gặp ở miệng (tưa lưỡi), da, âm đạo và các cơ quan khác khi hệ miễn dịch suy giảm."
   },
   {
-    "id": "q002",
-    "category": "Đơn bào đường ruột",
-    "image": "images/placeholder.svg",
-    "question": "Đây là ký sinh trùng nào?",
-    "answer": "Giardia lamblia",
-    "hint": "Hình quả lê, có 2 nhân đối xứng",
-    "explanation": "Giardia lamblia (còn gọi G. intestinalis) có hình quả lê đối xứng với 2 nhân, 4 đôi roi và đĩa bám. Gây hội chứng kém hấp thu, tiêu chảy mỡ. Thể kén có 4 nhân, lây qua đường phân–miệng."
+          "id": "q002",
+      "category": "Nấm",
+      "image": "./assets/images/candida-ongmam.jpg",
+      "question": "Đây là gì?",
+      "answer": "Candida albicans ống mầm",
+      "hint": "Dạng giúp chẩn đoán nhanh Candida trong phòng thí nghiệm",
+      "explanation": "Candida albicans có khả năng tạo ống mầm (germ tube) khi được ủ trong huyết thanh ở 37°C trong khoảng 2–3 giờ. Ống mầm là cấu trúc kéo dài từ tế bào nấm mà không có vách ngăn tại điểm xuất phát, đây là đặc điểm quan trọng giúp phân biệt Candida albicans với các loài Candida khác trong chẩn đoán vi sinh."
+
   },
   {
     "id": "q003",
-    "category": "Sán dây",
-    "image": "images/placeholder.svg",
-    "question": "Đây là loài sán nào?",
-    "answer": "Taenia solium",
-    "hint": "Sán dây lợn, đầu có móc",
-    "explanation": "Taenia solium (sán dây lợn) có đầu sán (scolex) mang 2 vòng móc và 4 giác bám. Proglottid có tử cung phân nhánh 7–12 nhánh mỗi bên. Ấu trùng Cysticercus cellulosae gây bệnh ấu trùng sán dây nguy hiểm ở não, mắt."
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/trichophyton-mentagrophytes.jpg",
+  "question": "Đây là gì?",
+  "answer": "Trichophyton mentagrophytes",
+  "hint": "Nấm da gây bệnh hắc lào, có nhiều vi bào tử",
+  "explanation": "Trichophyton mentagrophytes là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da, tóc và móng. Dưới kính hiển vi, đặc trưng bởi nhiều vi bào tử (microconidia) hình cầu hoặc hình lê, sắp xếp thành chùm giống chùm nho. Sợi nấm có thể xoắn (spiral hyphae), là dấu hiệu gợi ý quan trọng."
   },
   {
     "id": "q004",
-    "category": "Giun tròn",
-    "image": "images/placeholder.svg",
-    "question": "Đây là loài giun nào?",
-    "answer": "Ascaris lumbricoides",
-    "hint": "Giun đũa, ký sinh ở ruột non",
-    "explanation": "Ascaris lumbricoides là giun đũa người, dài 15–35 cm. Trứng thụ tinh có lớp vỏ protein màu nâu lồi lõm đặc trưng. Vòng đời qua phổi (hội chứng Löffler). Biến chứng: tắc ruột, tắc ống mật."
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/trichophyton-rubrum.jpg",
+  "question": "Đây là gì?",
+  "answer": "Trichophyton rubrum",
+  "hint": "Nấm da phổ biến nhất, ít vi bào tử hơn T. mentagrophytes",
+  "explanation": "Trichophyton rubrum là tác nhân gây bệnh nấm da phổ biến nhất ở người. Đặc điểm vi thể gồm vi bào tử hình giọt nước hoặc hình bút chì, phân bố dọc theo sợi nấm. So với T. mentagrophytes, loài này có ít vi bào tử hơn và không có sợi xoắn. Khuẩn lạc thường có màu đỏ rượu ở mặt dưới."
   },
   {
     "id": "q005",
-    "category": "Ký sinh trùng sốt rét",
-    "image": "images/placeholder.svg",
-    "question": "Đây là loài Plasmodium nào?",
-    "answer": "Plasmodium falciparum",
-    "hint": "Thể nhẫn nhỏ, bám rìa hồng cầu",
-    "explanation": "Plasmodium falciparum gây sốt rét ác tính. Thể nhẫn (ring form) nhỏ, mảnh, thường bám ở rìa hồng cầu (appliqué/accolé). Có thể thấy 2 nhân trong 1 thể nhẫn. Không thấy thể phân liệt trong máu ngoại vi. Hồng cầu nhiễm không phình to."
+  "category": "Nấm mốc",
+  "image": "./assets/images/alternaria.jpg",
+  "question": "Đây là gì?",
+  "answer": "Alternaria",
+  "hint": "Bào tử có vách ngăn ngang và dọc, giống hình chuỗi",
+  "explanation": "Alternaria là nấm mốc thường gặp trong môi trường, có thể gây dị ứng hoặc nhiễm trùng cơ hội. Đặc điểm nhận dạng là bào tử lớn, màu nâu sẫm, có nhiều vách ngăn cả ngang và dọc (muriform), thường xếp thành chuỗi. Hình dạng bào tử giống hình chùy hoặc quả lê, là dấu hiệu điển hình."
+  },
+  {
+    "id": "q006",
+  "category": "Nấm mốc",
+  "image": "./assets/images/aspergillus-fumigatus.jpg",
+  "question": "Đây là gì?",
+  "answer": "Aspergillus fumigatus",
+  "hint": "Đầu bào tử dạng cột, thường gây bệnh phổi",
+  "explanation": "Aspergillus fumigatus là nấm mốc gây bệnh cơ hội, thường gặp trong nhiễm nấm phổi. Đặc điểm vi thể gồm cuống bào tử (conidiophore) kết thúc bằng túi bào tử (vesicle), các bào tử (conidia) xếp thành chuỗi tạo thành đầu bào tử dạng cột (columnar). Đây là dấu hiệu giúp phân biệt với các loài Aspergillus khác."
   }
 ]
