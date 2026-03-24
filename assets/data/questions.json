@@ -68,7 +68,7 @@
   "category": "Nấm mốc",
   "image": "./assets/images/penicillium.jpg",
   "question": "Đây là gì?",
-  "answer": "Penicillium",
+  "answer": "Penicillium sp.",
   "hint": "Hình dạng giống cây chổi hoặc bàn chải",
   "explanation": "Penicillium là nấm mốc phổ biến trong môi trường. Đặc điểm nhận dạng là cấu trúc bào tử phân nhánh nhiều cấp, tạo hình giống cây chổi (brush-like). Các bào tử (conidia) xếp thành chuỗi ở đầu các nhánh. Một số loài có vai trò sản xuất kháng sinh penicillin."
   },
@@ -77,7 +77,7 @@
   "category": "Nấm mốc",
   "image": "./assets/images/fusarium.jpg",
   "question": "Đây là gì?",
-  "answer": "Fusarium",
+  "answer": "Fusarium sp.",
   "hint": "Bào tử hình lưỡi liềm (hình thuyền)",
   "explanation": "Fusarium là nấm mốc thường gặp trong đất và thực vật, có thể gây nhiễm trùng cơ hội. Đặc điểm vi thể điển hình là đại bào tử (macroconidia) có hình cong như lưỡi liềm hoặc hình thuyền, có nhiều vách ngăn. Đây là dấu hiệu nhận dạng rất đặc trưng."
   },
