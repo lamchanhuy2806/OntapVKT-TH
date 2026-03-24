@@ -219,9 +219,9 @@ const hide = id => { el(id).style.display = 'none'; };
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 
 function norm(s) {
-  return s.trim().toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, ' ');
+  // Chỉ trim và chuẩn hoá khoảng trắng thừa.
+  // Giữ nguyên HOA/thường và dấu câu (., sp., v.v.)
+  return s.trim().replace(/\s+/g, ' ');
 }
 
 /* ─── Keyboard ─── */
