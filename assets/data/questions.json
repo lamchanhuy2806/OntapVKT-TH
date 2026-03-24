@@ -89,5 +89,89 @@
   "answer": "Microsporum gypseum",
   "hint": "Dermatophyte, đại bào tử nhiều vách, thành dày",
   "explanation": "Microsporum gypseum là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da. Đặc điểm vi thể là đại bào tử (macroconidia) hình bầu dục hoặc thoi, thành dày, có nhiều vách ngăn. Đây là đặc điểm giúp phân biệt với các chi dermatophyte khác."
+  },
+  {
+    "id": "q021", 
+    "category": "Sán lá",
+    "image": "./assets/images/clonorchis-sinensis.jpg",
+    "question": "Đây là gì?",
+    "answer": "Trứng Clonorchis sinensis",
+    "hint": "Có đĩa hút miệng lớn hơn đĩa hút bụng,manh tràng dài đến cuối đuôi (Sán lá gan nhỏ)",
+    "explanation": "Trứng nhỏ hình bầu dục có nắp lồi dễ thấy, màu nâu sẩm,đối diện với nắp có gai nhỏ"
+  },
+  {
+    "id": "q022",
+    "category": "Sán lá",
+    "image": "./assets/images/fasciola-hepatica.jpg",
+    "question": "Đây là gì?",
+    "answer": "Fasciola hepatica ",
+    "hint": "Bắt đầu bằng chữ F kết thức bằng chữ a (Sán lá gan lớn)",
+    "explanation": "Trứng hình bầu dục,có nắp, vỏ mỏng"
+  },
+  {
+    "id": "q023",
+    "category": "Sán lá",
+    "image": "./assets/images/diphyllobothrium-latum.jpg",
+    "question": "Đây là gì?",
+    "answer": "Diphyllobothrium latum",
+    "hint": "Từ thứ nhất bắt đầu bằng chữ D và từ thứ 2 bắt đầu bằng chữ l (Sán dải cá) ",
+    "explanation": "Trứng màu nâu, vỏ mỏng có nắp giống trứng sán lá lớn nhưng nhỏ hơn"
+
+  },
+  {
+    "id": "q024",
+    "category": "Sán lá",
+    "image": "./assets/images/dipylidium-caninu.jpg",
+    "question": "Đây là gì?",
+    "answer": "Dipylidium caninum",
+    "hint": "Từ thứ nhất bắt đầu bằng chữ D và từ thứ 2 bắt đầu bằng chữ c(Sán dải chó)",
+    "explanation": "Trứng tròn, dính chùm 8-15 trứng trong một bọc, trứng có vỏ albumin dày chứa phôi bên trong."
+
+  },
+  {
+    "id": "q025",
+    "category": "Sán lá",
+    "image": "./assets/images/taenia-solium.jpg",
+    "question": "Đây là gì?",
+    "answer": "Taenia solium",
+    "hint": "Sán dải heo bắt đầu bằng chữ T",
+    "explanation": "Trứng có màu nâu sẫm"
+  },
+  {
+    "id": "q026",
+    "category": "Sán lá",
+    "image": "./assets/images/hymenolepis-nana.jpg",
+    "question": "Đây là gì?",
+    "answer": "Hymenolepis nana",
+    "hint": "Sán dải lùn, bắt đầu bằng chữ H ",
+    "explanation": "nang trứng đốt tử cung hình túi chứa 80-180 trứng"
+
+  },
+  {
+  "id": "q027",
+    "category": "Sán lá",
+    "image": "./assets/images/taenia-saginata.jpg",
+    "question": "Đây là gì?",
+    "answer": "Taenia saginata",
+    "hint": "Trứng sán dải bò, từ đầu tiên giống sán dải heo từ thứ hai bắt đầu bằng từ s ",
+    "explanation": "màu nâu sẫm, tồn tại lâu trong môi trường (tháng/năm) và truyền nhiễm qua thức ăn/nước uống ô nhiễm phân người"
+  },
+  {
+    "id": "q028", 
+    "category": "Sán lá",
+    "image": "./assets/images/san-la-gan-nho.jpg",
+    "question": "Đây là gì?",
+    "answer": "Clonorchis sinensis",
+    "hint": "Có đĩa hút miệng lớn hơn đĩa hút bụng,manh tràng dài đến cuối đuôi (Sán lá gan nhỏ)",
+    "explanation": "Trứng nhỏ hình bầu dục có nắp lồi dễ thấy, màu nâu sẩm,đối diện với nắp có gai nhỏ"
+  },
+  {
+    "id": "q029",
+    "category": "Sán lá",
+    "image": "./assets/images/dot-san-dai-taenia-solium.jpg",
+    "question": "Đây là gì?",
+    "answer": "Đốt sán Taenia solium",
+    "hint": "Sán dải heo bắt đầu bằng chữ T",
+    "explanation": "Trứng có màu nâu sẫm"
   }
 ]
