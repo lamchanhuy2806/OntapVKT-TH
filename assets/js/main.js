@@ -1,225 +1,236 @@
+/* ─── State ─── */
+let allQuestions = [];
+let queue        = [];
+let current      = 0;
+let attempts     = 0;
+let score        = 0;
+let currentMode  = null;
 
-let questions = [];
-let shuffled = [];
-let current = 0;
-let attempts = 0;
-let score = 0;
-const MAX_WRONG = 2;
+const EXAM_COUNT = 20;
+const MAX_WRONG  = 2;
 
-async function loadQuestions() {
+/* ─── Init ─── */
+async function init() {
   try {
-    const res = await fetch('./assets/data/questions.json');
-    if (!res.ok) throw new Error('Không tìm thấy file questions.json');
-    questions = await res.json();
-    startQuiz();
+    const res = await fetch('data/questions.json');
+    if (!res.ok) throw new Error('Không tìm thấy data/questions.json');
+    allQuestions = await res.json();
+    show('mode-screen');
+    hide('loading-msg');
   } catch (e) {
     document.getElementById('loading-msg').textContent = '⚠ ' + e.message;
   }
 }
 
-function shuffle(arr) {
-  return [...arr].sort(() => Math.random() - 0.5);
-}
-
-function normalize(str) {
-  return str.trim().toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s+/g, ' ');
-}
-
-function startQuiz() {
-  shuffled = shuffle(questions);
+/* ─── Mode ─── */
+function startMode(mode) {
+  currentMode = mode;
+  queue   = mode === 'study' ? [...allQuestions] : shuffle(allQuestions).slice(0, EXAM_COUNT);
   current = 0;
-  score = 0;
-  document.getElementById('loading-msg').style.display = 'none';
-  document.getElementById('quiz-content').style.display = 'block';
-  document.getElementById('done-screen').classList.remove('visible');
+  score   = 0;
+  attempts = 0;
+
+  const pill = el('mode-pill');
+  pill.textContent = mode === 'study' ? 'Ôn tập' : 'Thi thử';
+  pill.className = 'mode-pill ' + mode;
+  pill.style.display = 'inline-block';
+  el('progress-wrap').style.display = 'flex';
+
+  hide('mode-screen');
+  el('done-screen').classList.remove('visible');
+  el('done-screen').style.display = 'none';
+  show('quiz-screen');
   showQuestion();
 }
 
+function backToMenu() {
+  hide('quiz-screen');
+  el('done-screen').classList.remove('visible');
+  el('done-screen').style.display = 'none';
+  el('mode-pill').style.display = 'none';
+  el('progress-wrap').style.display = 'none';
+  show('mode-screen');
+}
+
+/* ─── Quiz ─── */
 function showQuestion() {
-  const q = shuffled[current];
-  attempts = 0;
+  const q     = queue[current];
+  const total = queue.length;
+  attempts    = 0;
 
-  // Update progress
-  const total = shuffled.length;
-  document.getElementById('progress-text').textContent = `${current + 1} / ${total}`;
-  document.getElementById('progress-bar').style.width = `${((current) / total) * 100}%`;
-  document.getElementById('score-badge').textContent = `${score} đúng`;
+  el('progress-text').textContent = `${current + 1} / ${total}`;
+  el('progress-bar').style.width  = `${(current / total) * 100}%`;
 
-  // Populate
-  document.getElementById('category-badge').textContent = q.category || 'Câu hỏi';
-  document.getElementById('question-text').textContent = q.question || 'Đây là ký sinh trùng nào?';
-  document.getElementById('question-image').src = q.image || 'images/placeholder.svg';
-  document.getElementById('question-image').alt = q.answer;
+  el('category-badge').textContent = q.category || 'Câu hỏi';
+  el('question-text').textContent  = q.question  || 'Đây là ký sinh trùng nào?';
+  el('question-image').src         = q.image     || 'images/placeholder.svg';
 
-  // Reset dots
-  document.getElementById('dot-1').className = 'dot';
-  document.getElementById('dot-2').className = 'dot';
+  el('dot-1').className = 'dot';
+  el('dot-2').className = 'dot';
 
-  // Reset hint
-  const hintEl = document.getElementById('hint-text');
-  hintEl.textContent = '';
-  hintEl.classList.remove('visible');
+  const hint = el('hint-text');
+  hint.textContent = '';
+  hint.classList.remove('visible');
 
-  // Reset input
-  const input = document.getElementById('answer-input');
-  input.value = '';
+  const input = el('answer-input');
+  input.value     = '';
   input.className = 'answer-input';
-  input.disabled = false;
-  input.focus();
+  input.disabled  = false;
+  setTimeout(() => input.focus(), 80);
 
-  // Reset feedback
-  const panel = document.getElementById('feedback-panel');
+  el('submit-btn').disabled = false;
+
+  const panel = el('feedback-panel');
   panel.className = 'feedback-panel';
-  panel.classList.remove('visible');
-  document.getElementById('correct-answer-line').style.display = 'none';
-  document.getElementById('explanation-text').style.display = 'none';
+  el('correct-answer-line').style.display = 'none';
+  el('explanation-text').style.display    = 'none';
 
-  // Reset button
-  document.getElementById('submit-btn').disabled = false;
-  document.getElementById('next-btn').classList.remove('visible');
+  el('next-btn').classList.remove('visible');
 
-  // Animate in
-  document.getElementById('quiz-content').classList.remove('slide-in');
-  void document.getElementById('quiz-content').offsetWidth;
-  document.getElementById('quiz-content').classList.add('slide-in');
+  const qs = el('quiz-screen');
+  qs.classList.remove('fade-up');
+  void qs.offsetWidth;
+  qs.classList.add('fade-up');
 }
 
 function checkAnswer() {
-  const q = shuffled[current];
-  const input = document.getElementById('answer-input');
-  const userAnswer = input.value;
+  const q   = queue[current];
+  const inp = el('answer-input');
+  if (!inp.value.trim()) { inp.focus(); return; }
 
-  if (!userAnswer.trim()) {
-    input.focus();
-    return;
-  }
-
-  const isCorrect = normalize(userAnswer) === normalize(q.answer);
-
-  if (isCorrect) {
-    handleCorrect();
+  if (norm(inp.value) === norm(q.answer)) {
+    handleCorrect(q);
   } else {
     attempts++;
     handleWrong(q);
   }
 }
 
-function handleCorrect() {
-  const input = document.getElementById('answer-input');
-  input.classList.add('correct');
-  input.disabled = true;
-  document.getElementById('submit-btn').disabled = true;
-  score++;
+function handleCorrect(q) {
+  const inp = el('answer-input');
+  inp.classList.add('st-correct');
+  inp.disabled = true;
+  el('submit-btn').disabled = true;
 
-  const panel = document.getElementById('feedback-panel');
-  panel.className = 'feedback-panel correct-panel';
-  document.getElementById('feedback-icon').textContent = '✓';
-  document.getElementById('feedback-title').textContent = 'Chính xác!';
-  document.getElementById('correct-answer-line').style.display = 'none';
-  document.getElementById('explanation-text').style.display = 'none';
-  panel.classList.add('visible');
+  if (currentMode === 'exam') score++;
 
-  updateDots(true);
+  const dotIdx = Math.min(attempts + 1, 2);
+  el(`dot-${dotIdx}`).className = 'dot correct';
 
-  document.getElementById('score-badge').textContent = `${score} đúng`;
+  const panel = el('feedback-panel');
+  panel.className = 'feedback-panel fp-correct visible';
+  el('feedback-icon').textContent  = '✓';
+  el('feedback-label').textContent = 'Chính xác!';
+  el('correct-answer-line').style.display = 'none';
+  el('explanation-text').style.display    = 'none';
 
-  setTimeout(() => {
-    document.getElementById('next-btn').classList.add('visible');
-  }, 400);
+  setTimeout(() => el('next-btn').classList.add('visible'), 350);
 }
 
 function handleWrong(q) {
-  const input = document.getElementById('answer-input');
-  input.classList.add('wrong');
-  input.classList.add('shake');
-  setTimeout(() => {
-    input.classList.remove('shake', 'wrong');
-  }, 400);
+  const inp = el('answer-input');
 
-  updateDots(false);
+  const dotEl = el(`dot-${Math.min(attempts, 2)}`);
+  if (dotEl) dotEl.className = 'dot wrong';
 
-  // Show hint after 1st wrong
+  inp.classList.add('st-wrong', 'shake');
+  setTimeout(() => inp.classList.remove('shake', 'st-wrong'), 420);
+
   if (attempts === 1 && q.hint) {
-    const hintEl = document.getElementById('hint-text');
-    hintEl.textContent = '💡 Gợi ý: ' + q.hint;
-    hintEl.classList.add('visible');
+    const h = el('hint-text');
+    h.textContent = '💡 ' + q.hint;
+    h.classList.add('visible');
   }
 
-  // Show answer + explanation after MAX_WRONG
   if (attempts >= MAX_WRONG) {
-    input.disabled = true;
-    document.getElementById('submit-btn').disabled = true;
+    inp.disabled = true;
+    el('submit-btn').disabled = true;
 
-    const panel = document.getElementById('feedback-panel');
-    panel.className = 'feedback-panel wrong-panel';
-    document.getElementById('feedback-icon').textContent = '✗';
-    document.getElementById('feedback-title').textContent = `Đáp án đúng`;
+    const panel = el('feedback-panel');
+    panel.className = 'feedback-panel fp-wrong visible';
+    el('feedback-icon').textContent  = '✗';
+    el('feedback-label').textContent = 'Đáp án đúng là:';
 
-    const answerLine = document.getElementById('correct-answer-line');
-    answerLine.innerHTML = `→ <strong>${q.answer}</strong>`;
-    answerLine.style.display = 'block';
+    const al = el('correct-answer-line');
+    al.innerHTML = `<strong>${q.answer}</strong>`;
+    al.style.display = 'block';
 
     if (q.explanation) {
-      const expEl = document.getElementById('explanation-text');
-      expEl.textContent = q.explanation;
-      expEl.style.display = 'block';
+      const ex = el('explanation-text');
+      ex.textContent  = q.explanation;
+      ex.style.display = 'block';
     }
 
-    panel.classList.add('visible');
-
-    setTimeout(() => {
-      document.getElementById('next-btn').classList.add('visible');
-    }, 400);
+    setTimeout(() => el('next-btn').classList.add('visible'), 350);
   } else {
-    input.value = '';
-    input.focus();
+    inp.value = '';
+    inp.focus();
   }
-}
-
-function updateDots(correct) {
-  const dotEl = document.getElementById(`dot-${attempts > 0 ? attempts : 1}`);
-  if (dotEl) dotEl.className = 'dot ' + (correct ? 'correct' : 'wrong');
 }
 
 function nextQuestion() {
   current++;
-  if (current >= shuffled.length) {
-    showDone();
+  if (current >= queue.length) showDone();
+  else showQuestion();
+}
+
+/* ─── Done ─── */
+function showDone() {
+  hide('quiz-screen');
+  el('progress-bar').style.width  = '100%';
+  el('progress-text').textContent = `${queue.length} / ${queue.length}`;
+
+  const done = el('done-screen');
+  done.style.display = '';
+  done.classList.add('visible');
+
+  if (currentMode === 'study') {
+    el('done-eyebrow').textContent = 'Ôn tập hoàn thành';
+    show('done-study');
+    hide('done-exam');
   } else {
-    showQuestion();
+    el('done-eyebrow').textContent = 'Kết quả thi thử';
+    hide('done-study');
+    show('done-exam');
+
+    const pct = Math.round((score / queue.length) * 100);
+    el('exam-pct').textContent      = pct + '%';
+    el('exam-fraction').textContent = `${score} / ${queue.length} câu đúng`;
+
+    const bar = el('exam-bar');
+    bar.className = 'exam-bar ' + (pct >= 80 ? 'good' : pct >= 50 ? 'ok' : 'bad');
+    el('exam-pct').style.color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
+    setTimeout(() => bar.style.width = pct + '%', 80);
+
+    let msg = '';
+    if      (pct === 100) msg = 'Hoàn hảo! Bạn đúng tất cả 20 câu.';
+    else if (pct >= 80)   msg = `Rất tốt! Còn <strong>${queue.length - score}</strong> câu cần xem lại.`;
+    else if (pct >= 50)   msg = `Đạt yêu cầu. Nên ôn lại <strong>${queue.length - score}</strong> câu sai nhé.`;
+    else                  msg = `Cần cố gắng thêm. Vào <em>Ôn tập</em> để xem lại toàn bộ nhé.`;
+    el('exam-summary').innerHTML = msg;
   }
 }
 
-function showDone() {
-  document.getElementById('quiz-content').style.display = 'none';
-  const done = document.getElementById('done-screen');
-  done.classList.add('visible');
-  document.getElementById('done-score').textContent = `${score}/${shuffled.length}`;
+/* ─── Helpers ─── */
+const el   = id => document.getElementById(id);
+const show = id => { el(id).style.display = ''; };
+const hide = id => { el(id).style.display = 'none'; };
 
-  // Update progress to 100%
-  document.getElementById('progress-bar').style.width = '100%';
-  document.getElementById('progress-text').textContent = `${shuffled.length} / ${shuffled.length}`;
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function norm(s) {
+  return s.trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/\s+/g, ' ');
 }
 
-function restartQuiz() {
-  document.getElementById('done-screen').classList.remove('visible');
-  document.getElementById('quiz-content').style.display = 'block';
-  startQuiz();
-}
-
-// Enter key submits
+/* ─── Keyboard ─── */
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('answer-input').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const nextBtn = document.getElementById('next-btn');
-      if (nextBtn.classList.contains('visible')) {
-        nextQuestion();
-      } else {
-        checkAnswer();
-      }
-    }
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const nb = el('next-btn');
+    if (nb && nb.classList.contains('visible')) nextQuestion();
+    else checkAnswer();
   });
-  loadQuestions();
+  init();
 });

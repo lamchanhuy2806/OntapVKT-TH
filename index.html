@@ -6,26 +6,51 @@
 <title>Vi Ký Sinh Trùng — Ôn Tập</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/css/style.css">
+
 </head>
 <body>
 
 <header>
   <div class="logo">Vi Ký Sinh Trùng <span>/ Ôn Tập</span></div>
-  <div class="progress-wrap">
-    <span class="score-badge" id="score-badge">0 đúng</span>
-    <span class="progress-text" id="progress-text">0 / 0</span>
-    <div class="progress-bar-outer">
-      <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
+  <div class="header-right">
+    <span class="mode-pill" id="mode-pill"></span>
+    <div class="progress-wrap" id="progress-wrap">
+      <span class="progress-text" id="progress-text">0 / 0</span>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="card" id="main-card">
+<div class="card">
+
+  <!-- LOADING -->
   <div class="loading" id="loading-msg">Đang tải câu hỏi...</div>
 
-  <!-- Quiz content (hidden until loaded) -->
-  <div id="quiz-content" style="display:none">
+  <!-- ① MODE SELECT -->
+  <div id="mode-screen" style="display:none">
+    <p class="mode-eyebrow">Chọn chế độ học</p>
+    <h1 class="mode-title">Bạn muốn làm gì hôm nay?</h1>
+    <p class="mode-sub">48 ký sinh trùng cần nhớ</p>
+    <div class="mode-cards">
+      <div class="mode-card study" onclick="startMode('study')">
+        <div class="mc-icon">📖</div>
+        <div class="mc-name">Ôn tập</div>
+        <div class="mc-desc">Xem lần lượt tất cả 48 câu theo đúng thứ tự. Không tính điểm — học thoải mái, có gợi ý và giải thích.</div>
+        <div class="mc-tag">48 câu · theo thứ tự</div>
+      </div>
+      <div class="mode-card exam" onclick="startMode('exam')">
+        <div class="mc-icon">📝</div>
+        <div class="mc-name">Thi thử</div>
+        <div class="mc-desc">Random 20 câu trong 48. Tính điểm và hiện kết quả cuối bài để đánh giá mức độ nhớ.</div>
+        <div class="mc-tag">20 câu · random · có điểm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ② QUIZ -->
+  <div id="quiz-screen" style="display:none">
     <div class="card-top">
       <span class="badge" id="category-badge">—</span>
       <div class="attempt-dots">
@@ -36,8 +61,8 @@
 
     <div class="question-text" id="question-text">—</div>
 
-    <div class="image-wrap" id="image-wrap">
-      <img id="question-image" src="" alt="Hình ký sinh trùng">
+    <div class="image-wrap">
+      <img id="question-image" src="" alt="">
       <div class="img-overlay"></div>
     </div>
 
@@ -46,15 +71,9 @@
     <div class="input-area">
       <div class="input-label">Đáp án của bạn</div>
       <div class="input-row">
-        <input
-          type="text"
-          class="answer-input"
-          id="answer-input"
+        <input type="text" id="answer-input" class="answer-input"
           placeholder="Nhập tên ký sinh trùng..."
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-        >
+          autocomplete="off" autocorrect="off" spellcheck="false">
         <button class="submit-btn" id="submit-btn" onclick="checkAnswer()">Kiểm tra</button>
       </div>
     </div>
@@ -62,22 +81,41 @@
     <div class="feedback-panel" id="feedback-panel">
       <div class="feedback-header">
         <span class="feedback-icon" id="feedback-icon"></span>
-        <span class="feedback-title" id="feedback-title"></span>
+        <span class="feedback-label" id="feedback-label"></span>
       </div>
-      <div class="correct-answer-line" id="correct-answer-line" style="display:none"></div>
-      <div class="explanation-text" id="explanation-text" style="display:none"></div>
+      <div class="correct-answer-line" id="correct-answer-line"></div>
+      <div class="explanation-text"   id="explanation-text"></div>
     </div>
 
     <button class="next-btn" id="next-btn" onclick="nextQuestion()">Câu tiếp theo →</button>
   </div>
 
-  <!-- Done screen -->
-  <div class="done-screen" id="done-screen">
-    <div class="done-number" id="done-score">0/0</div>
-    <div class="done-label">Bạn đã hoàn thành bộ câu hỏi!</div>
-    <button class="restart-btn" onclick="restartQuiz()">Làm lại từ đầu</button>
+  <!-- ③ DONE -->
+  <div id="done-screen">
+    <p class="done-eyebrow" id="done-eyebrow"></p>
+
+    <div id="done-study" style="display:none">
+      <div class="study-done-icon">🎉</div>
+      <div class="study-done-title">Hoàn thành 48 câu!</div>
+      <div class="study-done-sub">Bạn đã xem qua tất cả ký sinh trùng.</div>
+    </div>
+
+    <div id="done-exam" style="display:none">
+      <div class="exam-pct" id="exam-pct">0%</div>
+      <div class="exam-fraction" id="exam-fraction">0 / 20 câu đúng</div>
+      <div class="exam-bar-wrap">
+        <div class="exam-bar" id="exam-bar"></div>
+      </div>
+      <div class="exam-summary" id="exam-summary"></div>
+    </div>
+
+    <div class="done-actions">
+      <button class="done-btn done-btn-primary" onclick="startMode(currentMode)">Làm lại</button>
+      <button class="done-btn done-btn-outline" onclick="backToMenu()">← Đổi chế độ</button>
+    </div>
   </div>
-</div>
+
+</div><!-- /card -->
 
 
 <script src="./assets/js/main.js"></script>
