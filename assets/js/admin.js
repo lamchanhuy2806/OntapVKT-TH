@@ -6,7 +6,7 @@ let currentFilter = '';   // '' = tất cả, else = tên danh mục
 // Load existing questions.json on startup
 async function loadExisting() {
   try {
-    const res = await fetch('data/questions.json');
+    const res = await fetch('./assets/data/questions.json');
     if (res.ok) {
       questions = await res.json();
       rebuildFilterChips();
