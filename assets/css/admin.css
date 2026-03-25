@@ -201,63 +201,93 @@
     justify-content: flex-end;
   }
 
-  /* Question list */
+  /* ── Search & filter bar ── */
+  .list-toolbar {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .search-wrap { position: relative; }
+  .search-icon {
+    position: absolute; left: 9px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px; opacity: 0.4; pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 7px 10px 7px 30px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-chip {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.04em;
+    padding: 3px 8px; border-radius: 4px;
+    border: 1px solid var(--border2);
+    background: transparent; color: var(--muted2);
+    cursor: pointer; transition: all 0.15s; white-space: nowrap;
+  }
+  .filter-chip:hover  { border-color: var(--accent2); color: var(--accent2); }
+  .filter-chip.active { background: rgba(59,130,246,0.12); border-color: var(--accent); color: var(--accent2); }
+
+  /* ── Question list ── */
+  .q-list-wrap {
+    max-height: 520px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+  .q-list-wrap::-webkit-scrollbar { width: 4px; }
+  .q-list-wrap::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
   .q-list { padding: 0; list-style: none; }
 
   .q-item {
-    padding: 14px 20px;
+    padding: 7px 12px;
     border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: background 0.15s;
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer; transition: background 0.12s;
   }
-
   .q-item:last-child { border-bottom: none; }
-  .q-item:hover { background: var(--surface2); }
-  .q-item.active { background: rgba(59,130,246,0.08); border-left: 2px solid var(--accent); }
+  .q-item:hover  { background: var(--surface2); }
+  .q-item.active { background: rgba(59,130,246,0.08); border-left: 2px solid var(--accent); padding-left: 10px; }
 
-  .q-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    min-width: 28px;
-  }
-
+  .q-num { font-family: var(--mono); font-size: 10px; color: var(--muted); min-width: 20px; flex-shrink: 0; }
   .q-info { flex: 1; min-width: 0; }
-
   .q-answer {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-family: var(--mono); font-size: 12px; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
+  .q-answer mark {
+    background: rgba(251,191,36,0.2); color: var(--amber);
+    border-radius: 2px; padding: 0 1px; font-style: normal;
+  }
   .q-cat {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 2px;
-    font-family: var(--serif);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 10px; color: var(--muted); font-family: var(--mono);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px;
   }
-
   .q-del {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 16px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: color 0.2s, background 0.2s;
-    flex-shrink: 0;
+    background: none; border: none; color: var(--muted);
+    cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 4px;
+    flex-shrink: 0; opacity: 0;
+    transition: opacity 0.15s, color 0.15s, background 0.15s;
   }
-  .q-del:hover { color: var(--red); background: rgba(239,68,68,0.08); }
+  .q-item:hover .q-del { opacity: 1; }
+  .q-del:hover { color: var(--red); background: rgba(239,68,68,0.1); }
+
+  .no-results {
+    padding: 28px; text-align: center;
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
 
   /* Export section */
   .export-section {

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -7,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/admin.css">
+
 </head>
 <body>
 
@@ -83,9 +85,26 @@
       <span class="panel-title">Danh sách</span>
       <span class="count-badge" id="count-badge">0 câu</span>
     </div>
-    <ul class="q-list" id="q-list">
-      <li class="empty-list">Chưa có câu hỏi nào</li>
-    </ul>
+
+    <!-- Search + filter toolbar -->
+    <div class="list-toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input"
+          placeholder="Tìm tên, danh mục..." autocomplete="off"
+          oninput="renderList()">
+      </div>
+      <div class="filter-row" id="filter-row">
+        <button class="filter-chip active" data-cat="" onclick="setFilter(this)">Tất cả</button>
+      </div>
+    </div>
+
+    <!-- Scrollable list -->
+    <div class="q-list-wrap">
+      <ul class="q-list" id="q-list">
+        <li class="empty-list">Chưa có câu hỏi nào</li>
+      </ul>
+    </div>
   </div>
 
 </div>
