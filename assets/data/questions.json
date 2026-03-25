@@ -91,6 +91,51 @@
   "explanation": "Microsporum gypseum là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da. Đặc điểm vi thể là đại bào tử (macroconidia) hình bầu dục hoặc thoi, thành dày, có nhiều vách ngăn. Đây là đặc điểm giúp phân biệt với các chi dermatophyte khác."
   },
   {
+    "id": "q011",
+    "category": "nấm",
+    "image": "./assets/images/nam-nigrospora.jpg",
+    "question": "Đây là ký sinh trùng nào",
+    "answer": "Nigrospora",
+    "hint": "bắt đầu bằng chữ N kết thức bằng chữ a",
+    "explanation": "Nigrospora là nấm mốc thường gặp trong môi trường. Đặc điểm nổi bật là bào tử lớn, hình cầu, màu đen, thường xuất hiện đơn lẻ ở đầu sợi nấm. Hình dạng đơn giản nhưng rất dễ nhận diện nhờ màu sắc đậm và kích thước bào tử lớn."
+  },
+  {
+    "id": "q012",
+    "category": "nấm",
+    "image": "./assets/images/nam-curvularia-sp.jpg",
+    "question": "Đây là loại nấm gì",
+    "answer": "Curvularia sp.",
+    "hint": "Bắt đầu bằng chữ C",
+    "explanation": "Curvularia là nấm mốc có bào tử (conidia) cong, có nhiều vách ngăn. Đặc điểm đặc trưng là tế bào trung tâm của bào tử phình to hơn các tế bào khác, làm cho toàn bộ bào tử có hình cong đặc trưng. Đây là dấu hiệu quan trọng để phân biệt với các nấm mốc tương tự."
+  },
+  {
+    "id": "q013",
+    "category": "nấm",
+    "image": "./assets/images/nam-aspergillus-niger.jpg",
+    "question": "Đây là loại nấm gì?",
+    "answer": "Aspergillus niger",
+    "hint": "con này tên gần giống với con flavus",
+    "explanation": "Aspergillus niger là nấm mốc có đầu bào tử màu đen đặc trưng. Dưới kính hiển vi, các bào tử (conidia) xếp thành chuỗi bao quanh túi bào tử, tạo thành đầu bào tử dạng tỏa tròn. Màu đen đậm là dấu hiệu giúp dễ dàng nhận diện loài này."
+  },
+  {
+    "id": "q014",
+    "category": "nấm",
+    "image": "./assets/images/nam-rhizopus-nigricans.jpg",
+    "question": "Đây là loại nấm gì",
+    "answer": "Rhizopus nigricans",
+    "hint": "con này bắt đầu bằng chữ Rh",
+    "explanation": "Rhizopus nigricans là nấm mốc thuộc nhóm Zygomycetes. Đặc điểm là sợi nấm không vách ngăn, có túi bào tử ở đầu cuống. Điểm phân biệt quan trọng với Mucor là có rễ giả (rhizoids) ở gốc cuống bào tử. Đây là dấu hiệu nhận dạng chính trong phòng thí nghiệm."
+  },
+  {
+    "id": "q015",
+    "category": "nấm",
+    "image": "./assets/images/nam-mucor-sp.jpg",
+    "question": "Đây là loại nấm gì?",
+    "answer": "Mucor sp.",
+    "hint": "Bắt đầu bằng chữ M",
+    "explanation": "Mucor là nấm mốc thuộc nhóm Zygomycetes. Đặc điểm là sợi nấm rộng, không có vách ngăn (aseptate hyphae). Túi bào tử (sporangium) nằm ở đầu cuống, bên trong chứa nhiều bào tử. Khác với Rhizopus, Mucor không có rễ giả (rhizoids)."
+  },
+  {
     "id": "q021", 
     "category": "Sán lá",
     "image": "./assets/images/clonorchis-sinensis.jpg",
