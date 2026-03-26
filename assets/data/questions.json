@@ -136,6 +136,51 @@
     "explanation": "Mucor là nấm mốc thuộc nhóm Zygomycetes. Đặc điểm là sợi nấm rộng, không có vách ngăn (aseptate hyphae). Túi bào tử (sporangium) nằm ở đầu cuống, bên trong chứa nhiều bào tử. Khác với Rhizopus, Mucor không có rễ giả (rhizoids)."
   },
   {
+    "id": "q016",
+    "category": "giun",
+    "image": "./assets/images/ascaris-lumbricoides.jpg",
+    "question": "Con nì tên là gì?",
+    "answer": "Ascaris lumbricoides",
+    "hint": "Màu vàng, hình bầu dục, con này người việt hay gọi là con giun đũa",
+    "explanation": "Màu vàng, hình bầu dục, hoặc hơi tròn, rất cân đối."
+  },
+  {
+    "id": "q017",
+    "category": "giun",
+    "image": "./assets/images/enterobius-vemicularis",
+    "question": "Tên con này là gì đây",
+    "answer": "Enterobius vermicularis",
+    "hint": "con nì được gọi là giun kim",
+    "explanation": "Hình bầu dục, thon dài, không cân đối, lép 1 bên"
+  },
+  {
+    "id": "q018",
+    "category": "giun",
+    "image": "./assets/images/trichuris-trichiura",
+    "question": "Tên con này là gì?",
+    "answer": "Trichuris trichiura",
+    "hint": "Ở Việt Nam người ta gọi con này con giun tóc",
+    "explanation": "Hình dạng: Bầu dục, đối xứng. Màu sắc: Màu vàng nhạt giống sắc tố mật. \nCấu tạo: Hai đầu có nút nhầy, nhân được bao bọc bởi lớp vỏ dày"
+  },
+  {
+    "id": "q019",
+    "category": "Giun tròn (Nematode)",
+    "image": "./assets/images/ancylostoma-duodenale.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ancylostoma duodenale",
+    "hint": "Giun móc, có răng trong bao miệng",
+    "explanation": "Ancylostoma duodenale là giun móc ký sinh ở ruột non người. Đặc điểm nhận dạng là phần đầu cong như móc và có răng sắc trong bao miệng dùng để bám vào niêm mạc ruột và hút máu. Ấu trùng có thể xâm nhập qua da khi tiếp xúc với đất nhiễm bẩn, gây thiếu máu do mất máu kéo dài."
+  },
+  {
+"id": "q020",
+  "category": "Giun tròn (Nematode)",
+  "image": "./assets/images/strongyloides-stercoralis.jpg",
+  "question": "Đây là gì?",
+  "answer": "Strongyloides stercoralis",
+  "hint": "Giun lươn, có chu kỳ tự nhiễm",
+  "explanation": "Strongyloides stercoralis là giun lươn ký sinh ở ruột non. Đặc điểm nổi bật là khả năng tự nhiễm (autoinfection), giúp ký sinh trùng tồn tại lâu dài trong cơ thể mà không cần tái nhiễm từ môi trường. Ấu trùng có thể xuyên qua da, di chuyển qua phổi rồi xuống ruột. Trong mẫu phân thường thấy ấu trùng thay vì trứng."
+  },
+  {
     "id": "q021", 
     "category": "Sán lá",
     "image": "./assets/images/clonorchis-sinensis.jpg",
