@@ -147,7 +147,7 @@
   {
     "id": "q017",
     "category": "giun",
-    "image": "./assets/images/enterobius-vemicularis",
+    "image": "./assets/images/enterobius-vemicularis.jpg",
     "question": "Tên con này là gì đây",
     "answer": "Enterobius vermicularis",
     "hint": "con nì được gọi là giun kim",
@@ -156,7 +156,7 @@
   {
     "id": "q018",
     "category": "giun",
-    "image": "./assets/images/trichuris-trichiura",
+    "image": "./assets/images/trichuris-trichiura.jpg",
     "question": "Tên con này là gì?",
     "answer": "Trichuris trichiura",
     "hint": "Ở Việt Nam người ta gọi con này con giun tóc",
