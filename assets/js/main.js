@@ -16,7 +16,7 @@ const MAX_WRONG  = 2;
 /* ══════ INIT ══════ */
 async function init() {
   try {
-    const res = await fetch('data/questions.json');
+    const res = await fetch('./assets/data/questions.json');
     if (!res.ok) throw new Error('Không tìm thấy data/questions.json');
     allQuestions = await res.json();
     show('home-screen'); hide('loading-msg');
