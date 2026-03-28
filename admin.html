@@ -1,202 +1,133 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vi Ký Sinh Trùng</title>
+<title>Admin — Quản Lý Câu Hỏi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./assets/css/admin.css">
+
 </head>
 <body>
 
-<!-- ─── HEADER ─── -->
 <header>
-  <div class="logo">Vi Ký Sinh Trùng <span>/ Học</span></div>
-  <div class="header-right">
-    <button class="back-btn" id="back-btn" onclick="backToMenu()">← Quay lại</button>
-    <span class="mode-pill" id="mode-pill"></span>
-    <div class="progress-wrap" id="progress-wrap">
-      <span class="progress-text" id="progress-text">0 / 0</span>
-      <div class="progress-bar-outer">
-        <div class="progress-bar-inner" id="progress-bar" style="width:0%"></div>
-      </div>
-    </div>
+  <div class="logo">Vi KST <span>/ Admin</span></div>
+  <div class="header-actions">
+    <a href="index.html" style="text-decoration:none"><button class="btn btn-outline">← Xem trang quiz</button></a>
+    <button class="btn btn-green" onclick="exportJSON()">⬇ Export questions.json</button>
   </div>
 </header>
 
-<!-- ─── CARD ─── -->
-<div class="card">
+<div class="layout">
 
-  <!-- LOADING -->
-  <div class="loading" id="loading-msg">Đang tải câu hỏi...</div>
-
-  <!-- ① HOME -->
-  <div id="home-screen" style="display:none">
-    <p class="home-eyebrow">Vi Ký Sinh Trùng</p>
-    <h1 class="home-title">Bạn muốn làm gì hôm nay?</h1>
-    <p class="home-sub">48 ký sinh trùng cần nhớ</p>
-    <div class="home-cards">
-
-      <div class="hc study" onclick="startMode('study')">
-        <div class="hc-icon">📖</div>
-        <div class="hc-name">Ôn tập</div>
-        <div class="hc-desc">Lần lượt 48 câu theo thứ tự. Không tính điểm, có gợi ý và giải thích.</div>
-        <div class="hc-tag">48 câu · theo thứ tự</div>
-      </div>
-
-      <div class="hc exam" onclick="startMode('exam')">
-        <div class="hc-icon">📝</div>
-        <div class="hc-name">Thi thử</div>
-        <div class="hc-desc">Random 20 câu. Tính điểm và hiện kết quả cuối bài.</div>
-        <div class="hc-tag">20 câu · random · có điểm</div>
-      </div>
-
-      <div class="hc browse" onclick="startBrowse()">
-        <div class="hc-icon">🔬</div>
-        <div class="hc-name">Xem danh sách</div>
-        <div class="hc-desc">Duyệt toàn bộ ký sinh trùng, xem hình và đọc mô tả chi tiết từng loài.</div>
-        <div class="hc-tag">48 loài · có tìm kiếm</div>
-      </div>
-
-      <div class="hc flash" onclick="startMode('flash')">
-        <div class="hc-icon">⚡</div>
-        <div class="hc-name">Flash card</div>
-        <div class="hc-desc">Xem hình → nhớ tên. Lật thẻ để kiểm tra. Không cần gõ, lướt nhanh.</div>
-        <div class="hc-tag">48 thẻ · lật xem đáp án</div>
-      </div>
-
+  <!-- Form thêm/sửa câu hỏi -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title" id="form-title">Thêm câu hỏi mới</span>
+      <button class="btn btn-outline" id="clear-btn" onclick="clearForm()" style="display:none">Hủy sửa</button>
     </div>
-  </div>
+    <div class="form-body">
 
-  <!-- ② QUIZ -->
-  <div id="quiz-screen" style="display:none">
-    <div class="card-top">
-      <span class="badge" id="category-badge">—</span>
-      <div class="attempt-dots">
-        <div class="dot" id="dot-1"></div>
-        <div class="dot" id="dot-2"></div>
-      </div>
-    </div>
-    <div class="question-text" id="question-text">—</div>
-    <div class="image-wrap">
-      <img id="question-image" src="" alt="" onclick="openLightbox(this.src)">
-      <div class="img-overlay"></div>
-    </div>
-    <div class="hint-text" id="hint-text"></div>
-    <div class="input-area">
-      <div class="input-label">Đáp án của bạn</div>
-      <div class="input-row">
-        <input type="text" id="answer-input" class="answer-input"
-          placeholder="Nhập tên ký sinh trùng..."
-          autocomplete="off" autocorrect="off" spellcheck="false">
-        <button class="submit-btn" id="submit-btn" onclick="checkAnswer()">Kiểm tra</button>
-      </div>
-    </div>
-    <div class="feedback-panel" id="feedback-panel">
-      <div class="feedback-header">
-        <span class="feedback-icon" id="feedback-icon"></span>
-        <span class="feedback-label" id="feedback-label"></span>
-      </div>
-      <div class="correct-answer-line" id="correct-answer-line"></div>
-      <div class="explanation-text"   id="explanation-text"></div>
-    </div>
-    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Câu tiếp theo →</button>
-  </div>
-
-  <!-- ③ DONE -->
-  <div id="done-screen">
-    <p class="done-eyebrow" id="done-eyebrow"></p>
-    <div id="done-study" style="display:none">
-      <div class="study-done-icon">🎉</div>
-      <div class="study-done-title">Hoàn thành 48 câu!</div>
-      <div class="study-done-sub">Bạn đã xem qua tất cả ký sinh trùng.</div>
-    </div>
-    <div id="done-exam" style="display:none">
-      <div class="exam-pct" id="exam-pct">0%</div>
-      <div class="exam-fraction" id="exam-fraction">0 / 20 câu đúng</div>
-      <div class="exam-bar-wrap"><div class="exam-bar" id="exam-bar"></div></div>
-      <div class="exam-summary" id="exam-summary"></div>
-    </div>
-    <div class="done-actions">
-      <button class="done-btn done-btn-primary" onclick="startMode(currentMode)">Làm lại</button>
-      <button class="done-btn done-btn-outline" onclick="backToMenu()">← Về trang chủ</button>
-    </div>
-  </div>
-
-  <!-- ④ BROWSE -->
-  <div id="browse-screen" style="display:none">
-    <div class="browse-toolbar">
-      <div class="browse-search-wrap">
-        <span class="browse-search-icon">🔍</span>
-        <input type="text" class="browse-search" id="browse-search"
-          placeholder="Tìm tên ký sinh trùng, danh mục..."
-          autocomplete="off" oninput="renderBrowse()">
-      </div>
-      <div class="browse-cats" id="browse-cats"></div>
-    </div>
-    <div class="browse-count" id="browse-count"></div>
-    <div class="browse-grid" id="browse-grid"></div>
-  </div>
-
-  <!-- ⑤ FLASH CARD -->
-  <div id="flash-screen" style="display:none">
-    <div class="card-top" style="padding:16px 24px 0">
-      <span class="badge" id="flash-badge">—</span>
-      <span style="font-family:var(--mono);font-size:12px;color:var(--muted2)" id="flash-progress">1 / 48</span>
-    </div>
-
-    <!-- 3D flip container -->
-    <div class="flash-scene" onclick="flipFlash()">
-      <div class="flash-card-inner" id="flash-card-inner">
-
-        <!-- Mặt trước: hình ảnh -->
-        <div class="flash-face flash-front">
-          <img id="flash-image" src="" alt="">
-          <div class="flash-front-hint">nhấn để lật ↩</div>
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label">ID câu hỏi</label>
+          <input type="text" class="field-input" id="f-id" placeholder="q001" autocomplete="off">
         </div>
-
-        <!-- Mặt sau: đáp án -->
-        <div class="flash-face flash-back">
-          <div class="flash-back-cat"  id="flash-back-cat"></div>
-          <div class="flash-back-name" id="flash-back-name"></div>
-          <div class="flash-back-hint" id="flash-back-hint"></div>
-          <div class="flash-back-divider" id="flash-back-divider"></div>
-          <div class="flash-back-exp"  id="flash-back-exp"></div>
+        <div class="field">
+          <label class="field-label">Danh mục</label>
+          <input type="text" class="field-input" id="f-category" placeholder="Đơn bào đường ruột" autocomplete="off">
         </div>
+      </div>
 
+      <div class="field">
+        <label class="field-label">Câu hỏi hiển thị</label>
+        <input type="text" class="field-input" id="f-question" placeholder="Đây là ký sinh trùng nào?" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Đáp án chính xác</label>
+        <input type="text" class="field-input" id="f-answer" placeholder="Entamoeba histolytica" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Gợi ý (hiện sau lần sai 1)</label>
+        <input type="text" class="field-input" id="f-hint" placeholder="Amip gây kiết lỵ..." autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label class="field-label">Đường dẫn hình ảnh</label>
+        <div class="image-path-row">
+          <input type="text" class="field-input" id="f-image" placeholder="images/parasite_001.jpg" oninput="previewImage(this.value)">
+          <button class="btn btn-outline" onclick="document.getElementById('f-image').focus()">📁</button>
+        </div>
+        <div class="image-preview" id="image-preview">
+          <div class="placeholder-text">Nhập đường dẫn ảnh để xem trước</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Giải thích (hiện sau khi sai quá 2 lần)</label>
+        <textarea class="field-textarea" id="f-explanation" placeholder="Mô tả đặc điểm nhận dạng, vòng đời, bệnh gây ra..."></textarea>
+      </div>
+
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-outline" onclick="clearForm()">Xóa form</button>
+      <button class="btn btn-primary" onclick="saveQuestion()">Lưu câu hỏi</button>
+    </div>
+  </div>
+
+  <!-- Danh sách câu hỏi -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Danh sách</span>
+      <span class="count-badge" id="count-badge">0 câu</span>
+    </div>
+
+    <!-- Search + filter toolbar -->
+    <div class="list-toolbar">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="search-input"
+          placeholder="Tìm tên, danh mục..." autocomplete="off"
+          oninput="renderList()">
+      </div>
+      <div class="filter-row" id="filter-row">
+        <button class="filter-chip active" data-cat="" onclick="setFilter(this)">Tất cả</button>
       </div>
     </div>
 
-    <div class="flash-nav">
-      <button class="flash-nav-btn" onclick="prevFlash();event.stopPropagation()">← Trước</button>
-      <button class="flash-nav-btn flip-btn" onclick="flipFlash();event.stopPropagation()">↩ Lật thẻ</button>
-      <button class="flash-nav-btn" onclick="nextFlash();event.stopPropagation()">Tiếp →</button>
+    <!-- Scrollable list -->
+    <div class="q-list-wrap">
+      <ul class="q-list" id="q-list">
+        <li class="empty-list">Chưa có câu hỏi nào</li>
+      </ul>
     </div>
   </div>
 
-</div><!-- /card -->
-
-<!-- Detail modal (browse) -->
-<div id="detail-modal" onclick="closeDetail(event)">
-  <div class="detail-box">
-    <img class="detail-img" id="detail-img" src="" alt="" onclick="openLightbox(this.src)">
-    <div class="detail-body">
-      <div class="detail-cat"  id="detail-cat"></div>
-      <div class="detail-name" id="detail-name"></div>
-      <div class="detail-hint" id="detail-hint"></div>
-      <div class="detail-divider"></div>
-      <div class="detail-explain" id="detail-explain"></div>
-      <button class="detail-close" onclick="document.getElementById('detail-modal').classList.remove('open')">Đóng ✕</button>
-    </div>
-  </div>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">ESC · Đóng</button>
-  <img id="lightbox-img" src="" alt="">
+<!-- Export section -->
+<div class="export-section">
+  <div class="panel-header">
+    <span class="panel-title">Export & Hướng dẫn</span>
+    <button class="btn btn-outline" onclick="toggleJsonPreview()">Xem JSON</button>
+  </div>
+  <div class="export-body">
+    <div class="export-info">
+      Hiện có <strong id="export-count">0</strong> câu hỏi.
+      Sau khi export, copy file <code style="font-family:var(--mono);font-size:12px;color:var(--accent2)">questions.json</code>
+      vào thư mục <code style="font-family:var(--mono);font-size:12px;color:var(--accent2)">data/</code> rồi push lên GitHub.
+    </div>
+    <button class="btn btn-green" onclick="exportJSON()">⬇ Tải questions.json</button>
+  </div>
+  <pre class="json-box" id="json-preview"></pre>
 </div>
+
+<div class="toast" id="toast"></div>
+
 
 <script src="./assets/js/admin.js"></script>
 </body>
