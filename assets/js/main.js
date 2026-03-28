@@ -1,3 +1,4 @@
+
 /* ══════ STATE ══════ */
 let allQuestions = [];
 let queue        = [];
@@ -15,7 +16,7 @@ const MAX_WRONG  = 2;
 /* ══════ INIT ══════ */
 async function init() {
   try {
-    const res = await fetch('./assets/data/questions.json');
+    const res = await fetch('data/questions.json');
     if (!res.ok) throw new Error('Không tìm thấy data/questions.json');
     allQuestions = await res.json();
     show('home-screen'); hide('loading-msg');
@@ -170,35 +171,50 @@ function setBrowseFilter(cat) {
   renderBrowse();
 }
 
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function hlText(s, term) {
+  const safe = escHtml(s);
+  if (!term) return safe;
+  const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
 function renderBrowse() {
   const term = (el('browse-search').value || '').trim().toLowerCase();
-  const filtered = allQuestions.filter((q,i) => {
+  const filtered = allQuestions.filter(function(q) {
     if (browseFilter && q.category !== browseFilter) return false;
     if (!term) return true;
-    return (q.answer||'').toLowerCase().includes(term) || (q.category||'').toLowerCase().includes(term);
+    return (q.answer||'').toLowerCase().includes(term)
+        || (q.category||'').toLowerCase().includes(term);
   });
-  el('browse-count').textContent = term || browseFilter
-    ? `${filtered.length} / ${allQuestions.length} loài`
-    : `${allQuestions.length} loài`;
+
+  el('browse-count').textContent = (term || browseFilter)
+    ? filtered.length + ' / ' + allQuestions.length + ' loài'
+    : allQuestions.length + ' loài';
 
   if (!filtered.length) {
-    el('browse-grid').innerHTML = `<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)">Không tìm thấy kết quả</div>`;
+    el('browse-grid').innerHTML = '<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)">Không tìm thấy kết quả</div>';
     return;
   }
 
-  el('browse-grid').innerHTML = filtered.map((q, i) => {
+  el('browse-grid').innerHTML = filtered.map(function(q) {
     const idx = allQuestions.indexOf(q) + 1;
-    const hl  = s => term ? s.replace(new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>') : s;
-    return `
-    <div class="browse-item" onclick="openDetail('${q.id}')">
-      <span class="bi-num">${String(idx).padStart(2,'0')}</span>
-      <div class="bi-thumb"><img src="${q.image||''}" alt="" onerror="this.style.display='none'"></div>
-      <div class="bi-info">
-        <div class="bi-name">${hl(q.answer||'')}</div>
-        <div class="bi-cat">${hl(q.category||'—')}</div>
-      </div>
-    </div>`;
+    return '<div class="browse-item" data-qid="' + escHtml(q.id) + '">'
+         + '<span class="bi-num">' + String(idx).padStart(2,'0') + '</span>'
+         + '<div class="bi-thumb"><img src="' + escHtml(q.image||'') + '" alt="" onerror="this.style.display=\'none\'"></div>'
+         + '<div class="bi-info">'
+         + '<div class="bi-name">' + hlText(q.answer||'', term) + '</div>'
+         + '<div class="bi-cat">'  + hlText(q.category||'—', term) + '</div>'
+         + '</div></div>';
   }).join('');
+
+  // Gắn click listener sau khi render — tránh lỗi inline onclick với ký tự đặc biệt
+  el('browse-grid').querySelectorAll('.browse-item').forEach(function(item) {
+    item.addEventListener('click', function() { openDetail(item.dataset.qid); });
+  });
 }
 
 function openDetail(id) {
@@ -219,8 +235,9 @@ function closeDetail(e) {
 
 /* ══════ FLASH CARD MODE ══════ */
 function startFlash() {
-  queue     = shuffle([...allQuestions]);
-  flashIdx  = 0; flashFlipped = false;
+  queue        = shuffle([...allQuestions]);
+  flashIdx     = 0;
+  flashFlipped = false;
   hide('home-screen');
   show('flash-screen');
   showHeader('flash', false);
@@ -229,40 +246,40 @@ function startFlash() {
 
 function renderFlash() {
   const q = queue[flashIdx];
+
+  // Reset về mặt trước (không animate khi đổi thẻ)
+  flashFlipped = false;
+  const inner = el('flash-card-inner');
+  inner.style.transition = 'none';
+  inner.classList.remove('flipped');
+  // Force reflow rồi bật lại transition
+  void inner.offsetWidth;
+  inner.style.transition = '';
+
+  // Cập nhật nội dung
   el('flash-badge').textContent    = q.category || 'Flash card';
-  el('flash-progress').textContent = `${flashIdx+1} / ${queue.length}`;
+  el('flash-progress').textContent = (flashIdx + 1) + ' / ' + queue.length;
   el('flash-image').src            = q.image || '';
 
-  // Hide answer
-  flashFlipped = false;
-  const wrap = el('flash-answer-wrap');
-  wrap.style.maxHeight = '0'; wrap.style.opacity = '0';
-  el('flash-flip-btn').textContent = '↩ Lật thẻ';
-  el('flash-tap-hint').style.display = '';
+  // Điền sẵn mặt sau (ẩn sau lưng)
+  el('flash-back-cat').textContent  = q.category || '';
+  el('flash-back-name').textContent = q.answer   || '';
+  el('flash-back-hint').textContent = q.hint     || '';
+  el('flash-back-divider').style.display = q.explanation ? '' : 'none';
+  const exp = el('flash-back-exp');
+  if (q.explanation) { exp.textContent = q.explanation; exp.style.display = ''; }
+  else { exp.textContent = ''; exp.style.display = 'none'; }
 }
 
 function flipFlash() {
-  const q = queue[flashIdx];
-  const wrap = el('flash-answer-wrap');
-  if (!flashFlipped) {
-    el('flash-answer-name').textContent = q.answer || '';
-    el('flash-answer-hint').textContent = q.hint   || '';
-    const exp = el('flash-answer-exp');
-    if (q.explanation) { exp.textContent = q.explanation; exp.style.display = 'block'; }
-    else { exp.style.display = 'none'; }
-    wrap.style.maxHeight = '400px'; wrap.style.opacity = '1';
-    el('flash-flip-btn').textContent = '↩ Ẩn đáp án';
-    el('flash-tap-hint').style.display = 'none';
-    flashFlipped = true;
-  } else {
-    wrap.style.maxHeight = '0'; wrap.style.opacity = '0';
-    el('flash-flip-btn').textContent = '↩ Lật thẻ';
-    el('flash-tap-hint').style.display = '';
-    flashFlipped = false;
-  }
+  flashFlipped = !flashFlipped;
+  el('flash-card-inner').classList.toggle('flipped', flashFlipped);
 }
 
-function nextFlash() { flashIdx = (flashIdx + 1) % queue.length; renderFlash(); }
+function nextFlash() {
+  flashIdx = (flashIdx + 1) % queue.length;
+  renderFlash();
+}
 function prevFlash() { flashIdx = (flashIdx - 1 + queue.length) % queue.length; renderFlash(); }
 
 /* ══════ LIGHTBOX ══════ */
