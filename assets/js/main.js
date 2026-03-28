@@ -1,308 +1,299 @@
-/* ─── State ─── */
+/* ══════ STATE ══════ */
 let allQuestions = [];
 let queue        = [];
 let current      = 0;
 let attempts     = 0;
 let score        = 0;
 let currentMode  = null;
+let flashIdx     = 0;
+let flashFlipped = false;
+let browseFilter = '';
 
 const EXAM_COUNT = 20;
 const MAX_WRONG  = 2;
 
-/* ─── Init ─── */
+/* ══════ INIT ══════ */
 async function init() {
   try {
     const res = await fetch('./assets/data/questions.json');
     if (!res.ok) throw new Error('Không tìm thấy data/questions.json');
     allQuestions = await res.json();
-    show('mode-screen');
-    hide('loading-msg');
+    show('home-screen'); hide('loading-msg');
   } catch (e) {
-    document.getElementById('loading-msg').textContent = '⚠ ' + e.message;
+    el('loading-msg').textContent = '⚠ ' + e.message;
   }
 }
 
-/* ─── Mode ─── */
+/* ══════ NAVIGATION ══════ */
+function backToMenu() {
+  ['quiz-screen','done-screen','browse-screen','flash-screen'].forEach(hide);
+  el('done-screen').classList.remove('visible');
+  el('mode-pill').style.display  = 'none';
+  el('progress-wrap').style.display = 'none';
+  el('back-btn').classList.remove('visible');
+  show('home-screen');
+}
+
+function showHeader(modeKey, showProgress) {
+  const pill = el('mode-pill');
+  const labels = { study:'Ôn tập', exam:'Thi thử', flash:'Flash card', browse:'Xem danh sách' };
+  pill.textContent = labels[modeKey] || '';
+  pill.className   = 'mode-pill ' + modeKey;
+  pill.style.display = 'inline-block';
+  el('progress-wrap').style.display = showProgress ? 'flex' : 'none';
+  el('back-btn').classList.add('visible');
+}
+
+/* ══════ QUIZ MODE ══════ */
 function startMode(mode) {
   currentMode = mode;
-  queue   = mode === 'study' ? [...allQuestions] : shuffle(allQuestions).slice(0, EXAM_COUNT);
-  current = 0;
-  score   = 0;
-  attempts = 0;
 
-  const pill = el('mode-pill');
-  pill.textContent = mode === 'study' ? 'Ôn tập' : 'Thi thử';
-  pill.className = 'mode-pill ' + mode;
-  pill.style.display = 'inline-block';
-  el('progress-wrap').style.display = 'flex';
+  if (mode === 'flash') { startFlash(); return; }
 
-  hide('mode-screen');
+  queue    = mode === 'study' ? [...allQuestions] : shuffle(allQuestions).slice(0, EXAM_COUNT);
+  current  = 0; score = 0; attempts = 0;
+
+  hide('home-screen');
   el('done-screen').classList.remove('visible');
   el('done-screen').style.display = 'none';
   show('quiz-screen');
+  showHeader(mode, true);
   showQuestion();
 }
 
-function backToMenu() {
-  hide('quiz-screen');
-  el('done-screen').classList.remove('visible');
-  el('done-screen').style.display = 'none';
-  el('mode-pill').style.display = 'none';
-  el('progress-wrap').style.display = 'none';
-  show('mode-screen');
-}
-
-/* ─── Quiz ─── */
 function showQuestion() {
-  const q     = queue[current];
-  const total = queue.length;
-  attempts    = 0;
-
-  el('progress-text').textContent = `${current + 1} / ${total}`;
-  el('progress-bar').style.width  = `${(current / total) * 100}%`;
-
+  const q = queue[current], total = queue.length;
+  attempts = 0;
+  el('progress-text').textContent = `${current+1} / ${total}`;
+  el('progress-bar').style.width  = `${(current/total)*100}%`;
   el('category-badge').textContent = q.category || 'Câu hỏi';
   el('question-text').textContent  = q.question  || 'Đây là ký sinh trùng nào?';
-  el('question-image').src         = q.image     || 'images/placeholder.svg';
-
-  el('dot-1').className = 'dot';
-  el('dot-2').className = 'dot';
-
-  const hint = el('hint-text');
-  hint.textContent = '';
-  hint.classList.remove('visible');
-
-  const input = el('answer-input');
-  input.value     = '';
-  input.className = 'answer-input';
-  input.disabled  = false;
-  setTimeout(() => input.focus(), 80);
-
+  el('question-image').src         = q.image     || '';
+  el('dot-1').className = el('dot-2').className = 'dot';
+  const hint = el('hint-text'); hint.textContent = ''; hint.classList.remove('visible');
+  const inp  = el('answer-input'); inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
+  setTimeout(() => inp.focus(), 80);
   el('submit-btn').disabled = false;
-
-  const panel = el('feedback-panel');
-  panel.className = 'feedback-panel';
-  el('correct-answer-line').style.display = 'none';
-  el('explanation-text').style.display    = 'none';
-
+  el('feedback-panel').className = 'feedback-panel';
+  el('correct-answer-line').style.display = el('explanation-text').style.display = 'none';
   el('next-btn').classList.remove('visible');
-
-  const qs = el('quiz-screen');
-  qs.classList.remove('fade-up');
-  void qs.offsetWidth;
-  qs.classList.add('fade-up');
+  const qs = el('quiz-screen'); qs.classList.remove('fade-up'); void qs.offsetWidth; qs.classList.add('fade-up');
 }
 
 function checkAnswer() {
-  const q   = queue[current];
-  const inp = el('answer-input');
+  const q = queue[current], inp = el('answer-input');
   if (!inp.value.trim()) { inp.focus(); return; }
-
-  if (norm(inp.value) === norm(q.answer)) {
-    handleCorrect(q);
-  } else {
-    attempts++;
-    handleWrong(q);
-  }
+  norm(inp.value) === norm(q.answer) ? handleCorrect(q) : (attempts++, handleWrong(q));
 }
 
 function handleCorrect(q) {
-  const inp = el('answer-input');
-  inp.classList.add('st-correct');
-  inp.disabled = true;
+  const inp = el('answer-input'); inp.classList.add('st-correct'); inp.disabled = true;
   el('submit-btn').disabled = true;
-
   if (currentMode === 'exam') score++;
-
-  const dotIdx = Math.min(attempts + 1, 2);
-  el(`dot-${dotIdx}`).className = 'dot correct';
-
-  const panel = el('feedback-panel');
-  panel.className = 'feedback-panel fp-correct visible';
+  el(`dot-${Math.min(attempts+1,2)}`).className = 'dot correct';
+  el('feedback-panel').className = 'feedback-panel fp-correct visible';
   el('feedback-icon').textContent  = '✓';
   el('feedback-label').textContent = 'Chính xác!';
-  el('correct-answer-line').style.display = 'none';
-  el('explanation-text').style.display    = 'none';
-
+  el('correct-answer-line').style.display = el('explanation-text').style.display = 'none';
   setTimeout(() => el('next-btn').classList.add('visible'), 350);
 }
 
 function handleWrong(q) {
   const inp = el('answer-input');
-
-  const dotEl = el(`dot-${Math.min(attempts, 2)}`);
-  if (dotEl) dotEl.className = 'dot wrong';
-
-  inp.classList.add('st-wrong', 'shake');
-  setTimeout(() => inp.classList.remove('shake', 'st-wrong'), 420);
-
-  if (attempts === 1 && q.hint) {
-    const h = el('hint-text');
-    h.textContent = '💡 ' + q.hint;
-    h.classList.add('visible');
-  }
-
+  const dotEl = el(`dot-${Math.min(attempts,2)}`); if (dotEl) dotEl.className = 'dot wrong';
+  inp.classList.add('st-wrong','shake');
+  setTimeout(() => inp.classList.remove('shake','st-wrong'), 420);
+  if (attempts === 1 && q.hint) { const h = el('hint-text'); h.textContent = '💡 ' + q.hint; h.classList.add('visible'); }
   if (attempts >= MAX_WRONG) {
-    inp.disabled = true;
-    el('submit-btn').disabled = true;
-
-    const panel = el('feedback-panel');
-    panel.className = 'feedback-panel fp-wrong visible';
+    inp.disabled = true; el('submit-btn').disabled = true;
+    el('feedback-panel').className = 'feedback-panel fp-wrong visible';
     el('feedback-icon').textContent  = '✗';
     el('feedback-label').textContent = 'Đáp án đúng là:';
-
-    const al = el('correct-answer-line');
-    al.innerHTML = `<strong>${q.answer}</strong>`;
-    al.style.display = 'block';
-
-    if (q.explanation) {
-      const ex = el('explanation-text');
-      ex.textContent  = q.explanation;
-      ex.style.display = 'block';
-    }
-
+    const al = el('correct-answer-line'); al.innerHTML = `<strong>${q.answer}</strong>`; al.style.display = 'block';
+    if (q.explanation) { const ex = el('explanation-text'); ex.textContent = q.explanation; ex.style.display = 'block'; }
     setTimeout(() => el('next-btn').classList.add('visible'), 350);
-  } else {
-    inp.value = '';
-    inp.focus();
-  }
+  } else { inp.value = ''; inp.focus(); }
 }
 
 function nextQuestion() {
   current++;
-  if (current >= queue.length) showDone();
-  else showQuestion();
+  current >= queue.length ? showDone() : showQuestion();
 }
 
-/* ─── Done ─── */
 function showDone() {
   hide('quiz-screen');
   el('progress-bar').style.width  = '100%';
   el('progress-text').textContent = `${queue.length} / ${queue.length}`;
-
-  const done = el('done-screen');
-  done.style.display = '';
-  done.classList.add('visible');
-
+  const done = el('done-screen'); done.style.display = ''; done.classList.add('visible');
   if (currentMode === 'study') {
     el('done-eyebrow').textContent = 'Ôn tập hoàn thành';
-    show('done-study');
-    hide('done-exam');
+    show('done-study'); hide('done-exam');
   } else {
     el('done-eyebrow').textContent = 'Kết quả thi thử';
-    hide('done-study');
-    show('done-exam');
-
-    const pct = Math.round((score / queue.length) * 100);
+    hide('done-study'); show('done-exam');
+    const pct = Math.round((score/queue.length)*100);
     el('exam-pct').textContent      = pct + '%';
     el('exam-fraction').textContent = `${score} / ${queue.length} câu đúng`;
-
     const bar = el('exam-bar');
-    bar.className = 'exam-bar ' + (pct >= 80 ? 'good' : pct >= 50 ? 'ok' : 'bad');
-    el('exam-pct').style.color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
-    setTimeout(() => bar.style.width = pct + '%', 80);
-
-    let msg = '';
-    if      (pct === 100) msg = 'Hoàn hảo! Bạn đúng tất cả 20 câu.';
-    else if (pct >= 80)   msg = `Rất tốt! Còn <strong>${queue.length - score}</strong> câu cần xem lại.`;
-    else if (pct >= 50)   msg = `Đạt yêu cầu. Nên ôn lại <strong>${queue.length - score}</strong> câu sai nhé.`;
-    else                  msg = `Cần cố gắng thêm. Vào <em>Ôn tập</em> để xem lại toàn bộ nhé.`;
+    bar.className = 'exam-bar ' + (pct>=80?'good':pct>=50?'ok':'bad');
+    el('exam-pct').style.color = pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+    setTimeout(() => bar.style.width = pct+'%', 80);
+    let msg = pct===100 ? 'Hoàn hảo! Bạn đúng tất cả.' :
+              pct>=80   ? `Rất tốt! Còn <strong>${queue.length-score}</strong> câu cần xem lại.` :
+              pct>=50   ? `Đạt yêu cầu. Nên ôn lại <strong>${queue.length-score}</strong> câu sai.` :
+                          `Cần cố gắng thêm. Vào <em>Ôn tập</em> để xem lại nhé.`;
     el('exam-summary').innerHTML = msg;
   }
 }
 
-/* ─── Lightbox ─── */
-function initLightbox() {
-  // Inject CSS
-  const style = document.createElement('style');
-  style.textContent = `
-    #lightbox-overlay {
-      position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,0.92);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s ease;
-      cursor: zoom-out;
-    }
-    #lightbox-overlay.open {
-      opacity: 1; pointer-events: all;
-    }
-    #lightbox-img {
-      max-width: 92vw; max-height: 88vh;
-      object-fit: contain;
-      border-radius: 8px;
-      transform: scale(0.92);
-      transition: transform 0.25s ease;
-      cursor: default;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.7);
-    }
-    #lightbox-overlay.open #lightbox-img {
-      transform: scale(1);
-    }
-    #lightbox-close {
-      position: fixed; top: 20px; right: 24px;
-      font-family: monospace; font-size: 14px; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 6px; padding: 6px 12px;
-      cursor: pointer; z-index: 10000;
-      transition: color 0.15s, background 0.15s;
-    }
-    #lightbox-close:hover { color: #fff; background: rgba(255,255,255,0.15); }
-    #question-image { cursor: zoom-in; }
-    .image-wrap:hover #question-image { opacity: 0.9; }
-  `;
-  document.head.appendChild(style);
-
-  // Inject HTML
-  const overlay = document.createElement('div');
-  overlay.id = 'lightbox-overlay';
-  overlay.innerHTML = `
-    <button id="lightbox-close" onclick="closeLightbox()">ESC · Đóng</button>
-    <img id="lightbox-img" src="" alt="Phóng to">
-  `;
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeLightbox();
-  });
-  document.body.appendChild(overlay);
-
-  // Wire up image click
-  document.getElementById('question-image').addEventListener('click', () => {
-    openLightbox(document.getElementById('question-image').src);
-  });
+/* ══════ BROWSE MODE ══════ */
+function startBrowse() {
+  browseFilter = '';
+  hide('home-screen');
+  show('browse-screen');
+  showHeader('browse', false);
+  el('browse-search').value = '';
+  buildBrowseCats();
+  renderBrowse();
 }
 
+function buildBrowseCats() {
+  const cats = ['', ...new Set(allQuestions.map(q => q.category).filter(Boolean))].sort((a,b) => a ? a.localeCompare(b) : -1);
+  el('browse-cats').innerHTML = cats.map(c =>
+    `<button class="bcat-chip${c===browseFilter?' active':''}" onclick="setBrowseFilter('${c}')">${c||'Tất cả'}</button>`
+  ).join('');
+}
+
+function setBrowseFilter(cat) {
+  browseFilter = cat;
+  document.querySelectorAll('.bcat-chip').forEach(b => b.classList.toggle('active', b.textContent === (cat||'Tất cả')));
+  renderBrowse();
+}
+
+function renderBrowse() {
+  const term = (el('browse-search').value || '').trim().toLowerCase();
+  const filtered = allQuestions.filter((q,i) => {
+    if (browseFilter && q.category !== browseFilter) return false;
+    if (!term) return true;
+    return (q.answer||'').toLowerCase().includes(term) || (q.category||'').toLowerCase().includes(term);
+  });
+  el('browse-count').textContent = term || browseFilter
+    ? `${filtered.length} / ${allQuestions.length} loài`
+    : `${allQuestions.length} loài`;
+
+  if (!filtered.length) {
+    el('browse-grid').innerHTML = `<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)">Không tìm thấy kết quả</div>`;
+    return;
+  }
+
+  el('browse-grid').innerHTML = filtered.map((q, i) => {
+    const idx = allQuestions.indexOf(q) + 1;
+    const hl  = s => term ? s.replace(new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>') : s;
+    return `
+    <div class="browse-item" onclick="openDetail('${q.id}')">
+      <span class="bi-num">${String(idx).padStart(2,'0')}</span>
+      <div class="bi-thumb"><img src="${q.image||''}" alt="" onerror="this.style.display='none'"></div>
+      <div class="bi-info">
+        <div class="bi-name">${hl(q.answer||'')}</div>
+        <div class="bi-cat">${hl(q.category||'—')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openDetail(id) {
+  const q = allQuestions.find(x => x.id === id); if (!q) return;
+  el('detail-img').src         = q.image || '';
+  el('detail-cat').textContent  = q.category || '';
+  el('detail-name').textContent = q.answer || '';
+  el('detail-hint').textContent = q.hint ? '💡 ' + q.hint : '';
+  const exp = el('detail-explain');
+  if (q.explanation) { exp.textContent = q.explanation; exp.classList.remove('empty'); }
+  else               { exp.textContent = 'Chưa có mô tả.'; exp.classList.add('empty'); }
+  el('detail-modal').classList.add('open');
+}
+
+function closeDetail(e) {
+  if (e.target === el('detail-modal')) el('detail-modal').classList.remove('open');
+}
+
+/* ══════ FLASH CARD MODE ══════ */
+function startFlash() {
+  queue     = shuffle([...allQuestions]);
+  flashIdx  = 0; flashFlipped = false;
+  hide('home-screen');
+  show('flash-screen');
+  showHeader('flash', false);
+  renderFlash();
+}
+
+function renderFlash() {
+  const q = queue[flashIdx];
+  el('flash-badge').textContent    = q.category || 'Flash card';
+  el('flash-progress').textContent = `${flashIdx+1} / ${queue.length}`;
+  el('flash-image').src            = q.image || '';
+
+  // Hide answer
+  flashFlipped = false;
+  const wrap = el('flash-answer-wrap');
+  wrap.style.maxHeight = '0'; wrap.style.opacity = '0';
+  el('flash-flip-btn').textContent = '↩ Lật thẻ';
+  el('flash-tap-hint').style.display = '';
+}
+
+function flipFlash() {
+  const q = queue[flashIdx];
+  const wrap = el('flash-answer-wrap');
+  if (!flashFlipped) {
+    el('flash-answer-name').textContent = q.answer || '';
+    el('flash-answer-hint').textContent = q.hint   || '';
+    const exp = el('flash-answer-exp');
+    if (q.explanation) { exp.textContent = q.explanation; exp.style.display = 'block'; }
+    else { exp.style.display = 'none'; }
+    wrap.style.maxHeight = '400px'; wrap.style.opacity = '1';
+    el('flash-flip-btn').textContent = '↩ Ẩn đáp án';
+    el('flash-tap-hint').style.display = 'none';
+    flashFlipped = true;
+  } else {
+    wrap.style.maxHeight = '0'; wrap.style.opacity = '0';
+    el('flash-flip-btn').textContent = '↩ Lật thẻ';
+    el('flash-tap-hint').style.display = '';
+    flashFlipped = false;
+  }
+}
+
+function nextFlash() { flashIdx = (flashIdx + 1) % queue.length; renderFlash(); }
+function prevFlash() { flashIdx = (flashIdx - 1 + queue.length) % queue.length; renderFlash(); }
+
+/* ══════ LIGHTBOX ══════ */
 function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox-overlay').classList.add('open');
+  el('lightbox-img').src = src;
+  el('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLightbox() {
-  document.getElementById('lightbox-overlay').classList.remove('open');
+  el('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-/* ─── Helpers ─── */
+/* ══════ HELPERS ══════ */
 const el   = id => document.getElementById(id);
 const show = id => { el(id).style.display = ''; };
 const hide = id => { el(id).style.display = 'none'; };
-
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function norm(s) { return s.trim().replace(/\s+/g,' '); }
 
-function norm(s) {
-  // Chỉ trim và chuẩn hoá khoảng trắng thừa.
-  // Giữ nguyên HOA/thường và dấu câu (., sp., v.v.)
-  return s.trim().replace(/\s+/g, ' ');
-}
-
-/* ─── Keyboard ─── */
+/* ══════ KEYBOARD ══════ */
 document.addEventListener('DOMContentLoaded', () => {
-  initLightbox();
-
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'Escape') {
+      closeLightbox();
+      el('detail-modal').classList.remove('open');
+      return;
+    }
+    if (e.key === 'ArrowRight' && el('flash-screen').style.display !== 'none') { nextFlash(); return; }
+    if (e.key === 'ArrowLeft'  && el('flash-screen').style.display !== 'none') { prevFlash(); return; }
+    if (e.key === ' '          && el('flash-screen').style.display !== 'none') { e.preventDefault(); flipFlash(); return; }
     if (e.key !== 'Enter') return;
     const nb = el('next-btn');
     if (nb && nb.classList.contains('visible')) nextQuestion();
