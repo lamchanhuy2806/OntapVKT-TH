@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vi Ký Sinh Trùng</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vi Ký Sinh Trùng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
 
-<!-- ─── HEADER ─── -->
+<!-- ═══════════════════════════════════
+     HEADER
+═══════════════════════════════════ -->
 <header>
   <div class="logo">Vi Ký Sinh Trùng <span>/ Học</span></div>
   <div class="header-right">
@@ -25,51 +27,52 @@
   </div>
 </header>
 
-<!-- ─── CARD ─── -->
+<!-- ═══════════════════════════════════
+     CARD
+═══════════════════════════════════ -->
 <div class="card">
 
-  <!-- LOADING -->
+  <!-- Loading -->
   <div class="loading" id="loading-msg">Đang tải câu hỏi...</div>
 
-  <!-- ① HOME -->
+  <!-- ① HOME SCREEN -->
   <div id="home-screen" style="display:none">
     <p class="home-eyebrow">Vi Ký Sinh Trùng</p>
     <h1 class="home-title">Bạn muốn làm gì hôm nay?</h1>
     <p class="home-sub">48 ký sinh trùng cần nhớ</p>
-    <div class="home-cards">
 
+    <div class="home-cards">
       <div class="hc study" onclick="startMode('study')">
         <div class="hc-icon">📖</div>
         <div class="hc-name">Ôn tập</div>
-        <div class="hc-desc">Lần lượt 48 câu theo thứ tự. Không tính điểm, có gợi ý và giải thích.</div>
+        <div class="hc-desc">Lần lượt 48 câu theo thứ tự. Không tính điểm — có gợi ý và giải thích.</div>
         <div class="hc-tag">48 câu · theo thứ tự</div>
       </div>
 
       <div class="hc exam" onclick="startMode('exam')">
         <div class="hc-icon">📝</div>
         <div class="hc-name">Thi thử</div>
-        <div class="hc-desc">Random 20 câu. Tính điểm và hiện kết quả cuối bài.</div>
+        <div class="hc-desc">Random 20 câu trong 48. Tính điểm và hiện kết quả cuối bài.</div>
         <div class="hc-tag">20 câu · random · có điểm</div>
       </div>
 
-      <div class="hc browse" onclick="startBrowse()">
+      <div class="hc browse" onclick="startMode('browse')">
         <div class="hc-icon">🔬</div>
         <div class="hc-name">Xem danh sách</div>
-        <div class="hc-desc">Duyệt toàn bộ ký sinh trùng, xem hình và đọc mô tả chi tiết từng loài.</div>
+        <div class="hc-desc">Duyệt toàn bộ 48 loài, xem hình và đọc mô tả chi tiết từng loài.</div>
         <div class="hc-tag">48 loài · có tìm kiếm</div>
       </div>
 
       <div class="hc flash" onclick="startMode('flash')">
         <div class="hc-icon">⚡</div>
         <div class="hc-name">Flash card</div>
-        <div class="hc-desc">Xem hình → nhớ tên. Lật thẻ để kiểm tra. Không cần gõ, lướt nhanh.</div>
-        <div class="hc-tag">48 thẻ · lật xem đáp án</div>
+        <div class="hc-desc">Xem hình rồi nhấn lật thẻ để xem tên. Lướt nhanh, không cần gõ.</div>
+        <div class="hc-tag">48 thẻ · lật 3D</div>
       </div>
-
     </div>
   </div>
 
-  <!-- ② QUIZ -->
+  <!-- ② QUIZ SCREEN -->
   <div id="quiz-screen" style="display:none">
     <div class="card-top">
       <span class="badge" id="category-badge">—</span>
@@ -78,21 +81,28 @@
         <div class="dot" id="dot-2"></div>
       </div>
     </div>
+
     <div class="question-text" id="question-text">—</div>
+
     <div class="image-wrap">
       <img id="question-image" src="" alt="" onclick="openLightbox(this.src)">
       <div class="img-overlay"></div>
     </div>
+
     <div class="hint-text" id="hint-text"></div>
+
     <div class="input-area">
       <div class="input-label">Đáp án của bạn</div>
       <div class="input-row">
-        <input type="text" id="answer-input" class="answer-input"
+        <input
+          type="text" id="answer-input" class="answer-input"
           placeholder="Nhập tên ký sinh trùng..."
-          autocomplete="off" autocorrect="off" spellcheck="false">
+          autocomplete="off" autocorrect="off" spellcheck="false"
+        >
         <button class="submit-btn" id="submit-btn" onclick="checkAnswer()">Kiểm tra</button>
       </div>
     </div>
+
     <div class="feedback-panel" id="feedback-panel">
       <div class="feedback-header">
         <span class="feedback-icon" id="feedback-icon"></span>
@@ -101,37 +111,45 @@
       <div class="correct-answer-line" id="correct-answer-line"></div>
       <div class="explanation-text"   id="explanation-text"></div>
     </div>
+
     <button class="next-btn" id="next-btn" onclick="nextQuestion()">Câu tiếp theo →</button>
   </div>
 
-  <!-- ③ DONE -->
+  <!-- ③ DONE SCREEN -->
   <div id="done-screen">
     <p class="done-eyebrow" id="done-eyebrow"></p>
+
     <div id="done-study" style="display:none">
       <div class="study-done-icon">🎉</div>
       <div class="study-done-title">Hoàn thành 48 câu!</div>
       <div class="study-done-sub">Bạn đã xem qua tất cả ký sinh trùng.</div>
     </div>
+
     <div id="done-exam" style="display:none">
       <div class="exam-pct" id="exam-pct">0%</div>
       <div class="exam-fraction" id="exam-fraction">0 / 20 câu đúng</div>
-      <div class="exam-bar-wrap"><div class="exam-bar" id="exam-bar"></div></div>
+      <div class="exam-bar-wrap">
+        <div class="exam-bar" id="exam-bar"></div>
+      </div>
       <div class="exam-summary" id="exam-summary"></div>
     </div>
+
     <div class="done-actions">
       <button class="done-btn done-btn-primary" onclick="startMode(currentMode)">Làm lại</button>
       <button class="done-btn done-btn-outline" onclick="backToMenu()">← Về trang chủ</button>
     </div>
   </div>
 
-  <!-- ④ BROWSE -->
+  <!-- ④ BROWSE SCREEN -->
   <div id="browse-screen" style="display:none">
     <div class="browse-toolbar">
       <div class="browse-search-wrap">
         <span class="browse-search-icon">🔍</span>
-        <input type="text" class="browse-search" id="browse-search"
+        <input
+          type="text" class="browse-search" id="browse-search"
           placeholder="Tìm tên ký sinh trùng, danh mục..."
-          autocomplete="off" oninput="renderBrowse()">
+          autocomplete="off" oninput="renderBrowse()"
+        >
       </div>
       <div class="browse-cats" id="browse-cats"></div>
     </div>
@@ -139,49 +157,58 @@
     <div class="browse-grid" id="browse-grid"></div>
   </div>
 
-  <!-- ⑤ FLASH CARD -->
+  <!-- ⑤ FLASH CARD SCREEN -->
   <div id="flash-screen" style="display:none">
-    <div class="card-top">
+
+    <div class="flash-header">
       <span class="badge" id="flash-badge">—</span>
-      <span style="font-family:var(--mono);font-size:12px;color:var(--muted2)" id="flash-progress">1 / 48</span>
+      <span class="flash-counter" id="flash-counter">1 / 48</span>
     </div>
 
-    <div class="image-wrap" style="margin:16px 24px;cursor:pointer" onclick="flipFlash()" id="flash-img-wrap">
-      <img id="flash-image" src="" alt="" style="max-height:300px">
-      <div class="img-overlay"></div>
-      <div id="flash-tap-hint" style="position:absolute;bottom:12px;right:14px;font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.35);pointer-events:none">nhấn để lật ↩</div>
-    </div>
+    <!-- Thẻ lật 3D -->
+    <div class="flash-scene" onclick="flipFlash()">
+      <div class="flash-card-inner" id="flash-card-inner">
 
-    <!-- Answer reveal -->
-    <div id="flash-answer-wrap" style="margin:0 24px 8px;border-radius:10px;overflow:hidden;max-height:0;opacity:0;transition:max-height 0.4s ease,opacity 0.3s">
-      <div style="background:rgba(167,139,250,0.07);border:1px solid rgba(167,139,250,0.2);padding:16px 20px">
-        <div style="font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple);margin-bottom:6px">Đáp án</div>
-        <div id="flash-answer-name" style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px"></div>
-        <div id="flash-answer-hint" style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--amber)"></div>
-        <div id="flash-answer-exp"  style="font-family:var(--serif);font-size:13px;color:var(--muted2);line-height:1.65;margin-top:10px;border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;display:none"></div>
+        <!-- Mặt trước: hình ảnh -->
+        <div class="flash-face flash-front">
+          <img id="flash-image" src="" alt="">
+          <div class="flash-front-hint">nhấn để lật ↩</div>
+        </div>
+
+        <!-- Mặt sau: đáp án -->
+        <div class="flash-face flash-back">
+          <div class="flash-back-cat"     id="flash-back-cat"></div>
+          <div class="flash-back-name"    id="flash-back-name"></div>
+          <div class="flash-back-hint"    id="flash-back-hint"></div>
+          <div class="flash-back-divider" id="flash-back-divider"></div>
+          <div class="flash-back-exp"     id="flash-back-exp"></div>
+        </div>
+
       </div>
     </div>
 
-    <div style="padding:12px 24px 24px;display:flex;gap:10px">
-      <button onclick="prevFlash()" style="flex:1;padding:11px;background:transparent;border:1px solid var(--bord2);border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--muted2);cursor:pointer;transition:border-color 0.2s,color 0.2s" onmouseover="this.style.borderColor='var(--acc2)';this.style.color='var(--acc2)'" onmouseout="this.style.borderColor='var(--bord2)';this.style.color='var(--muted2)'">← Trước</button>
-      <button onclick="flipFlash()" id="flash-flip-btn" style="flex:1;padding:11px;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.3);border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--purple);cursor:pointer">↩ Lật thẻ</button>
-      <button onclick="nextFlash()" style="flex:1;padding:11px;background:transparent;border:1px solid var(--bord2);border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;color:var(--muted2);cursor:pointer;transition:border-color 0.2s,color 0.2s" onmouseover="this.style.borderColor='var(--acc2)';this.style.color='var(--acc2)'" onmouseout="this.style.borderColor='var(--bord2)';this.style.color='var(--muted2)'">Tiếp →</button>
+    <!-- Điều hướng -->
+    <div class="flash-nav">
+      <button class="flash-nav-btn" onclick="prevFlash(); event.stopPropagation()">← Trước</button>
+      <button class="flash-nav-btn flip-btn" onclick="flipFlash(); event.stopPropagation()">↩ Lật thẻ</button>
+      <button class="flash-nav-btn" onclick="nextFlash(); event.stopPropagation()">Tiếp →</button>
     </div>
+
   </div>
 
 </div><!-- /card -->
 
-<!-- Detail modal (browse) -->
-<div id="detail-modal" onclick="closeDetail(event)">
+<!-- Detail Modal (browse) -->
+<div id="detail-modal" onclick="if(event.target===this) closeDetailModal()">
   <div class="detail-box">
     <img class="detail-img" id="detail-img" src="" alt="" onclick="openLightbox(this.src)">
     <div class="detail-body">
-      <div class="detail-cat"  id="detail-cat"></div>
-      <div class="detail-name" id="detail-name"></div>
-      <div class="detail-hint" id="detail-hint"></div>
+      <div class="detail-cat"     id="detail-cat"></div>
+      <div class="detail-name"    id="detail-name"></div>
+      <div class="detail-hint"    id="detail-hint"></div>
       <div class="detail-divider"></div>
       <div class="detail-explain" id="detail-explain"></div>
-      <button class="detail-close" onclick="document.getElementById('detail-modal').classList.remove('open')">Đóng ✕</button>
+      <button class="detail-close" onclick="closeDetailModal()">Đóng ✕</button>
     </div>
   </div>
 </div>
