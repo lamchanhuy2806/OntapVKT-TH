@@ -431,7 +431,7 @@ header {
 
 .flash-scene {
   margin: 16px 24px;
-  height: 340px;
+  height: min(460px, 58vw);
   perspective: 1200px;
   cursor: pointer;
 }
@@ -461,6 +461,7 @@ header {
 }
 .flash-front img {
   width: 100%; height: 100%; object-fit: contain; display: block;
+  padding: 12px;
 }
 .flash-front-hint {
   position: absolute; bottom: 12px; right: 14px;
