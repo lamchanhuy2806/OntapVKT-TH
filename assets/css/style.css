@@ -569,74 +569,8 @@ header {
 }
 
 /* ═══════════════════════════════════
-   QUIZ ACTIONS — retry / retype
+   NEXT BTN & INPUT-LABEL transition
 ═══════════════════════════════════ */
-.quiz-actions {
-  padding: 0 24px 24px;
-  display: flex; flex-direction: column; gap: 8px;
-}
+.input-label { transition: color 0.3s; }
 
-/* Nút "Câu tiếp theo" (dùng chung) */
-.next-btn {
-  display: none;
-  width: 100%; padding: 13px;
-  background: transparent; border: 1px solid var(--accent); border-radius: 8px;
-  color: var(--acc2); font-family: var(--mono); font-size: 13px; font-weight: 700;
-  letter-spacing: 0.06em; cursor: pointer; transition: background 0.2s; text-align: center;
-}
-.next-btn:hover  { background: rgba(59,130,246,0.1); }
-.next-btn.visible { display: block; }
-
-/* 2 nút lựa chọn sau sai lần 2 (study) */
-.retry-actions {
-  display: flex; gap: 10px;
-}
-.retry-btn, .skip-btn {
-  flex: 1; padding: 12px;
-  border-radius: 8px; border: 1px solid;
-  font-family: var(--mono); font-size: 12px; font-weight: 700;
-  letter-spacing: 0.04em; cursor: pointer; transition: background 0.2s, color 0.2s;
-}
-.retry-btn {
-  background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.35); color: var(--purple);
-}
-.retry-btn:hover { background: rgba(167,139,250,0.2); }
-.skip-btn {
-  background: transparent; border-color: var(--bord2); color: var(--muted2);
-}
-.skip-btn:hover { border-color: var(--acc2); color: var(--acc2); }
-
-/* Ô điền lại */
-.retype-area {
-  display: flex; flex-direction: column; gap: 8px;
-  background: rgba(167,139,250,0.05); border: 1px solid rgba(167,139,250,0.15);
-  border-radius: 10px; padding: 14px 16px;
-}
-.retype-label {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.07em;
-  text-transform: uppercase; color: var(--purple);
-}
-.retype-row { display: flex; gap: 8px; }
-.retype-input {
-  flex: 1;
-  background: var(--surf2); border: 1px solid var(--bord2); border-radius: 8px;
-  padding: 10px 14px; font-family: var(--mono); font-size: 14px; color: var(--text);
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.retype-input:focus   { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(167,139,250,0.15); }
-.retype-input.ok      { border-color: var(--green);  box-shadow: 0 0 0 3px rgba(34,197,94,0.15); color: var(--green); }
-.retype-input.fail    { border-color: var(--red);    box-shadow: 0 0 0 3px rgba(239,68,68,0.15); }
-
-.retype-check-btn {
-  padding: 10px 18px; white-space: nowrap;
-  background: var(--purple); color: #fff; border: none; border-radius: 8px;
-  font-family: var(--mono); font-size: 12px; font-weight: 700;
-  cursor: pointer; transition: background 0.2s;
-}
-.retype-check-btn:hover { background: #8b5cf6; }
-
-.retype-feedback {
-  font-family: var(--mono); font-size: 12px; min-height: 18px;
-}
-.retype-feedback.ok   { color: var(--green); }
-.retype-feedback.fail { color: var(--red); }
+.submit-btn { transition: background 0.25s, transform 0.1s; }

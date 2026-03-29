@@ -92,7 +92,7 @@
     <div class="hint-text" id="hint-text"></div>
 
     <div class="input-area">
-      <div class="input-label">Đáp án của bạn</div>
+      <div class="input-label" id="input-label">Đáp án của bạn</div>
       <div class="input-row">
         <input
           type="text" id="answer-input" class="answer-input"
@@ -112,32 +112,8 @@
       <div class="explanation-text"   id="explanation-text"></div>
     </div>
 
-    <!-- Action buttons sau khi trả lời -->
-    <div class="quiz-actions" id="quiz-actions">
-
-      <!-- Đúng hoặc exam sai → chỉ "Câu tiếp theo" -->
-      <button class="next-btn" id="next-btn" onclick="nextQuestion()">Câu tiếp theo →</button>
-
-      <!-- Study sai quá lần → 2 lựa chọn -->
-      <div class="retry-actions" id="retry-actions" style="display:none">
-        <button class="retry-btn" id="retry-btn" onclick="retypeAnswer()">✏ Điền lại để ghi nhớ</button>
-        <button class="skip-btn"  id="skip-btn"  onclick="nextQuestion()">Bỏ qua →</button>
-      </div>
-
-      <!-- Ô điền lại -->
-      <div class="retype-area" id="retype-area" style="display:none">
-        <div class="retype-label">Hãy điền lại đúng đáp án để ghi nhớ</div>
-        <div class="retype-row">
-          <input type="text" id="retype-input" class="retype-input"
-            placeholder="Điền lại đáp án..."
-            autocomplete="off" autocorrect="off" spellcheck="false">
-          <button class="retype-check-btn" onclick="checkRetype()">Kiểm tra</button>
-        </div>
-        <div class="retype-feedback" id="retype-feedback"></div>
-        <button class="next-btn" id="retype-next-btn" onclick="nextQuestion()" style="display:none;margin-top:8px">Câu tiếp theo →</button>
-      </div>
-
-    </div>
+    <!-- Nút hành động -->
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Câu tiếp theo →</button>
   </div>
 
   <!-- ③ DONE SCREEN -->

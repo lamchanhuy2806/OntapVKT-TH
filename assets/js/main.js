@@ -10,6 +10,7 @@ let currentMode  = null;   // 'study' | 'exam' | 'flash' | 'browse'
 let flashIdx     = 0;
 let flashFlipped = false;
 let browseFilter = '';
+let retryMode    = false;  // true = đang ở chế độ điền lại ghi nhớ
 
 const EXAM_COUNT        = 20;
 const STUDY_MAX_WRONG   = 2;   // Ôn tập: sai 2 lần thì hiện đáp án
@@ -136,13 +137,13 @@ function showQuestion() {
   el('explanation-text').style.display    = 'none';
 
   // Reset action buttons
+  retryMode = false;
   el('next-btn').classList.remove('visible');
-  el('retry-actions').style.display  = 'none';
-  el('retype-area').style.display    = 'none';
-  el('retype-input').value           = '';
-  el('retype-input').className       = 'retype-input';
-  el('retype-feedback').textContent  = '';
-  el('retype-next-btn').style.display = 'none';
+  // Reset input label & submit button về trạng thái gốc
+  el('input-label').textContent     = 'Đáp án của bạn';
+  el('input-label').style.color     = '';
+  el('submit-btn').textContent      = 'Kiểm tra';
+  el('submit-btn').style.background = '';
 
   var qs = el('quiz-screen');
   qs.classList.remove('fade-up');
@@ -155,6 +156,8 @@ function maxWrong() {
 }
 
 function checkAnswer() {
+  if (retryMode) { checkRetype(); return; }
+
   const q   = queue[current];
   const inp = el('answer-input');
   if (!inp.value.trim()) { inp.focus(); return; }
@@ -243,53 +246,55 @@ function handleWrong(q) {
 /* Hiện nút hành động sau khi sai hết lượt */
 function showPostWrongActions(q) {
   if (currentMode === 'exam') {
-    // Exam: chỉ nút "Câu tiếp theo"
+    // Exam: chỉ "Câu tiếp theo" luôn
     el('next-btn').classList.add('visible');
-    el('retry-actions').style.display = 'none';
-    el('retype-area').style.display   = 'none';
   } else {
-    // Study: 2 lựa chọn — điền lại hoặc bỏ qua
-    el('next-btn').classList.remove('visible');
-    el('retype-area').style.display   = 'none';
-    el('retry-actions').style.display = 'flex';
+    // Study: mở lại ô input để điền lại ghi nhớ
+    retryMode = true;
+    var inp = el('answer-input');
+    inp.value     = '';
+    inp.className = 'answer-input';
+    inp.disabled  = false;
+
+    // Đổi label thành gợi ý tím
+    el('input-label').textContent  = '✏ Điền lại đáp án để ghi nhớ (hoặc nhấn →)';
+    el('input-label').style.color  = 'var(--purple)';
+
+    // Đổi nút submit thành "Ghi nhớ"
+    el('submit-btn').textContent      = 'Ghi nhớ ✓';
+    el('submit-btn').style.background = 'var(--purple)';
+    el('submit-btn').disabled         = false;
+
+    // Hiện nút bỏ qua (next-btn dùng làm skip)
+    el('next-btn').classList.add('visible');
+    el('next-btn').textContent = 'Bỏ qua →';
+
+    setTimeout(function() { inp.focus(); }, 80);
   }
 }
 
-/* Người dùng chọn "Điền lại để ghi nhớ" */
-function retypeAnswer() {
-  el('retry-actions').style.display = 'none';
-  var area = el('retype-area');
-  area.style.display = 'flex';
-  var inp = el('retype-input');
-  inp.value     = '';
-  inp.className = 'retype-input';
-  el('retype-feedback').textContent = '';
-  el('retype-feedback').className   = 'retype-feedback';
-  el('retype-next-btn').style.display = 'none';
-  setTimeout(function() { inp.focus(); }, 60);
-}
-
-/* Kiểm tra đáp án điền lại */
+/* Kiểm tra đáp án điền lại (dùng lại ô input gốc) */
 function checkRetype() {
   var q   = queue[current];
-  var inp = el('retype-input');
-  var fb  = el('retype-feedback');
-
+  var inp = el('answer-input');
   if (!inp.value.trim()) { inp.focus(); return; }
 
   if (norm(inp.value) === norm(q.answer)) {
-    inp.className = 'retype-input ok';
-    fb.textContent = '✓ Chính xác! Bạn đã nhớ rồi.';
-    fb.className   = 'retype-feedback ok';
-    inp.disabled   = true;
-    el('retype-next-btn').style.display = 'block';
+    // Đúng → xanh + khoá + đổi next-btn
+    inp.className = 'answer-input st-correct';
+    inp.disabled  = true;
+    el('submit-btn').disabled    = true;
+    el('next-btn').textContent   = 'Câu tiếp theo →';
+    el('next-btn').classList.add('visible');
+    retryMode = false;
   } else {
-    inp.classList.add('fail', 'shake');
-    setTimeout(function() { inp.classList.remove('shake'); }, 420);
-    fb.textContent = '✗ Chưa đúng — thử lại nhé.';
-    fb.className   = 'retype-feedback fail';
-    inp.value = '';
-    setTimeout(function() { inp.focus(); }, 60);
+    // Sai → shake, xoá, thử lại
+    inp.classList.add('st-wrong', 'shake');
+    setTimeout(function() {
+      inp.classList.remove('shake', 'st-wrong');
+      inp.value = '';
+      inp.focus();
+    }, 420);
   }
 }
 
@@ -532,15 +537,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Quiz shortcuts
     if (e.key !== 'Enter') return;
 
-    // Nếu đang ở ô retype
-    if (el('retype-area') && el('retype-area').style.display !== 'none') {
-      var rn = el('retype-next-btn');
-      if (rn && rn.style.display !== 'none') nextQuestion();
-      else checkRetype();
-      return;
-    }
-
     var nb = el('next-btn');
+    // Nếu next-btn visible mà đang retryMode thì Enter = checkRetype (không skip)
+    if (retryMode) { checkAnswer(); return; }
     if (nb && nb.classList.contains('visible')) nextQuestion();
     else checkAnswer();
   });
