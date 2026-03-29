@@ -11,6 +11,7 @@ let flashIdx     = 0;
 let flashFlipped = false;
 let browseFilter = '';
 let retryMode    = false;  // true = đang ở chế độ điền lại ghi nhớ
+let answered     = false;  // guard tránh double-trigger checkAnswer
 let examTimer    = null;   // setInterval ID
 let examSeconds  = 0;      // số giây còn lại
 
@@ -147,6 +148,7 @@ function showQuestion() {
 
   // Reset action buttons
   retryMode = false;
+  answered  = false;
   el('next-btn').classList.remove('visible');
   // Reset input label & submit button về trạng thái gốc
   el('input-label').textContent     = 'Đáp án của bạn';
@@ -166,14 +168,18 @@ function maxWrong() {
 
 function checkAnswer() {
   if (retryMode) { checkRetype(); return; }
+  if (answered)  return;  // chặn double-trigger
 
   const q   = queue[current];
   const inp = el('answer-input');
   if (!inp.value.trim()) { inp.focus(); return; }
 
+  answered = true;  // lock ngay lập tức
+
   if (norm(inp.value) === norm(q.answer)) {
     handleCorrect(q);
   } else {
+    answered = false;  // sai thì mở lại để thử tiếp
     attempts++;
     handleWrong(q);
   }
@@ -594,9 +600,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Quiz shortcuts
     if (e.key !== 'Enter') return;
+    e.preventDefault(); // ngăn browser tự click button, tránh double-trigger
 
     var nb = el('next-btn');
-    // Nếu next-btn visible mà đang retryMode thì Enter = checkRetype (không skip)
     if (retryMode) { checkAnswer(); return; }
     if (nb && nb.classList.contains('visible')) nextQuestion();
     else checkAnswer();
