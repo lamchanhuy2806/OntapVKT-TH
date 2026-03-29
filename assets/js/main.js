@@ -11,8 +11,11 @@ let flashIdx     = 0;
 let flashFlipped = false;
 let browseFilter = '';
 let retryMode    = false;  // true = đang ở chế độ điền lại ghi nhớ
+let examTimer    = null;   // setInterval ID
+let examSeconds  = 0;      // số giây còn lại
 
 const EXAM_COUNT        = 20;
+const EXAM_DURATION_SEC = 20 * 60;  // 20 phút
 const STUDY_MAX_WRONG   = 2;   // Ôn tập: sai 2 lần thì hiện đáp án
 const EXAM_MAX_WRONG    = 1;   // Thi thử: sai 1 lần là qua luôn
 
@@ -66,6 +69,7 @@ async function init() {
    NAVIGATION
 ═══════════════════════════════════ */
 function backToMenu() {
+  stopExamTimer();
   ['quiz-screen', 'done-screen', 'browse-screen', 'flash-screen'].forEach(hide);
   el('done-screen').classList.remove('visible');
   el('mode-pill').style.display      = 'none';
@@ -103,6 +107,11 @@ function startMode(mode) {
   el('done-screen').style.display = 'none';
   show('quiz-screen');
   showHeader(mode, true);
+
+  // Khởi động timer nếu thi thử
+  stopExamTimer();
+  if (mode === 'exam') startExamTimer();
+
   showQuestion();
 }
 
@@ -308,6 +317,7 @@ function nextQuestion() {
    DONE SCREEN
 ═══════════════════════════════════ */
 function showDone() {
+  stopExamTimer();
   hide('quiz-screen');
   el('progress-bar').style.width  = '100%';
   el('progress-text').textContent = queue.length + ' / ' + queue.length;
@@ -321,7 +331,7 @@ function showDone() {
     show('done-study');
     hide('done-exam');
   } else {
-    el('done-eyebrow').textContent = 'Kết quả thi thử';
+    el('done-eyebrow').textContent = examSeconds <= 0 ? 'Hết giờ — Kết quả thi thử' : 'Kết quả thi thử';
     hide('done-study');
     show('done-exam');
 
@@ -341,6 +351,54 @@ function showDone() {
     else                  msg = 'Cần cố gắng thêm. Vào <em>Ôn tập</em> để xem lại nhé.';
     el('exam-summary').innerHTML = msg;
   }
+}
+
+/* ═══════════════════════════════════
+   EXAM TIMER
+═══════════════════════════════════ */
+function startExamTimer() {
+  examSeconds = EXAM_DURATION_SEC;
+  updateTimerDisplay();
+  el('exam-timer').style.display = 'flex';
+  el('exam-timer').className = 'exam-timer';
+
+  examTimer = setInterval(function() {
+    examSeconds--;
+    updateTimerDisplay();
+
+    // Cảnh báo vàng khi còn 5 phút
+    if (examSeconds === 5 * 60) {
+      el('exam-timer').className = 'exam-timer warning';
+    }
+    // Cảnh báo đỏ khi còn 1 phút
+    if (examSeconds === 60) {
+      el('exam-timer').className = 'exam-timer danger';
+    }
+    // Hết giờ → tính điểm luôn
+    if (examSeconds <= 0) {
+      stopExamTimer();
+      showDone();
+    }
+  }, 1000);
+}
+
+function stopExamTimer() {
+  if (examTimer) {
+    clearInterval(examTimer);
+    examTimer = null;
+  }
+  el('exam-timer').style.display = 'none';
+  el('exam-timer').className = 'exam-timer';
+}
+
+function updateTimerDisplay() {
+  var m = Math.floor(examSeconds / 60);
+  var s = examSeconds % 60;
+  el('timer-text').textContent = pad2(m) + ':' + pad2(s);
+}
+
+function pad2(n) {
+  return n < 10 ? '0' + n : String(n);
 }
 
 /* ═══════════════════════════════════

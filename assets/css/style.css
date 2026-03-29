@@ -574,3 +574,34 @@ header {
 .input-label { transition: color 0.3s; }
 
 .submit-btn { transition: background 0.25s, transform 0.1s; }
+
+/* ═══════════════════════════════════
+   EXAM TIMER
+═══════════════════════════════════ */
+.exam-timer {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+  color: var(--muted2);
+  background: var(--surf2);
+  border: 1px solid var(--bord2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  transition: color 0.4s, border-color 0.4s, background 0.4s;
+}
+.exam-timer.warning {
+  color: var(--amber);
+  border-color: rgba(245,158,11,0.4);
+  background: rgba(245,158,11,0.08);
+}
+.exam-timer.danger {
+  color: var(--red);
+  border-color: rgba(239,68,68,0.4);
+  background: rgba(239,68,68,0.08);
+  animation: timerPulse 1s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+.timer-icon { font-size: 12px; }
+.timer-text { letter-spacing: 0.04em; }
