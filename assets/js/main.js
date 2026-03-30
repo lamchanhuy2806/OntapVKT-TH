@@ -185,6 +185,40 @@ function checkAnswer() {
   }
 }
 
+/* ═══════════════════════════════════
+   SOUND
+═══════════════════════════════════ */
+var audioCtx = null;
+
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playCorrectSound() {
+  try {
+    var ctx = getAudioCtx();
+    // 2 nốt lên: C5 → E5, nghe như "ding-ding" nhẹ
+    var notes = [523.25, 659.25];
+    notes.forEach(function(freq, i) {
+      var osc  = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.type      = 'sine';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+
+      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
+      gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + i * 0.12 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
+
+      osc.start(ctx.currentTime + i * 0.12);
+      osc.stop(ctx.currentTime + i * 0.12 + 0.25);
+    });
+  } catch (e) {}
+}
+
 function handleCorrect(q) {
   const inp = el('answer-input');
   inp.classList.add('st-correct');
@@ -192,6 +226,8 @@ function handleCorrect(q) {
   el('submit-btn').disabled = true;
 
   if (currentMode === 'exam') score++;
+
+  playCorrectSound();
 
   var dotIdx = Math.min(attempts + 1, 2);
   el('dot-' + dotIdx).className = 'dot correct';
