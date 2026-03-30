@@ -263,5 +263,32 @@
     "answer": "Đốt sán Taenia solium",
     "hint": "Sán dải heo bắt đầu bằng chữ T",
     "explanation": "Trứng có màu nâu sẫm"
+  },
+  {
+    "id": "q030",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/anopheles-female.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Anopheles cái",
+    "hint": "Truyền sốt rét, palps dài bằng vòi",
+    "explanation": "Muỗi Anopheles cái là vector truyền ký sinh trùng sốt rét (Plasmodium). Đặc điểm nhận dạng là palps (râu hàm) dài bằng vòi, khi đậu thân tạo góc khoảng 45° so với bề mặt. Chỉ muỗi cái hút máu để phát triển trứng, do đó có vai trò truyền bệnh."
+  },
+  {
+    "id": "q031",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/anopheles-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Anopheles đực",
+    "hint": "Râu nhiều lông, không hút máu",
+    "explanation": "Muỗi Anopheles đực không hút máu mà chỉ hút dịch thực vật. Đặc điểm nổi bật là râu rất nhiều lông (plumose antennae), giúp phân biệt với muỗi cái. Chúng không tham gia truyền bệnh."
+  },
+  {
+    "id": "q032",
+    "category": "Sán lá",
+    "image": "./assets/images/dot-san-dai-taenia-solium.jpg",
+    "question": "Đây là gì?",
+    "answer": "Đốt sán Taenia solium",
+    "hint": "Sán dải heo bắt đầu bằng chữ T",
+    "explanation": "Trứng có màu nâu sẫm"
   }
 ]
