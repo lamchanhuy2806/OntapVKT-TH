@@ -317,5 +317,41 @@
     "answer": "Muỗi Culex đực",
     "hint": "Râu nhiều lông, không hút máu",
     "explanation": "Muỗi Culex đực không hút máu và không truyền bệnh. Đặc điểm nhận dạng là râu nhiều lông (plumose antennae), giúp phân biệt với muỗi cái. Chúng chủ yếu ăn dịch thực vật."
+  },
+  {
+    "id": "q036",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/larva-anopheles.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ấu trùng Anopheles",
+    "hint": "Nằm song song mặt nước, không có ống thở",
+    "explanation": "Ấu trùng Anopheles sống trong nước và có đặc điểm nằm song song với mặt nước do không có ống thở (siphon). Đây là dấu hiệu quan trọng để phân biệt với các loài muỗi khác. Chúng là giai đoạn phát triển của muỗi truyền bệnh sốt rét."
+  },
+  {
+    "id": "q037",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/larva-aedes.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ấu trùng Aedes",
+    "hint": "Treo nghiêng, có ống thở ngắn",
+    "explanation": "Ấu trùng Aedes có ống thở (siphon) ngắn nên thường treo chếch so với mặt nước. Đây là đặc điểm giúp phân biệt với ấu trùng Anopheles. Chúng phát triển thành muỗi Aedes – vector truyền sốt xuất huyết."
+  },
+  {
+    "id": "q038",
+    "category": "Ký sinh trùng (Đơn bào)",
+    "image": "./assets/images/plasmodium-falciparum.jpg",
+    "question": "Đây là gì?",
+    "answer": "Plasmodium falciparum",
+    "hint": "Thể nhẫn nhỏ, nhiều trong 1 hồng cầu, gây sốt rét ác tính",
+    "explanation": "Plasmodium falciparum là loài ký sinh trùng gây sốt rét ác tính nguy hiểm nhất. Đặc điểm vi thể là thể nhẫn nhỏ, có thể thấy nhiều ký sinh trùng trong một hồng cầu. Thường không thấy các giai đoạn trưởng thành trong máu ngoại vi. Có thể gây biến chứng nặng như sốt rét não."
+  },
+  {
+    "id": "q039",
+    "category": "Ký sinh trùng (Đơn bào)",
+    "image": "./assets/images/plasmodium-vivax.jpg",
+    "question": "Đây là gì?",
+    "answer": "Plasmodium vivax",
+    "hint": "Hồng cầu to, có hạt Schüffner",
+    "explanation": "Plasmodium vivax là ký sinh trùng gây sốt rét thể lành. Đặc điểm là ký sinh trong hồng cầu non làm hồng cầu to lên, xuất hiện các hạt Schüffner. Có thể thấy nhiều giai đoạn phát triển trong máu ngoại vi. Loài này có thể gây tái phát do tồn tại dạng ngủ ở gan."
   }
 ]
