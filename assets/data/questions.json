@@ -284,11 +284,38 @@
   },
   {
     "id": "q032",
-    "category": "Sán lá",
-    "image": "./assets/images/dot-san-dai-taenia-solium.jpg",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/aedes-female.jpg",
     "question": "Đây là gì?",
-    "answer": "Đốt sán Taenia solium",
-    "hint": "Sán dải heo bắt đầu bằng chữ T",
-    "explanation": "Trứng có màu nâu sẫm"
+    "answer": "Muỗi Aedes cái",
+    "hint": "Muỗi vằn, truyền sốt xuất huyết",
+    "explanation": "Muỗi Aedes cái là vector truyền virus Dengue, Zika và Chikungunya. Đặc điểm nhận dạng là thân và chân có vằn trắng đen rõ rệt. Chúng hoạt động ban ngày và hút máu người để phát triển trứng."
+  },
+  {
+    "id": "q033",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/aedes-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Aedes đực",
+    "hint": "Râu nhiều lông, không truyền bệnh",
+    "explanation": "Muỗi Aedes đực không hút máu mà chỉ hút dịch thực vật. Giống các muỗi đực khác, chúng có râu nhiều lông giúp phân biệt với muỗi cái. Không có vai trò truyền bệnh."
+  },
+  {
+    "id": "q034",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/culex-female.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Culex cái",
+    "hint": "Đậu song song mặt phẳng, truyền viêm não Nhật Bản",
+    "explanation": "Muỗi Culex cái là vector truyền virus viêm não Nhật Bản và một số bệnh khác. Đặc điểm là khi đậu, thân song song với bề mặt (khác Anopheles). Chúng hoạt động chủ yếu vào ban đêm và hút máu để sinh sản."
+  },
+  {
+    "id": "q035",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/culex-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Culex đực",
+    "hint": "Râu nhiều lông, không hút máu",
+    "explanation": "Muỗi Culex đực không hút máu và không truyền bệnh. Đặc điểm nhận dạng là râu nhiều lông (plumose antennae), giúp phân biệt với muỗi cái. Chúng chủ yếu ăn dịch thực vật."
   }
 ]

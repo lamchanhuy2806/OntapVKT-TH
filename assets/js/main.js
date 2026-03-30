@@ -130,6 +130,8 @@ function showQuestion() {
 
   el('dot-1').className = 'dot';
   el('dot-2').className = 'dot';
+  // Exam chỉ 1 lần → ẩn chấm thứ 2
+  el('dot-2').style.display = currentMode === 'exam' ? 'none' : '';
 
   const hint = el('hint-text');
   hint.textContent = '';
@@ -198,23 +200,26 @@ function getAudioCtx() {
 function playCorrectSound() {
   try {
     var ctx = getAudioCtx();
-    // 2 nốt lên: C5 → E5, nghe như "ding-ding" nhẹ
-    var notes = [523.25, 659.25];
-    notes.forEach(function(freq, i) {
+    // Azota-style: 2 nốt cao nhanh E6 → G6, attack cực ngắn, decay mượt
+    var notes = [
+      { freq: 1318.5, t: 0.00 },   // E6
+      { freq: 1567.0, t: 0.11 },   // G6
+    ];
+    notes.forEach(function(n) {
       var osc  = ctx.createOscillator();
       var gain = ctx.createGain();
       osc.connect(gain);
       gain.connect(ctx.destination);
 
-      osc.type      = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.12);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(n.freq, ctx.currentTime + n.t);
 
-      gain.gain.setValueAtTime(0, ctx.currentTime + i * 0.12);
-      gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + i * 0.12 + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.25);
+      gain.gain.setValueAtTime(0.0,  ctx.currentTime + n.t);
+      gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + n.t + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + n.t + 0.18);
 
-      osc.start(ctx.currentTime + i * 0.12);
-      osc.stop(ctx.currentTime + i * 0.12 + 0.25);
+      osc.start(ctx.currentTime + n.t);
+      osc.stop(ctx.currentTime  + n.t + 0.20);
     });
   } catch (e) {}
 }
