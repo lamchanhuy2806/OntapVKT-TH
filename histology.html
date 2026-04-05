@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mô học thực hành</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./assets/css/histology.css">
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Mô học thực hành</h1>
+  <span>Tiêu bản kính hiển vi</span>
+</header>
+
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">Tất cả</button>
+</div>
+
+<div class="count-line" id="count-line"></div>
+
+<div class="slides-wrap" id="slides-wrap"></div>
+<div class="empty-state" id="empty-state">Không có tiêu bản nào trong danh mục này.</div>
+
+
+<script src="./assets/js/histology.js"></script>
+</body>
+</html>

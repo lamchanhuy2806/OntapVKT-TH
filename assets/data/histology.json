@@ -1,0 +1,47 @@
+[
+    {
+        "id": "h001",
+        "category": "Biểu mô",
+        "organ": "Thận",
+        "structure": "Biểu mô lát đơn",
+        "image": null,
+        "magnification": null,
+        "annotations": [
+            {
+                "number": 1,
+                "label": "Biểu mô lát đơn"
+            },
+            {
+                "number": 2,
+                "label": "Lá ngoài bao Bowman"
+            },
+            {
+                "number": 3,
+                "label": "Tế bào lát, vuông và trụ"
+            }
+        ],
+        "explanation": "Thận chứa nhiều loại biểu mô khác nhau tùy vị trí. Lá ngoài bao Bowman được lót bởi biểu mô lát đơn — tế bào dẹt, nhân hơi lồi. Đây là ví dụ điển hình để nhận diện biểu mô lát đơn, phân biệt với biểu mô vuông đơn (ống góp) và biểu mô trụ đơn (ống lượn gần)."
+    },
+    {
+        "id": "h002",
+        "category": "Biểu mô",
+        "organ": "Dạ dày",
+        "structure": "Biểu mô",
+        "image": "./assets/images/khi-quan-x40.jpg",
+        "annotations": [
+            {
+                "number": 1,
+                "label": "biểu mô trụ đơn tiết nhầy"
+            },
+            {
+                "number": 2,
+                "label": "tuyến đáy vị"
+            },
+            {
+                "number": 3,
+                "label": "tế bào trụ tiết nhầy"
+            }
+        ],
+        "explanation": "Biểu mô lót lòng khí quản là biểu mô trụ giả tầng có lông chuyển. Nhìn tổng thể có vẻ nhiều tầng nhưng thực ra tất cả tế bào đều bám màng đáy. Gồm 3 loại tế bào chính: tế bào trụ có lông chuyển (chiếm đa số), tế bào đài tiết nhầy, và tế bào đáy. Lông chuyển phối hợp đẩy chất nhầy và dị vật ra ngoài."
+    }
+]
