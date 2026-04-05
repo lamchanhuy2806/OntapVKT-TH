@@ -323,7 +323,7 @@
     "category": "Côn trùng y học",
     "image": "./assets/images/larva-anopheles.jpg",
     "question": "Đây là gì?",
-    "answer": "Ấu trùng Anopheles",
+    "answer": "Ấu trùng Anopheles cái",
     "hint": "Nằm song song mặt nước, không có ống thở",
     "explanation": "Ấu trùng Anopheles sống trong nước và có đặc điểm nằm song song với mặt nước do không có ống thở (siphon). Đây là dấu hiệu quan trọng để phân biệt với các loài muỗi khác. Chúng là giai đoạn phát triển của muỗi truyền bệnh sốt rét."
   },
@@ -332,7 +332,7 @@
     "category": "Côn trùng y học",
     "image": "./assets/images/larva-aedes.jpg",
     "question": "Đây là gì?",
-    "answer": "Ấu trùng Aedes",
+    "answer": "Ấu trùng Aedes cái",
     "hint": "Treo nghiêng, có ống thở ngắn",
     "explanation": "Ấu trùng Aedes có ống thở (siphon) ngắn nên thường treo chếch so với mặt nước. Đây là đặc điểm giúp phân biệt với ấu trùng Anopheles. Chúng phát triển thành muỗi Aedes – vector truyền sốt xuất huyết."
   },
