@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Literata:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/gallery.css">
 </head>
 <body>
 
@@ -73,6 +74,13 @@
         <div class="hc-name">Flash card</div>
         <div class="hc-desc">Xem hình rồi nhấn lật thẻ để xem tên. Lướt nhanh, không cần gõ.</div>
         <div class="hc-tag">39 thẻ · lật 3D</div>
+      </div>
+
+      <div class="hc gallery" onclick="startMode('gallery')" style="grid-column: 1 / -1">
+        <div class="hc-icon">🖼</div>
+        <div class="hc-name">Kho ảnh</div>
+        <div class="hc-desc">Xem tất cả ảnh của từng loài. Mỗi loài có thể có nhiều ảnh — click để phóng to.</div>
+        <div class="hc-tag">Nhiều ảnh / loài · phóng to</div>
       </div>
     </div>
   </div>
@@ -202,6 +210,22 @@
 
   </div>
 
+
+  <!-- ⑥ GALLERY SCREEN -->
+  <div id="gallery-screen" style="display:none">
+    <div class="browse-toolbar">
+      <div class="browse-search-wrap">
+        <span class="browse-search-icon">🔍</span>
+        <input type="text" class="browse-search" id="gallery-search"
+          placeholder="Tìm tên loài, danh mục..."
+          autocomplete="off" oninput="renderGallery()">
+      </div>
+      <div class="browse-cats" id="gallery-cats"></div>
+    </div>
+    <div class="browse-count" id="gallery-count"></div>
+    <div class="gallery-photo-grid" id="gallery-photo-grid"></div>
+  </div>
+
 </div><!-- /card -->
 
 <!-- Detail Modal (browse) -->
@@ -223,8 +247,10 @@
 <div id="lightbox" onclick="closeLightbox()">
   <button id="lightbox-close" onclick="closeLightbox()">ESC · Đóng</button>
   <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-tips" hidden></div>
 </div>
 
 <script src="./assets/js/main.js"></script>
+<script src="./assets/js/gallery.js"></script>
 </body>
 </html>
