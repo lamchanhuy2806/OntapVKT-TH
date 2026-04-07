@@ -71,7 +71,7 @@ async function init() {
 ═══════════════════════════════════ */
 function backToMenu() {
   stopExamTimer();
-  ['quiz-screen', 'done-screen', 'browse-screen', 'flash-screen'].forEach(hide);
+  ['quiz-screen', 'done-screen', 'browse-screen', 'flash-screen', 'gallery-screen'].forEach(hide);
   el('done-screen').classList.remove('visible');
   el('mode-pill').style.display      = 'none';
   el('progress-wrap').style.display  = 'none';
@@ -80,7 +80,7 @@ function backToMenu() {
 }
 
 function showHeader(modeKey, showProgress) {
-  const labels = { study: 'Ôn tập', exam: 'Thi thử', flash: 'Flash card', browse: 'Xem danh sách' };
+  const labels = { study: 'Ôn tập', exam: 'Thi thử', flash: 'Flash card', browse: 'Xem danh sách', gallery: 'Thư viện ảnh' };
   const pill = el('mode-pill');
   pill.textContent    = labels[modeKey] || '';
   pill.className      = 'mode-pill ' + modeKey;
@@ -95,8 +95,9 @@ function showHeader(modeKey, showProgress) {
 function startMode(mode) {
   currentMode = mode;
 
-  if (mode === 'flash')  { startFlash();  return; }
-  if (mode === 'browse') { startBrowse(); return; }
+  if (mode === 'flash')   { startFlash();   return; }
+  if (mode === 'browse')  { startBrowse();  return; }
+  if (mode === 'gallery') { startGallery(); return; }
 
   queue    = mode === 'study' ? [...allQuestions] : shuffle(allQuestions).slice(0, EXAM_COUNT);
   current  = 0;
@@ -604,6 +605,213 @@ function prevFlash() {
   renderFlash();
 }
 
+
+/* ═══════════════════════════════════
+   GALLERY MODE
+═══════════════════════════════════ */
+var galleryFilter  = '';
+var gmCurrentQ     = null;   // question đang xem trong modal
+var gmCurrentIdx   = 0;      // index ảnh đang xem
+
+function startGallery() {
+  galleryFilter = '';
+  hide('home-screen');
+  show('gallery-screen');
+  showHeader('gallery', false);
+  el('gallery-search').value = '';
+  buildGalleryCats();
+  renderGallery();
+}
+
+function buildGalleryCats() {
+  var cats = Array.from(new Set(allQuestions.map(function(q) {
+    return q.category;
+  }).filter(Boolean))).sort();
+
+  var row = el('gallery-cats');
+  row.innerHTML = '<button class="bcat-chip active" data-cat="">Tất cả</button>';
+  cats.forEach(function(cat) {
+    var btn = document.createElement('button');
+    btn.className   = 'bcat-chip';
+    btn.dataset.cat = cat;
+    btn.textContent = cat;
+    row.appendChild(btn);
+  });
+  row.querySelectorAll('.bcat-chip').forEach(function(btn) {
+    btn.addEventListener('click', function() { setGalleryFilter(btn.dataset.cat); });
+  });
+}
+
+function setGalleryFilter(cat) {
+  galleryFilter = cat;
+  el('gallery-cats').querySelectorAll('.bcat-chip').forEach(function(b) {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderGallery();
+}
+
+function renderGallery() {
+  var term = (el('gallery-search').value || '').trim().toLowerCase();
+
+  var filtered = allQuestions.filter(function(q) {
+    if (galleryFilter && q.category !== galleryFilter) return false;
+    if (!term) return true;
+    return (q.answer   || '').toLowerCase().includes(term)
+        || (q.category || '').toLowerCase().includes(term);
+  });
+
+  el('gallery-count').textContent = (term || galleryFilter)
+    ? filtered.length + ' / ' + allQuestions.length + ' loài'
+    : allQuestions.length + ' loài';
+
+  if (!filtered.length) {
+    el('gallery-grid').innerHTML = '<div style="grid-column:1/-1;padding:40px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted)">Không tìm thấy kết quả</div>';
+    return;
+  }
+
+    // Dùng createElement để tránh vấn đề escape quote trong HTML string
+  var grid = el('gallery-grid');
+  grid.innerHTML = '';
+  filtered.forEach(function(q) {
+    var images = getImages(q);
+    var thumb  = images.length > 0 ? images[0].src : (q.image || '');
+    var count  = images.length;
+
+    var item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.dataset.qid = q.id;
+
+    var img = document.createElement('img');
+    img.src     = thumb;
+    img.alt     = '';
+    img.loading = 'lazy';
+    img.onerror = function() { this.style.display = 'none'; };
+    item.appendChild(img);
+
+    if (count > 1) {
+      var badge = document.createElement('div');
+      badge.className   = 'gallery-item-badge';
+      badge.textContent = '🖼 ' + count;
+      item.appendChild(badge);
+    }
+
+    var overlay = document.createElement('div');
+    overlay.className = 'gallery-item-overlay';
+    var nameEl = document.createElement('div');
+    nameEl.className   = 'gallery-item-name';
+    nameEl.textContent = q.answer || '';
+    var catEl = document.createElement('div');
+    catEl.className   = 'gallery-item-cat';
+    catEl.textContent = q.category || '';
+    overlay.appendChild(nameEl);
+    overlay.appendChild(catEl);
+    item.appendChild(overlay);
+
+    item.addEventListener('click', function() { openGalleryModal(q.id); });
+    grid.appendChild(item);
+  });
+}
+
+/* Lấy danh sách ảnh của 1 question — hỗ trợ cả field images[] lẫn field image */
+function getImages(q) {
+  if (q.images && q.images.length > 0) return q.images;
+  if (q.image) return [{ src: q.image, caption: '' }];
+  return [];
+}
+
+/* Mở modal slideshow */
+function openGalleryModal(id) {
+  var q = allQuestions.find(function(x) { return x.id === id; });
+  if (!q) return;
+  gmCurrentQ   = q;
+  gmCurrentIdx = 0;
+
+  // Thông tin
+  el('gm-cat').textContent  = q.category || '';
+  el('gm-name').textContent = q.answer   || '';
+
+  // Hint + giải thích
+  el('gm-hint').textContent = q.hint ? '💡 ' + q.hint : '';
+  var exp = el('gm-explain');
+  if (q.explanation) {
+    exp.textContent = q.explanation;
+    exp.classList.remove('empty');
+  } else {
+    exp.textContent = 'Chưa có mô tả.';
+    exp.classList.add('empty');
+  }
+
+  // Thumbnails
+  renderGmThumbs(q);
+
+  // Ảnh đầu tiên
+  renderGmSlide(0);
+
+  el('gallery-modal').classList.add('open');
+}
+
+function renderGmThumbs(q) {
+  var images = getImages(q);
+  if (images.length <= 1) {
+    el('gm-thumbs').innerHTML = '';
+    el('gm-thumbs').style.display = 'none';
+    return;
+  }
+  el('gm-thumbs').style.display = 'flex';
+  var thumbsWrap = el('gm-thumbs');
+  thumbsWrap.innerHTML = '';
+  images.forEach(function(img, i) {
+    var thumb = document.createElement('div');
+    thumb.className    = 'gm-thumb' + (i === 0 ? ' active' : '');
+    thumb.dataset.idx  = i;
+    var tImg = document.createElement('img');
+    tImg.src     = img.src || '';
+    tImg.alt     = '';
+    tImg.loading = 'lazy';
+    tImg.onerror = function() { this.style.display = 'none'; };
+    thumb.appendChild(tImg);
+    thumb.addEventListener('click', function() { renderGmSlide(i); });
+    thumbsWrap.appendChild(thumb);
+  });
+}
+
+function renderGmSlide(idx) {
+  var images = getImages(gmCurrentQ);
+  if (!images.length) return;
+
+  // Clamp
+  idx = Math.max(0, Math.min(idx, images.length - 1));
+  gmCurrentIdx = idx;
+
+  var img = images[idx];
+  el('gm-img').src = img.src || '';
+  el('gm-caption').textContent = img.caption || '';
+  el('gm-counter').textContent = (idx + 1) + ' / ' + images.length;
+
+  // Ẩn/hiện mũi tên
+  el('gm-prev').classList.toggle('hidden', idx === 0);
+  el('gm-next').classList.toggle('hidden', idx === images.length - 1);
+
+  // Active thumbnail
+  var thumbs = el('gm-thumbs').querySelectorAll('.gm-thumb');
+  thumbs.forEach(function(t, i) { t.classList.toggle('active', i === idx); });
+
+  // Scroll thumbnail vào view
+  if (thumbs[idx]) {
+    thumbs[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+}
+
+function slideGallery(dir) {
+  renderGmSlide(gmCurrentIdx + dir);
+}
+
+function closeGalleryModal() {
+  el('gallery-modal').classList.remove('open');
+  gmCurrentQ   = null;
+  gmCurrentIdx = 0;
+}
+
 /* ═══════════════════════════════════
    LIGHTBOX
 ═══════════════════════════════════ */
@@ -628,6 +836,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape') {
       closeLightbox();
       closeDetailModal();
+      closeGalleryModal();
+      return;
+    }
+
+    // Gallery modal keyboard: ← → để chuyển ảnh
+    if (el('gallery-modal').classList.contains('open')) {
+      if (e.key === 'ArrowRight') { slideGallery(1);  return; }
+      if (e.key === 'ArrowLeft')  { slideGallery(-1); return; }
       return;
     }
 
