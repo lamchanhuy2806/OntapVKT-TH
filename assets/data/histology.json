@@ -1,47 +1,121 @@
 [
     {
-        "id": "h001",
-        "category": "Biểu mô",
-        "organ": "Thận",
-        "structure": "Biểu mô lát đơn",
-        "image": null,
-        "magnification": null,
-        "annotations": [
+      "category": "Biểu mô",
+      "organs": [
+        {
+          "organ": "Thận",
+          "slides": [
             {
-                "number": 1,
-                "label": "Biểu mô lát đơn"
+              "id": "h001",
+              "structure": "Biểu mô lát đơn",
+              "image": null,
+              "magnification": "×10",
+              "annotations": [
+                { "number": 1, "label": "Biểu mô lát đơn" },
+                { "number": 2, "label": "Lá ngoài bao Bowman" },
+                { "number": 3, "label": "Tế bào lát, vuông và trụ" }
+              ],
+              "explanation": "Thận chứa nhiều loại biểu mô khác nhau tùy vị trí. Lá ngoài bao Bowman được lót bởi biểu mô lát đơn — tế bào dẹt, nhân hơi lồi. Đây là ví dụ điển hình để nhận diện biểu mô lát đơn, phân biệt với biểu mô vuông đơn (ống góp) và biểu mô trụ đơn (ống lượn gần)."
             },
             {
-                "number": 2,
-                "label": "Lá ngoài bao Bowman"
-            },
-            {
-                "number": 3,
-                "label": "Tế bào lát, vuông và trụ"
+              "id": "h002",
+              "structure": "Biểu mô vuông đơn — Ống góp",
+              "image": null,
+              "magnification": "×40",
+              "annotations": [
+                { "number": 1, "label": "Ống góp" },
+                { "number": 2, "label": "Tế bào biểu mô vuông đơn" },
+                { "number": 3, "label": "Màng đáy" }
+              ],
+              "explanation": "Ống góp được lót bởi biểu mô vuông đơn. Tế bào có hình vuông, nhân tròn nằm giữa tế bào, bào tương sáng. Chức năng tái hấp thu nước và điều hòa cân bằng acid-base dưới tác dụng của ADH và aldosterone."
             }
-        ],
-        "explanation": "Thận chứa nhiều loại biểu mô khác nhau tùy vị trí. Lá ngoài bao Bowman được lót bởi biểu mô lát đơn — tế bào dẹt, nhân hơi lồi. Đây là ví dụ điển hình để nhận diện biểu mô lát đơn, phân biệt với biểu mô vuông đơn (ống góp) và biểu mô trụ đơn (ống lượn gần)."
+          ]
+        },
+        {
+          "organ": "Khí quản",
+          "slides": [
+            {
+              "id": "h003",
+              "structure": "Biểu mô trụ giả tầng có lông chuyển",
+              "image": null,
+              "magnification": "×40",
+              "annotations": [
+                { "number": 1, "label": "Biểu mô trụ giả tầng có lông chuyển" },
+                { "number": 2, "label": "Tế bào đài" },
+                { "number": 3, "label": "Tế bào trụ có lông chuyển" }
+              ],
+              "explanation": "Biểu mô lót lòng khí quản là biểu mô trụ giả tầng có lông chuyển. Tất cả tế bào đều bám màng đáy dù nhìn có vẻ nhiều tầng. Gồm tế bào trụ có lông chuyển (đa số), tế bào đài tiết nhầy và tế bào đáy."
+            }
+          ]
+        }
+      ]
     },
     {
-        "id": "h002",
-        "category": "Biểu mô",
-        "organ": "Dạ dày",
-        "structure": "Biểu mô",
-        "image": "./assets/images/khi-quan-x40.jpg",
-        "annotations": [
+      "category": "Mô liên kết",
+      "organs": [
+        {
+          "organ": "Da",
+          "slides": [
             {
-                "number": 1,
-                "label": "biểu mô trụ đơn tiết nhầy"
-            },
-            {
-                "number": 2,
-                "label": "tuyến đáy vị"
-            },
-            {
-                "number": 3,
-                "label": "tế bào trụ tiết nhầy"
+              "id": "h004",
+              "structure": "Mô liên kết thưa — Lớp bì",
+              "image": null,
+              "magnification": "×10",
+              "annotations": [
+                { "number": 1, "label": "Sợi collagen" },
+                { "number": 2, "label": "Nguyên bào sợi (Fibroblast)" },
+                { "number": 3, "label": "Mao mạch" }
+              ],
+              "explanation": "Lớp bì (dermis) cấu tạo chủ yếu bởi mô liên kết thưa với sợi collagen và sợi đàn hồi đan xen. Nguyên bào sợi là tế bào chính, có chức năng tổng hợp các thành phần chất nền ngoại bào."
             }
-        ],
-        "explanation": "Biểu mô lót lòng dạ dày là biểu mô trụ đơn tiết nhầy. Các tế bào biểu mô xếp thành một lớp, tất cả đều tiếp xúc với màng đáy. Tế bào trụ tiết nhầy phủ bề mặt và lót các hố vị, có chức năng tiết chất nhầy giàu bicarbonat để bảo vệ niêm mạc khỏi tác động của acid và enzym tiêu hóa. Bên dưới là các tuyến đáy vị chứa nhiều loại tế bào chuyên biệt như tế bào chính (tiết pepsinogen), tế bào viền (tiết HCl và yếu tố nội), và tế bào cổ tuyến tiết nhầy."
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Mô thần kinh",
+      "organs": [
+        {
+          "organ": "Tủy sống",
+          "slides": [
+            {
+              "id": "h005",
+              "structure": "Chất xám tủy sống",
+              "image": null,
+              "magnification": "×10",
+              "annotations": [
+                { "number": 1, "label": "Tế bào thần kinh vận động (Neuron)" },
+                { "number": 2, "label": "Tế bào thần kinh đệm (Neuroglia)" },
+                { "number": 3, "label": "Sợi thần kinh không myelin" }
+              ],
+              "explanation": "Chất xám tủy sống chứa thân tế bào thần kinh vận động lớn, đặc biệt ở sừng trước. Neuron có thân to, nhân lớn, nhân con rõ. Xung quanh là các tế bào thần kinh đệm và lưới mao mạch phong phú."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": "Mô sụn",
+      "organs": [
+        {
+          "organ": "Sụn trong",
+          "slides": [
+            {
+              "id": "h006",
+              "structure": "Sụn hyaline — Khí quản",
+              "image": null,
+              "magnification": "×10",
+              "annotations": [
+                { "number": 1, "label": "Tế bào sụn (Chondrocyte)" },
+                { "number": 2, "label": "Ổ sụn (Lacuna)" },
+                { "number": 3, "label": "Chất nền sụn" },
+                { "number": 4, "label": "Màng sụn (Perichondrium)" }
+              ],
+              "explanation": "Sụn hyaline là loại sụn phổ biến nhất, có chất nền đồng nhất, trong suốt. Tế bào sụn nằm trong ổ sụn, thường tập hợp thành nhóm đồng dạng. Chất nền giàu proteoglycan và collagen type II, không có mạch máu."
+            }
+          ]
+        }
+      ]
     }
-]
+  ]
+  
