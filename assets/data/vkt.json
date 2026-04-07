@@ -1,0 +1,12 @@
+{
+    "id": "q001",
+    "answer": "Candida albicans",
+    "category": "Nấm",
+    "hint": "Tạo ống mầm trong huyết thanh",
+    "explanation": "Candida albicans là...",
+    "images": [
+      { "src": "assets/images/candida-albicans/001.jpg", "caption": "Khuẩn lạc trên thạch Sabouraud" },
+      { "src": "assets/images/candida-albicans/002.jpg", "caption": "Ống mầm (germ tube) — đặc trưng nhận dạng" },
+      { "src": "assets/images/candida-albicans/003.jpg", "caption": "Bào tử áo (chlamydospore) dưới kính hiển vi" }
+    ]
+  }
