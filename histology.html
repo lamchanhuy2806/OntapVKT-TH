@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mô học thực hành</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="./assets/css/histology.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mô học thực hành</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/histology.css" />
 </head>
 <body>
+
   <header class="topbar">
     <div class="topbar-inner">
+      <button class="back-btn" id="btn-back" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Quay lại
+      </button>
       <div class="topbar-brand" id="btn-home">
         <span class="brand-icon">⬡</span>
         <span class="brand-name">Mô học</span>
@@ -20,7 +27,6 @@
 
   <main id="app"></main>
 
-
-<script src="./assets/js/histology.js"></script>
+  <script src="./assets/js/histology.js"></script>
 </body>
 </html>

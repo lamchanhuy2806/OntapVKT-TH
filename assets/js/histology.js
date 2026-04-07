@@ -3,7 +3,7 @@
 ═══════════════════════════════════════ */
 let DATA = [];
 let state = {
-  screen: 'home',       // 'home' | 'organs' | 'viewer'
+  screen: 'home',
   categoryIndex: null,
   organIndex: null,
   slideIndex: 0,
@@ -15,12 +15,57 @@ let state = {
 async function init() {
   const res = await fetch('./assets/data/histology.json');
   DATA = await res.json();
-  renderBreadcrumb();
-  renderHome();
 
-  document.getElementById('btn-home').addEventListener('click', () => {
+  document.getElementById('btn-home').addEventListener('click', goHome);
+  document.getElementById('btn-back').addEventListener('click', goBack);
+
+  // Support Android/browser hardware back button
+  window.addEventListener('popstate', () => goBack());
+
+  renderHome();
+  updateTopbar();
+}
+
+/* ═══════════════════════════════════════
+   BACK LOGIC
+═══════════════════════════════════════ */
+function goBack() {
+  if (state.screen === 'viewer') {
+    goOrgans(state.categoryIndex);
+  } else if (state.screen === 'organs') {
     goHome();
-  });
+  }
+}
+
+/* ═══════════════════════════════════════
+   TOPBAR: back button + breadcrumb
+═══════════════════════════════════════ */
+function updateTopbar() {
+  const backBtn = document.getElementById('btn-back');
+  const breadcrumb = document.getElementById('breadcrumb');
+
+  // Back button: hidden on home, visible on inner screens
+  backBtn.style.display = state.screen === 'home' ? 'none' : 'flex';
+
+  // Breadcrumb
+  if (state.screen === 'home') {
+    breadcrumb.innerHTML = '';
+    return;
+  }
+
+  const cat = DATA[state.categoryIndex];
+  let html = `<span class="sep">›</span>`;
+
+  if (state.screen === 'organs') {
+    html += `<span class="crumb active">${cat.category}</span>`;
+  } else {
+    const org = cat.organs[state.organIndex];
+    html += `<span class="crumb" onclick="goOrgans(${state.categoryIndex})">${cat.category}</span>`;
+    html += `<span class="sep">›</span>`;
+    html += `<span class="crumb active">${org.organ}</span>`;
+  }
+
+  breadcrumb.innerHTML = html;
 }
 
 /* ═══════════════════════════════════════
@@ -28,44 +73,22 @@ async function init() {
 ═══════════════════════════════════════ */
 function goHome() {
   state = { screen: 'home', categoryIndex: null, organIndex: null, slideIndex: 0 };
-  renderBreadcrumb();
+  updateTopbar();
   renderHome();
 }
 
 function goOrgans(catIdx) {
   state = { screen: 'organs', categoryIndex: catIdx, organIndex: null, slideIndex: 0 };
-  renderBreadcrumb();
+  updateTopbar();
   renderOrgans();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function goViewer(catIdx, orgIdx, slideIdx = 0) {
   state = { screen: 'viewer', categoryIndex: catIdx, organIndex: orgIdx, slideIndex: slideIdx };
-  renderBreadcrumb();
+  updateTopbar();
   renderViewer();
-}
-
-/* ═══════════════════════════════════════
-   BREADCRUMB
-═══════════════════════════════════════ */
-function renderBreadcrumb() {
-  const el = document.getElementById('breadcrumb');
-  const parts = [];
-
-  if (state.screen === 'home') {
-    el.innerHTML = '';
-    return;
-  }
-
-  const cat = DATA[state.categoryIndex];
-  parts.push(`<span class="crumb" onclick="goOrgans(${state.categoryIndex})">${cat.category}</span>`);
-
-  if (state.screen === 'viewer') {
-    const org = cat.organs[state.organIndex];
-    parts.push(`<span class="sep">›</span>`);
-    parts.push(`<span class="crumb active">${org.organ}</span>`);
-  }
-
-  el.innerHTML = '<span class="sep">›</span>' + parts.join('');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ═══════════════════════════════════════
@@ -76,11 +99,10 @@ function renderHome() {
 
   const cards = DATA.map((cat, i) => {
     const totalSlides = cat.organs.reduce((s, o) => s + o.slides.length, 0);
-    const organCount = cat.organs.length;
     return `
       <div class="category-card" onclick="goOrgans(${i})">
         <div class="cat-name">${cat.category}</div>
-        <div class="cat-meta">${organCount} cơ quan</div>
+        <div class="cat-meta">${cat.organs.length} cơ quan</div>
         <span class="cat-count">${totalSlides} tiêu bản</span>
       </div>
     `;
@@ -190,7 +212,7 @@ function prevSlide() {
   if (state.slideIndex > 0) {
     state.slideIndex--;
     renderViewer();
-    renderBreadcrumb();
+    updateTopbar();
   }
 }
 
@@ -199,7 +221,7 @@ function nextSlide() {
   if (state.slideIndex < org.slides.length - 1) {
     state.slideIndex++;
     renderViewer();
-    renderBreadcrumb();
+    updateTopbar();
   }
 }
 
