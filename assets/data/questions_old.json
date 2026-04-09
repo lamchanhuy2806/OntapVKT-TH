@@ -1,0 +1,357 @@
+[
+  {
+    "id": "q001",
+    "category": "Nấm",
+    "image": "./assets/images/cadida-tbmen.jpg",
+    "question": "Đây là gì?",
+    "answer": "Candida albicans tế bào men",
+    "hint": "Loại amip gây kiết lỵ",
+    "explanation": "Candida albicans là một loại nấm men thuộc hệ vi sinh vật thường trú ở người. Dưới kính hiển vi, tế bào có dạng hình bầu dục hoặc tròn, sinh sản bằng cách nảy chồi (budding). Trong điều kiện thuận lợi, chúng có thể phát triển thành dạng giả sợi (pseudohyphae), giúp tăng khả năng xâm nhập mô. Đây là tác nhân gây bệnh cơ hội, thường gặp ở miệng (tưa lưỡi), da, âm đạo và các cơ quan khác khi hệ miễn dịch suy giảm."
+  },
+  {
+      "id": "q002",
+      "category": "Nấm",
+      "image": "./assets/images/candida-ongmam.jpg",
+      "question": "Đây là gì?",
+      "answer": "Candida albicans ống mầm",
+      "hint": "Dạng giúp chẩn đoán nhanh Candida trong phòng thí nghiệm",
+      "explanation": "Candida albicans có khả năng tạo ống mầm (germ tube) khi được ủ trong huyết thanh ở 37°C trong khoảng 2–3 giờ. Ống mầm là cấu trúc kéo dài từ tế bào nấm mà không có vách ngăn tại điểm xuất phát, đây là đặc điểm quan trọng giúp phân biệt Candida albicans với các loài Candida khác trong chẩn đoán vi sinh."
+
+  },
+  {
+    "id": "q003",
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/trichophyton-mentagrophytes.jpg",
+  "question": "Đây là gì?",
+  "answer": "Trichophyton mentagrophytes",
+  "hint": "Nấm da gây bệnh hắc lào, có nhiều vi bào tử",
+  "explanation": "Trichophyton mentagrophytes là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da, tóc và móng. Dưới kính hiển vi, đặc trưng bởi nhiều vi bào tử (microconidia) hình cầu hoặc hình lê, sắp xếp thành chùm giống chùm nho. Sợi nấm có thể xoắn (spiral hyphae), là dấu hiệu gợi ý quan trọng."
+  },
+  {
+    "id": "q004",
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/trichophyton-rubrum.jpg",
+  "question": "Đây là gì?",
+  "answer": "Trichophyton rubrum",
+  "hint": "Nấm da phổ biến nhất, ít vi bào tử hơn T. mentagrophytes",
+  "explanation": "Trichophyton rubrum là tác nhân gây bệnh nấm da phổ biến nhất ở người. Đặc điểm vi thể gồm vi bào tử hình giọt nước hoặc hình bút chì, phân bố dọc theo sợi nấm. So với T. mentagrophytes, loài này có ít vi bào tử hơn và không có sợi xoắn. Khuẩn lạc thường có màu đỏ rượu ở mặt dưới."
+  },
+  {
+    "id": "q005",
+  "category": "Nấm mốc",
+  "image": "./assets/images/alternaria.jpg",
+  "question": "Đây là gì?",
+  "answer": "Alternaria",
+  "hint": "Bào tử có vách ngăn ngang và dọc, giống hình chuỗi",
+  "explanation": "Alternaria là nấm mốc thường gặp trong môi trường, có thể gây dị ứng hoặc nhiễm trùng cơ hội. Đặc điểm nhận dạng là bào tử lớn, màu nâu sẫm, có nhiều vách ngăn cả ngang và dọc (muriform), thường xếp thành chuỗi. Hình dạng bào tử giống hình chùy hoặc quả lê, là dấu hiệu điển hình."
+  },
+  {
+    "id": "q006",
+  "category": "Nấm mốc",
+  "image": "./assets/images/aspergillus-fumigatus.jpg",
+  "question": "Đây là gì?",
+  "answer": "Aspergillus fumigatus",
+  "hint": "Đầu bào tử dạng cột, thường gây bệnh phổi",
+  "explanation": "Aspergillus fumigatus là nấm mốc gây bệnh cơ hội, thường gặp trong nhiễm nấm phổi. Đặc điểm vi thể gồm cuống bào tử (conidiophore) kết thúc bằng túi bào tử (vesicle), các bào tử (conidia) xếp thành chuỗi tạo thành đầu bào tử dạng cột (columnar). Đây là dấu hiệu giúp phân biệt với các loài Aspergillus khác."
+  },
+  {
+    "id": "q007",
+  "category": "Nấm mốc",
+  "image": "./assets/images/aspergillus-flavus.jpg",
+  "question": "Đây là gì?",
+  "answer": "Aspergillus flavus",
+  "hint": "Sinh độc tố aflatoxin, đầu bào tử tỏa tròn",
+  "explanation": "Aspergillus flavus là nấm mốc có khả năng sinh độc tố aflatoxin gây ung thư gan. Dưới kính hiển vi, đầu bào tử có dạng tỏa tròn (radiate), với các chuỗi bào tử phủ xung quanh toàn bộ túi bào tử. Đây là đặc điểm phân biệt với Aspergillus fumigatus."
+  },
+  {
+    "id": "q008",
+  "category": "Nấm mốc",
+  "image": "./assets/images/penicillium.jpg",
+  "question": "Đây là gì?",
+  "answer": "Penicillium sp.",
+  "hint": "Hình dạng giống cây chổi hoặc bàn chải",
+  "explanation": "Penicillium là nấm mốc phổ biến trong môi trường. Đặc điểm nhận dạng là cấu trúc bào tử phân nhánh nhiều cấp, tạo hình giống cây chổi (brush-like). Các bào tử (conidia) xếp thành chuỗi ở đầu các nhánh. Một số loài có vai trò sản xuất kháng sinh penicillin."
+  },
+  {
+    "id": "q009",
+  "category": "Nấm mốc",
+  "image": "./assets/images/fusarium.jpg",
+  "question": "Đây là gì?",
+  "answer": "Fusarium sp.",
+  "hint": "Bào tử hình lưỡi liềm (hình thuyền)",
+  "explanation": "Fusarium là nấm mốc thường gặp trong đất và thực vật, có thể gây nhiễm trùng cơ hội. Đặc điểm vi thể điển hình là đại bào tử (macroconidia) có hình cong như lưỡi liềm hoặc hình thuyền, có nhiều vách ngăn. Đây là dấu hiệu nhận dạng rất đặc trưng."
+  },
+  {
+    "id": "q010",
+  "category": "Nấm sợi (Dermatophyte)",
+  "image": "./assets/images/microsporum-gypseum.jpg",
+  "question": "Đây là gì?",
+  "answer": "Microsporum gypseum",
+  "hint": "Dermatophyte, đại bào tử nhiều vách, thành dày",
+  "explanation": "Microsporum gypseum là nấm sợi thuộc nhóm dermatophyte, gây nhiễm nấm da. Đặc điểm vi thể là đại bào tử (macroconidia) hình bầu dục hoặc thoi, thành dày, có nhiều vách ngăn. Đây là đặc điểm giúp phân biệt với các chi dermatophyte khác."
+  },
+  {
+    "id": "q011",
+    "category": "Nấm mốc",
+    "image": "./assets/images/nam-nigrospora.jpg",
+    "question": "Đây là ký sinh trùng nào",
+    "answer": "Nigrospora",
+    "hint": "Bào tử tròn, đen, rất lớn và đơn độc",
+    "explanation": "Nigrospora là nấm mốc có bào tử (conidia) lớn, hình cầu, màu đen đậm và thường xuất hiện đơn độc ở đầu cuống bào tử. Đặc điểm này rất đặc trưng và giúp phân biệt với các nấm mốc khác có bào tử xếp chuỗi hoặc nhiều vách ngăn."
+  },
+  {
+    "id": "q012",
+    "category": "Nấm mốc",
+    "image": "./assets/images/nam-curvularia-sp.jpg",
+    "question": "Đây là loại nấm gì",
+    "answer": "Curvularia sp.",
+    "hint": "Bào tử cong, tế bào giữa to hơn",
+    "explanation": "Curvularia là nấm mốc có bào tử cong, nhiều vách ngăn. Đặc điểm quan trọng là tế bào trung tâm của bào tử phình to hơn các tế bào còn lại, làm cho bào tử có hình cong đặc trưng. Đây là dấu hiệu giúp phân biệt với Alternaria và các nấm mốc khác."
+  },
+  {
+    "id": "q013",
+    "category": "Nấm mốc",
+    "image": "./assets/images/nam-aspergillus-niger.jpg",
+    "question": "Đây là loại nấm gì?",
+    "answer": "Aspergillus niger",
+    "hint": "Đầu bào tử màu đen, hình cầu",
+    "explanation": "Aspergillus niger là nấm mốc có đầu bào tử màu đen đặc trưng. Dưới kính hiển vi, các bào tử (conidia) xếp thành chuỗi bao quanh túi bào tử, tạo thành đầu bào tử dạng tỏa tròn. Màu đen đậm là dấu hiệu giúp dễ dàng nhận diện loài này."
+  },
+  {
+    "id": "q014",
+    "category": "Nấm mốc (Zygomycetes)",
+    "image": "./assets/images/nam-rhizopus-nigricans.jpg",
+    "question": "Đây là loại nấm gì",
+    "answer": "Rhizopus nigricans",
+    "hint": "Có rễ giả (rhizoids), túi bào tử màu đen",
+    "explanation": "Rhizopus nigricans là nấm mốc thuộc nhóm Zygomycetes. Đặc điểm nhận dạng là sợi nấm không vách ngăn, có túi bào tử (sporangium) màu đen ở đầu cuống và đặc biệt có rễ giả (rhizoids) ở gốc. Đây là dấu hiệu quan trọng để phân biệt với Mucor."
+  },
+  {
+    "id": "q015",
+    "category": "Nấm mốc (Zygomycetes)",
+    "image": "./assets/images/nam-mucor-sp.jpg",
+    "question": "Đây là loại nấm gì?",
+    "answer": "Mucor sp.",
+    "hint": "Không có rễ giả (rhizoids)",
+    "explanation": "Mucor là nấm mốc thuộc nhóm Zygomycetes, có sợi nấm rộng, không vách ngăn. Túi bào tử nằm ở đầu cuống giống Rhizopus, nhưng điểm phân biệt quan trọng là không có rễ giả (rhizoids). Đây là đặc điểm giúp nhận diện nhanh trong thực hành."
+  },
+  {
+    "id": "q016",
+    "category": "Giun tròn (Nematode)",
+    "image": "./assets/images/ascaris-lumbricoides.jpg",
+    "question": "Con nì tên là gì?",
+    "answer": "Ascaris lumbricoides",
+    "hint": "Vỏ dày, sần sùi, màu nâu",
+    "explanation": "Trứng Ascaris lumbricoides có hình bầu dục, vỏ dày nhiều lớp. Lớp ngoài cùng có dạng sần sùi (mammillated), màu nâu do hấp thu mật. Đây là đặc điểm điển hình giúp nhận diện trứng giun đũa trong mẫu phân."
+  },
+  {
+    "id": "q017",
+    "category": "Giun tròn (Nematode)",
+    "image": "./assets/images/enterobius-vemicularis.jpg",
+    "question": "Tên con này là gì đây",
+    "answer": "Enterobius vermicularis",
+    "hint": "Một bên dẹt, một bên cong",
+    "explanation": "Trứng Enterobius vermicularis có hình bầu dục không đối xứng, một bên dẹt và một bên cong. Vỏ mỏng, trong suốt. Đây là đặc điểm giúp phân biệt với các trứng giun khác trong thực hành."
+  },
+  {
+    "id": "q018",
+    "category": "Giun tròn (Nematode)",
+    "image": "./assets/images/trichuris-trichiura.jpg",
+    "question": "Tên con này là gì?",
+    "answer": "Trichuris trichiura",
+    "hint": "Hai nút ở hai đầu (hình quả chanh)",
+    "explanation": "Trứng Trichuris trichiura có hình dạng đặc trưng giống quả chanh hoặc thùng rượu, với hai nút nhầy rõ rệt ở hai đầu. Vỏ dày, màu nâu. Đây là dấu hiệu rất đặc trưng, dễ nhận biết."
+  },
+  {
+    "id": "q019",
+    "category": "Giun tròn (Nematode)",
+    "image": "./assets/images/ancylostoma-duodenale.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ancylostoma duodenale",
+    "hint": "Vỏ mỏng, trong, thấy nhiều tế bào bên trong",
+    "explanation": "Trứng giun móc có hình bầu dục, vỏ mỏng và trong. Bên trong thường thấy nhiều phôi bào đang phân chia (4–8 tế bào). Đây là đặc điểm giúp phân biệt với các loại trứng giun khác."
+  },
+  {
+"id": "q020",
+  "category": "Giun tròn (Nematode)",
+  "image": "./assets/images/strongyloides-stercoralis.jpg",
+  "question": "Đây là gì?",
+  "answer": "Strongyloides stercoralis",
+  "hint": "Giun lươn, có chu kỳ tự nhiễm",
+  "explanation": "Strongyloides stercoralis là giun lươn ký sinh ở ruột non. Đặc điểm nổi bật là khả năng tự nhiễm (autoinfection), giúp ký sinh trùng tồn tại lâu dài trong cơ thể mà không cần tái nhiễm từ môi trường. Ấu trùng có thể xuyên qua da, di chuyển qua phổi rồi xuống ruột. Trong mẫu phân thường thấy ấu trùng thay vì trứng."
+  },
+  {
+    "id": "q021", 
+    "category": "Sán lá",
+    "image": "./assets/images/clonorchis-sinensis.jpg",
+    "question": "Đây là gì?",
+    "answer": "Trứng Clonorchis sinensis",
+    "hint": "Có đĩa hút miệng lớn hơn đĩa hút bụng,manh tràng dài đến cuối đuôi (Sán lá gan nhỏ)",
+    "explanation": "Trứng nhỏ hình bầu dục có nắp lồi dễ thấy, màu nâu sẩm,đối diện với nắp có gai nhỏ"
+  },
+  {
+    "id": "q022",
+    "category": "Sán lá",
+    "image": "./assets/images/fasciola-hepatica.jpg",
+    "question": "Đây là gì?",
+    "answer": "Fasciola hepatica ",
+    "hint": "Bắt đầu bằng chữ F kết thức bằng chữ a (Sán lá gan lớn)",
+    "explanation": "Trứng hình bầu dục,có nắp, vỏ mỏng"
+  },
+  {
+    "id": "q023",
+    "category": "Sán lá",
+    "image": "./assets/images/diphyllobothrium-latum.jpg",
+    "question": "Đây là gì?",
+    "answer": "Diphyllobothrium latum",
+    "hint": "Từ thứ nhất bắt đầu bằng chữ D và từ thứ 2 bắt đầu bằng chữ l (Sán dải cá) ",
+    "explanation": "Trứng màu nâu, vỏ mỏng có nắp giống trứng sán lá lớn nhưng nhỏ hơn"
+
+  },
+  {
+    "id": "q024",
+    "category": "Sán lá",
+    "image": "./assets/images/dipylidium-caninum.jpg",
+    "question": "Đây là gì?",
+    "answer": "Dipylidium caninum",
+    "hint": "Từ thứ nhất bắt đầu bằng chữ D và từ thứ 2 bắt đầu bằng chữ c(Sán dải chó)",
+    "explanation": "Trứng tròn, dính chùm 8-15 trứng trong một bọc, trứng có vỏ albumin dày chứa phôi bên trong."
+
+  },
+  {
+    "id": "q025",
+    "category": "Sán lá",
+    "image": "./assets/images/taenia-solium.jpg",
+    "question": "Đây là gì?",
+    "answer": "Taenia solium",
+    "hint": "Sán dải heo bắt đầu bằng chữ T",
+    "explanation": "Trứng có màu nâu sẫm"
+  },
+  {
+    "id": "q026",
+    "category": "Sán lá",
+    "image": "./assets/images/hymenolepis-nana.jpg",
+    "question": "Đây là gì?",
+    "answer": "Hymenolepis nana",
+    "hint": "Sán dải lùn, bắt đầu bằng chữ H ",
+    "explanation": "nang trứng đốt tử cung hình túi chứa 80-180 trứng"
+
+  },
+  {
+  "id": "q027",
+    "category": "Sán lá",
+    "image": "./assets/images/taenia-saginata.jpg",
+    "question": "Đây là gì?",
+    "answer": "Taenia saginata",
+    "hint": "Trứng sán dải bò, từ đầu tiên giống sán dải heo từ thứ hai bắt đầu bằng từ s ",
+    "explanation": "màu nâu sẫm, tồn tại lâu trong môi trường (tháng/năm) và truyền nhiễm qua thức ăn/nước uống ô nhiễm phân người"
+  },
+  {
+    "id": "q028", 
+    "category": "Sán lá",
+    "image": "./assets/images/san-la-gan-nho.jpg",
+    "question": "Đây là gì?",
+    "answer": "Clonorchis sinensis",
+    "hint": "Có đĩa hút miệng lớn hơn đĩa hút bụng,manh tràng dài đến cuối đuôi (Sán lá gan nhỏ)",
+    "explanation": "Trứng nhỏ hình bầu dục có nắp lồi dễ thấy, màu nâu sẩm,đối diện với nắp có gai nhỏ"
+  },
+  {
+    "id": "q029",
+    "category": "Sán lá",
+    "image": "./assets/images/dot-san-dai-taenia-solium.jpg",
+    "question": "Đây là gì?",
+    "answer": "Đốt sán Taenia solium",
+    "hint": "Sán dải heo bắt đầu bằng chữ T",
+    "explanation": "Trứng có màu nâu sẫm"
+  },
+  {
+    "id": "q030",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/anopheles-female.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Anopheles cái",
+    "hint": "Truyền sốt rét, palps dài bằng vòi",
+    "explanation": "Muỗi Anopheles cái là vector truyền ký sinh trùng sốt rét (Plasmodium). Đặc điểm nhận dạng là palps (râu hàm) dài bằng vòi, khi đậu thân tạo góc khoảng 45° so với bề mặt. Chỉ muỗi cái hút máu để phát triển trứng, do đó có vai trò truyền bệnh."
+  },
+  {
+    "id": "q031",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/anopheles-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Anopheles đực",
+    "hint": "Râu nhiều lông, không hút máu",
+    "explanation": "Muỗi Anopheles đực không hút máu mà chỉ hút dịch thực vật. Đặc điểm nổi bật là râu rất nhiều lông (plumose antennae), giúp phân biệt với muỗi cái. Chúng không tham gia truyền bệnh."
+  },
+  {
+    "id": "q032",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/aedes-female.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Aedes cái",
+    "hint": "Muỗi vằn, truyền sốt xuất huyết",
+    "explanation": "Muỗi Aedes cái là vector truyền virus Dengue, Zika và Chikungunya. Đặc điểm nhận dạng là thân và chân có vằn trắng đen rõ rệt. Chúng hoạt động ban ngày và hút máu người để phát triển trứng."
+  },
+  {
+    "id": "q033",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/aedes-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Aedes đực",
+    "hint": "Râu nhiều lông, không truyền bệnh",
+    "explanation": "Muỗi Aedes đực không hút máu mà chỉ hút dịch thực vật. Giống các muỗi đực khác, chúng có râu nhiều lông giúp phân biệt với muỗi cái. Không có vai trò truyền bệnh."
+  },
+  {
+    "id": "q034",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/culex-female.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Culex cái",
+    "hint": "Đậu song song mặt phẳng, truyền viêm não Nhật Bản",
+    "explanation": "Muỗi Culex cái là vector truyền virus viêm não Nhật Bản và một số bệnh khác. Đặc điểm là khi đậu, thân song song với bề mặt (khác Anopheles). Chúng hoạt động chủ yếu vào ban đêm và hút máu để sinh sản."
+  },
+  {
+    "id": "q035",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/culex-male.jpg",
+    "question": "Đây là gì?",
+    "answer": "Muỗi Culex đực",
+    "hint": "Râu nhiều lông, không hút máu",
+    "explanation": "Muỗi Culex đực không hút máu và không truyền bệnh. Đặc điểm nhận dạng là râu nhiều lông (plumose antennae), giúp phân biệt với muỗi cái. Chúng chủ yếu ăn dịch thực vật."
+  },
+  {
+    "id": "q036",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/larva-anopheles.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ấu trùng Anopheles cái",
+    "hint": "Nằm song song mặt nước, không có ống thở",
+    "explanation": "Ấu trùng Anopheles sống trong nước và có đặc điểm nằm song song với mặt nước do không có ống thở (siphon). Đây là dấu hiệu quan trọng để phân biệt với các loài muỗi khác. Chúng là giai đoạn phát triển của muỗi truyền bệnh sốt rét."
+  },
+  {
+    "id": "q037",
+    "category": "Côn trùng y học",
+    "image": "./assets/images/larva-aedes.jpg",
+    "question": "Đây là gì?",
+    "answer": "Ấu trùng Aedes cái",
+    "hint": "Treo nghiêng, có ống thở ngắn",
+    "explanation": "Ấu trùng Aedes có ống thở (siphon) ngắn nên thường treo chếch so với mặt nước. Đây là đặc điểm giúp phân biệt với ấu trùng Anopheles. Chúng phát triển thành muỗi Aedes – vector truyền sốt xuất huyết."
+  },
+  {
+    "id": "q038",
+    "category": "Ký sinh trùng (Đơn bào)",
+    "image": "./assets/images/plasmodium-falciparum.jpg",
+    "question": "Đây là gì?",
+    "answer": "Plasmodium falciparum",
+    "hint": "Thể nhẫn nhỏ, nhiều trong 1 hồng cầu, gây sốt rét ác tính",
+    "explanation": "Plasmodium falciparum là loài ký sinh trùng gây sốt rét ác tính nguy hiểm nhất. Đặc điểm vi thể là thể nhẫn nhỏ, có thể thấy nhiều ký sinh trùng trong một hồng cầu. Thường không thấy các giai đoạn trưởng thành trong máu ngoại vi. Có thể gây biến chứng nặng như sốt rét não."
+  },
+  {
+    "id": "q039",
+    "category": "Ký sinh trùng (Đơn bào)",
+    "image": "./assets/images/plasmodium-vivax.jpg",
+    "question": "Đây là gì?",
+    "answer": "Plasmodium vivax",
+    "hint": "Hồng cầu to, có hạt Schüffner",
+    "explanation": "Plasmodium vivax là ký sinh trùng gây sốt rét thể lành. Đặc điểm là ký sinh trong hồng cầu non làm hồng cầu to lên, xuất hiện các hạt Schüffner. Có thể thấy nhiều giai đoạn phát triển trong máu ngoại vi. Loài này có thể gây tái phát do tồn tại dạng ngủ ở gan."
+  }
+]
