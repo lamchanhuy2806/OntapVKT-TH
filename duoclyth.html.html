@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chạy trạm Dược lý Bài 1–4</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF5F2;--card:#fff;--ink:#12302E;--mute:#58706C;--line:#CCDED8;--brand:#0F6B63;--brandtxt:#fff;--ok:#17805A;--okbg:#DCF3E7;--bad:#C93636;--badbg:#FBE0E0;--miss:#9A6410;--missbg:#FFF0D2;--chip:#F3F8F5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1D1B;--card:#162927;--card:#162927;--ink:#E6F2EF;--mute:#93ADA8;--line:#2A4642;--brand:#3FB5A8;--brandtxt:#06201D;--ok:#4CD08F;--okbg:#14382A;--bad:#FF7A7A;--badbg:#401B1B;--miss:#F2B84B;--missbg:#3D3012;--chip:#1C3330;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1D1B;--card:#162927;--ink:#E6F2EF;--mute:#93ADA8;--line:#2A4642;--brand:#3FB5A8;--brandtxt:#06201D;--ok:#4CD08F;--okbg:#14382A;--bad:#FF7A7A;--badbg:#401B1B;--miss:#F2B84B;--missbg:#3D3012;--chip:#1C3330;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.5;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.35rem;margin:0 0 2px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tab{flex:1;min-width:96px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 8px;border-radius:10px;font:inherit;font-weight:700;font-size:.92rem;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--brand);color:var(--brandtxt);border-color:var(--brand)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:16px}
+.track{display:flex;align-items:center;margin:0 0 14px}
+.node{flex:0 0 auto;min-width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center;font-size:.78rem;font-weight:800;color:var(--mute)}
+.node.cur{border-color:var(--brand);color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 22%,transparent)}
+.node.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.node.part{background:var(--miss);border-color:var(--miss);color:#fff}
+.node.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.bar{flex:1;height:3px;background:var(--line);min-width:6px}
+.drug{font-size:1.5rem;font-weight:800;margin:2px 0 2px;letter-spacing:-.01em}
+.stname{font-weight:700;color:var(--brand);margin:0 0 2px}
+.hint{color:var(--mute);font-size:.86rem;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-size:.92rem;cursor:pointer;text-align:left}
+.chip[aria-pressed="true"]{border-color:var(--brand);background:var(--brand);color:var(--brandtxt);font-weight:700}
+.chip.ok{border-color:var(--ok);background:var(--okbg);color:var(--ok);font-weight:700}
+.chip.bad{border-color:var(--bad);background:var(--badbg);color:var(--bad);font-weight:700;text-decoration:line-through}
+.chip.miss{border:1.5px dashed var(--miss);background:var(--missbg);color:var(--miss);font-weight:700}
+.chip:disabled{cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{border:0;background:var(--brand);color:var(--brandtxt);padding:11px 20px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.timer{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;color:var(--miss)}
+.timer.low{color:var(--bad)}
+.opt{display:flex;gap:6px;align-items:center;font-size:.88rem;color:var(--mute)}
+.legend{font-size:.82rem;color:var(--mute);margin:-4px 0 12px}
+.score{font-size:2rem;font-weight:800;margin:0}
+.sumrow{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:.93rem}
+.miss-line{color:var(--miss);font-size:.84rem;margin:0 0 6px}
+.gbtn{display:block;width:100%;text-align:left;margin:0 0 8px;padding:12px 14px;border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:10px;font:inherit;cursor:pointer}
+.gbtn.ok{border-color:var(--ok);background:var(--okbg);color:var(--ok);font-weight:700}
+.gbtn.bad{border-color:var(--bad);background:var(--badbg);color:var(--bad)}
+.q{font-size:1.25rem;font-weight:800;margin:4px 0 14px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;min-width:720px;width:100%;font-size:.84rem}
+th,td{border:1px solid var(--line);padding:7px 8px;vertical-align:top;text-align:left}
+th{background:var(--chip)}
+.mn{margin:0;padding-left:1.1rem}
+.mn li{margin:0 0 8px}
+h2{font-size:1.05rem;margin:18px 0 8px}
+.hide{display:none}
+button:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+@media(max-width:480px){.drug{font-size:1.3rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Chạy trạm Dược lý (Bài 1–4)</h1>
+  <p class="sub">Giảm đau – kháng viêm, dạ dày, ho – hen – dị ứng, kháng sinh, tim mạch. Giáo viên đưa tên thuốc, bạn ghi Tác dụng phụ, Chỉ định, Chống chỉ định, Cách dùng.</p>
+  <div class="chips" id="scope" style="align-items:center;margin-bottom:10px"></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="run" aria-selected="true">Chạy trạm</button>
+    <button class="tab" role="tab" data-tab="guess" aria-selected="false">Đoán nhóm</button>
+    <button class="tab" role="tab" data-tab="study" aria-selected="false">Ôn nhanh</button>
+  </div>
+  <div id="run"></div>
+  <div id="guess" class="hide"></div>
+  <div id="study" class="hide"></div>
+</div>
+<script>
+const P=["PO"],Q0="Quá mẫn thành phần thuốc";
+const G={
+/* ---- Bài 1 ---- */
+pc:{b:1,name:"Hạ sốt – giảm đau (không kháng viêm)",td:["Giảm đau ngoại vi","Hạ sốt"],
+ tdp:["Dị ứng","Rối loạn tiêu hoá","Độc tế bào gan (4 g/ngày)"],
+ cd:["Giảm đau cơ","Đau do chấn thương","Đau bụng kinh","Đau răng","Đau đầu","Sốt mọi nguyên nhân"],
+ ccd:[Q0,"Trẻ em < 12 tuổi","Suy gan"],cdung:P,note:{tdp:"Với Paracetamol, dị ứng và rối loạn tiêu hoá chỉ ít gặp."}},
+n12:{b:1,name:"NSAID không chọn lọc (COX-1 + COX-2)",td:["Kháng viêm","Giảm đau ngoại vi","Hạ sốt"],
+ tdp:["Loét dạ dày","Dị ứng","Rối loạn tiêu hoá","Suy gan"],
+ cd:["Giảm đau cơ","Đau do chấn thương","Đau bụng kinh","Viêm khớp dạng thấp","Viêm xương khớp","Sốt mọi nguyên nhân"],
+ ccd:[Q0,"Loét dạ dày – tá tràng","Trẻ em < 12 tuổi","Suy gan","Suy thận"],cdung:P},
+c2:{b:1,name:"NSAID chọn lọc COX-2",td:["Kháng viêm","Giảm đau ngoại vi","Hạ sốt"],
+ tdp:["Tăng huyết áp","Suy tim","Dị ứng","Rối loạn tiêu hoá","Suy gan"],
+ cd:["Giảm đau cơ","Đau do chấn thương","Đau bụng kinh","Viêm khớp dạng thấp","Viêm xương khớp","Viêm cột sống","Sốt mọi nguyên nhân"],
+ ccd:[Q0,"Suy tim","Trẻ em < 12 tuổi","Suy gan","Suy thận"],cdung:P},
+gc:{b:1,name:"Glucocorticoid",td:["Kháng viêm mạnh","Giảm đau","Chống dị ứng"],
+ tdp:["Rối loạn tiêu hoá","Suy tuỷ","Hội chứng Cushing","Độc gan / thận"],
+ cd:["Gout cấp","Viêm khớp dạng thấp","Viêm xương khớp","Viêm cột sống","Hen phế quản","Lupus ban đỏ hệ thống"],
+ ccd:[Q0,"Loét dạ dày – tá tràng","Nhiễm trùng nặng chưa điều trị hiệu quả"],cdung:["PO","IV"]},
+/* ---- Bài 2 ---- */
+ta:{b:2,name:"Trung hoà acid (antacid)",td:["Trung hoà acid dạ dày","Tạo lớp màng bọc bảo vệ ổ loét"],tdp:[],
+ cd:["Trào ngược dạ dày","Loét dạ dày – tá tràng","Tăng tiết acid dạ dày","Hội chứng dạ dày kích thích"],
+ ccd:[Q0],cdung:P,note:{tdp:"Theo file: Aluminum phosphate chỉ ghi táo bón; Sucralfate ghi táo bón + ngứa/ban đỏ + hoa mắt/chóng mặt; Al hydroxid, Mg hydroxid, Almagate chỉ ghi rối loạn tiêu hoá nhẹ + buồn nôn nhẹ."}},
+ppi:{b:2,name:"Ức chế bơm proton (PPI)",td:["Giảm tiết acid dạ dày mạnh và kéo dài"],
+ tdp:["Đau đầu","Buồn nôn","Tiêu chảy","Đau bụng","Đầy hơi","Giảm hấp thu Vitamin B12 (dùng kéo dài)","Hạ Magie (dùng kéo dài)","Loãng xương (dùng kéo dài)"],
+ cd:["Trào ngược dạ dày","Viêm loét dạ dày – tá tràng","Diệt khuẩn Hp"],ccd:[Q0,"Hạ Magie","Loãng xương"],cdung:P},
+h2:{b:2,name:"Kháng H2",td:["Giảm tiết acid nền","Hiệu quả với tiết acid ban đêm"],
+ tdp:["Đau đầu","Chóng mặt","Tiêu chảy hoặc táo bón nhẹ","Mệt mỏi"],
+ cd:["Trào ngược dạ dày","Viêm loét dạ dày – tá tràng","Bệnh lý tăng tiết đường tiêu hoá"],
+ ccd:[Q0,"Suy gan nặng","Suy thận nặng","PNCT & CCB"],cdung:P},
+h1a:{b:2,name:"Kháng H1 thế hệ 1",td:["Chống ngứa","Chống dị ứng"],
+ tdp:["Buồn ngủ","Khô miệng","Bí tiểu","Thẫn thờ","Choáng váng"],
+ cd:["Dị ứng cấp","Hỗ trợ giấc ngủ","Chống nôn, say tàu xe"],ccd:[Q0,"Vận hành máy móc & lái xe","Trẻ sơ sinh"],cdung:P},
+h1b:{b:2,name:"Kháng H1 thế hệ 2",td:["Giảm dị ứng cấp"],
+ tdp:["Lơ mơ","Ngủ gà","Khô miệng","Chóng mặt","Buồn nôn"],
+ cd:["Viêm mũi dị ứng","Mày đay","Viêm da dị ứng","Viêm da tiếp xúc"],ccd:[Q0,"Suy gan","Suy thận","PNCT & CCB","Trẻ sơ sinh"],cdung:P},
+oil:{b:2,name:"Ho: Tinh dầu",td:["Sát khuẩn","Làm tê liệt thần kinh ngoại vi tại chỗ"],
+ tdp:["Buồn nôn","Chóng mặt","Khó chịu","Ợ hơi mùi tinh dầu"],cd:["Ho khan","Đau họng","Sổ mũi","Cảm cúm"],
+ ccd:[Q0,"PNCT & CCB","Trẻ < 3 tuổi","Ho do hen suyễn, suy hô hấp, lao"],cdung:P},
+op:{b:2,name:"Ho: Opioid ức chế trung tâm ho",td:["Ức chế trung tâm ho ở hành não","Làm loãng chất nhầy"],
+ tdp:["Buồn nôn","Mệt mỏi","Chóng mặt","Rối loạn tiêu hoá"],cd:[],ccd:[Q0,"PNCT & CCB","Trẻ nhỏ"],cdung:P},
+b2:{b:2,name:"Hen: Chủ vận Beta 2",td:["Giãn phế quản"],tdp:["Tim nhanh","Run cơ","Đau đầu","Chóng mặt"],
+ cd:["Phòng ngừa hen do gắng sức"],ccd:[Q0,"Có thể sẩy thai trong 3–6 tháng đầu mang thai","Bệnh lý tim mạch","Tiểu đường"],cdung:P},
+dia:{b:2,name:"Trị tiêu chảy",td:["Kháng khuẩn đường ruột","Giảm đi tiêu lỏng"],tdp:["Táo bón","Đầy bụng","Buồn nôn"],
+ cd:["Tiêu chảy cấp và mạn tính"],ccd:[Q0,"PNCT & CCB","Trẻ nhỏ","Bệnh nhân táo bón"],cdung:P},
+/* ---- Bài 3 ---- */
+bl:{b:3,name:"Beta-lactam",td:["Ức chế tổng hợp thành tế bào"],tdp:["Dị ứng","Sốc phản vệ","Rối loạn tiêu hoá"],
+ cd:["Nhiễm khuẩn hô hấp trên và dưới","Nhiễm khuẩn da – mô mềm","Nhiễm khuẩn đường tiết niệu – sinh dục"],ccd:[Q0],cdung:P},
+ce:{b:3,name:"Cephalosporin",td:["Ức chế tổng hợp thành tế bào"],tdp:["Rối loạn tiêu hoá","Viêm ruột kết màng giả"],cd:[],
+ ccd:[Q0,"PNCT","Suy thận"],cdung:P,note:{cd:"Thế hệ I: da, đường tiểu. Thế hệ II: hô hấp, tai giữa. Thế hệ III: màng não, khớp."}},
+li:{b:3,name:"Lincosamid",td:["Ức chế tổng hợp protein trên tiểu đơn vị 50S"],tdp:["Rối loạn tiêu hoá","Viêm ruột kết màng giả"],
+ cd:["Nhiễm trùng bộ phận giả","Nhiễm khuẩn nặng do vi khuẩn kỵ khí"],ccd:[Q0,"PNCT & CCB","Suy gan","Suy thận"],cdung:P},
+ag:{b:3,name:"Aminoglycosid",td:["Ức chế tổng hợp protein (tiểu đơn vị 30S)"],tdp:["Khó chịu ở mắt","Kích ứng mắt","Đỏ mắt"],
+ cd:["Nhiễm trùng giác mạc","Nhiễm trùng mí mắt","Nhiễm trùng kết mạc","Nhiễm trùng túi lệ"],ccd:[Q0,"Nhiễm trùng do nấm hoặc virus"],cdung:["Nhỏ mắt"],
+ note:{td:"File ghi Tác dụng của Tobramycin trùng với Glucocorticoid (có vẻ copy nhầm). Mình thay bằng kiến thức chuẩn, bạn hỏi lại giáo viên nhé."}},
+qu:{b:3,name:"Quinolon",td:["Ức chế tổng hợp DNA"],tdp:["Viêm gân","Đứt gân","Rối loạn tiêu hoá"],
+ cd:["Nhiễm trùng toàn thân","Nhiễm khuẩn xương khớp"],ccd:[Q0,"PNCT & CCB","Trẻ < 18 tuổi"],cdung:P},
+/* ---- Bài 4 ---- */
+ace:{b:4,name:"Ức chế men chuyển (ACEI)",td:["Hạ huyết áp"],tdp:["Ho khan","Hạ huyết áp tư thế","Tăng Kali máu","Phù mạch"],
+ cd:["Tăng huyết áp nguyên phát","Suy tim","THA do đái tháo đường / thận"],ccd:[Q0,"PNCT & CCB","Hẹp động mạch chủ / thận"],cdung:P},
+ccb:{b:4,name:"Chẹn kênh Canxi",td:["Ức chế canxi vào cơ trơn","Giảm dòng Ca vào tế bào"],tdp:["Phù mắt cá chân","Đau đầu","Đỏ bừng mặt"],
+ cd:["Tăng huyết áp nguyên phát","Đau thắt ngực ổn định"],ccd:[Q0,"Sốc tim","Suy tim","Hẹp động mạch chủ"],cdung:P},
+bb:{b:4,name:"Beta-Blocker",td:["Ức chế Renin tại tế bào thận","Chẹn cạnh tranh thụ thể Beta-1 ở tim"],
+ tdp:["Mệt mỏi","Lạnh đầu chi","Rối loạn giấc ngủ","Co thắt phế quản"],
+ cd:["Tăng huyết áp nguyên phát","Đau thắt ngực ổn định","Suy tim mạn tính ổn định"],
+ ccd:[Q0,"Hen phế quản nặng","COPD nặng","Sốc tim","Suy tim chưa bù trừ"],cdung:P},
+fu:{b:4,name:"Lợi tiểu quai (Furosemid)",td:["Đái nhiều","Tăng thải Na, Cl"],tdp:["Mất nước và điện giải","Tăng acid uric","Điếc (liều cao)"],
+ cd:["Tăng huyết áp kèm suy thận","Phù do mọi nguyên nhân","Tăng điện giải quá nặng"],ccd:[Q0,"Vô niệu","Hạ Kali / Natri máu"],cdung:P},
+nit:{b:4,name:"Trị đau thắt ngực (nitrat)",td:["Giải phóng NO","Giãn mạch","Giảm tiền gánh và hậu gánh"],
+ tdp:["Nhức đầu","Hạ huyết áp tư thế","Buồn nôn","Đỏ bừng mặt"],
+ cd:["Dự phòng và điều trị dài hạn cơn đau thắt ngực","Hỗ trợ điều trị suy tim sung huyết"],
+ ccd:[Q0,"Sốc tim","Hạ huyết áp","Tăng áp lực nội sọ"],cdung:P}
+};
+const GN={};Object.keys(G).forEach(k=>GN[k]=G[k].name);
+/* x = ý riêng của từng thuốc (cộng thêm), o = ý riêng thay thế ý của nhóm */
+const dr=(n,g,x,o)=>({n,g,x,o});
+const DR=[
+dr("Paracetamol (Acetaminophen)","pc"),dr("Ibuprofen","n12"),dr("Diclofenac","n12"),dr("Acid mefenamic","n12"),
+dr("Celecoxib","c2",{tdp:["Viêm gan, vàng da"]}),dr("Meloxicam","c2",{tdp:["Rối loạn công thức máu"]}),
+dr("Methylprednisolone","gc"),dr("Dexamethasone","gc"),
+dr("Aluminum phosphate","ta",0,{tdp:["Táo bón"]}),
+dr("Sucralfate","ta",0,{tdp:["Táo bón","Ngứa, ban đỏ","Hoa mắt, chóng mặt"]}),
+dr("Aluminium hydroxid gel","ta",0,{tdp:["Rối loạn tiêu hoá nhẹ","Buồn nôn nhẹ"]}),
+dr("Magnesium hydroxid","ta",0,{tdp:["Rối loạn tiêu hoá nhẹ","Buồn nôn nhẹ"]}),
+dr("Almagate","ta",0,{tdp:["Rối loạn tiêu hoá nhẹ","Buồn nôn nhẹ"]}),
+dr("Omeprazole","ppi"),dr("Esomeprazole","ppi"),dr("Rabeprazole natri","ppi"),dr("Lansoprazole","ppi"),
+dr("Cimetidin","h2",{tdp:["Vú to ở nam giới","Bất lực"]}),dr("Famotidin","h2"),
+dr("Clorpheniramin maleat","h1a"),dr("Promethazin HCl","h1a"),dr("Alimemazine tartrat","h1a"),
+dr("Desloratadine","h1b"),dr("Cetirizine","h1b"),dr("Loratadin","h1b"),
+dr("Eugica","oil"),dr("Eucalyptol","oil"),dr("Menthol","oil"),
+dr("Dextromethorphan","op",{cd:["Ho khan không đờm"]}),dr("Terpin hydrate","op",{cd:["Ho có đờm","Rối loạn tiết dịch ở phế quản"]}),
+dr("Salbutamol","b2",{cd:["Cắt cơn hen cấp tính"]}),dr("Salmeterol","b2",{cd:["Kiểm soát cơn hen phế quản"]}),
+dr("Berberine chloride","dia"),dr("Dioctahedral smectite","dia"),
+dr("Amoxicillin","bl"),
+dr("Cephalexin (thế hệ I)","ce",{cd:["Nhiễm trùng nhẹ da","Nhiễm trùng đường tiểu"]}),
+dr("Cefuroxim (thế hệ II)","ce",{cd:["Nhiễm trùng hô hấp trên và dưới","Nhiễm trùng tai giữa"]}),
+dr("Cefixim (thế hệ III)","ce",{cd:["Nhiễm trùng màng não","Nhiễm trùng khớp"]}),
+dr("Clindamycin","li"),dr("Tobramycin","ag"),dr("Ciprofloxacin","qu"),
+dr("Enalapril maleat","ace"),dr("Captopril","ace"),dr("Perindopril + Indapamide","ace"),
+dr("Nifedipine","ccb"),dr("Amlodipine","ccb",{tdp:["Tăng sản lợi"]}),
+dr("Diltiazem HCl","ccb",{tdp:["Chậm nhịp tim","Suy tim nặng hơn","Chóng mặt"],cd:["Kiểm soát tần số thất trong rung nhĩ / cuồng nhĩ"]}),
+dr("Bisoprolol fumarat","bb"),dr("Furosemid","fu"),dr("Isosorbide mononitrate","nit")];
+const EX={td:["Làm tăng huyết áp","Gây ngủ","Tăng tiết acid dạ dày"],tdp:["Rụng tóc","Sốt cao ác tính"],cd:["Nhiễm khuẩn huyết","Gãy xương","Mụn trứng cá"],ccd:["Người > 60 tuổi","Người ăn chay"],cdung:["IM","Bôi ngoài da"]};
+const ST=[["td","Tác dụng"],["tdp","Tác dụng phụ"],["cd","Chỉ định"],["ccd","Chống chỉ định"],["cdung","Cách dùng"]];
+const S=new Set([1,2,3,4]);
+const $=s=>document.querySelector(s);
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const dx=(d,k)=>(d.x&&d.x[k]||[]);
+const cor=(d,k)=>(d.o&&d.o[k]?d.o[k]:G[d.g][k]).concat(dx(d,k));
+const gScope=()=>Object.keys(G).filter(k=>S.has(G[k].b));
+const DRS=()=>DR.filter(d=>S.has(G[d.g].b));
+function uni(k){const s=new Set(EX[k]);gScope().forEach(g=>{G[g][k].forEach(v=>s.add(v));DR.filter(d=>d.g===g).forEach(d=>dx(d,k).concat(d.o&&d.o[k]||[]).forEach(v=>s.add(v)))});return [...s]}
+
+/* Tabs */
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===b));
+  ['run','guess','study'].forEach(id=>$('#'+id).classList.toggle('hide',id!==b.dataset.tab));
+  if(b.dataset.tab==='run'){if(!R.done&&R.i<stations().length)startTimer()}else stopTimer();
+});
+
+/* ===== Chạy trạm ===== */
+let R={queue:[],drug:null,i:0,res:[],sel:new Set,done:false,opts:[],t:0,iv:null,useTimer:true,useTd:true,hist:[]};
+function stations(){return ST.filter(([k])=>R.useTd||k!=='td')}
+function nextDrug(again){
+  if(!again){if(!R.queue.length)R.queue=shuf(DRS());R.drug=R.queue.pop()}
+  R.i=0;R.res=[];startStation();
+}
+function startStation(){
+  const k=stations()[R.i][0],d=R.drug,c=cor(d,k);
+  const pool=shuf(uni(k).filter(v=>!c.includes(v))).slice(0,4);
+  R.opts=shuf(c.concat(pool));R.sel=new Set;R.done=false;R.t=40;
+  drawRun();startTimer();
+}
+function startTimer(){stopTimer();if(!R.useTimer)return;if($("#run").classList.contains("hide"))return;R.iv=setInterval(()=>{R.t--;const el=$('#tm');if(el){el.textContent=R.t+'s';el.classList.toggle('low',R.t<=10)}if(R.t<=0){stopTimer();if(!R.done)checkSt()}},1000)}
+function stopTimer(){if(R.iv){clearInterval(R.iv);R.iv=null}}
+function checkSt(){
+  stopTimer();const k=stations()[R.i][0],c=cor(R.drug,k);
+  let right=0,wrong=0;R.sel.forEach(v=>c.includes(v)?right++:wrong++);
+  R.res[R.i]={right,wrong,total:c.length,miss:c.filter(v=>!R.sel.has(v)),bad:[...R.sel].filter(v=>!c.includes(v))};
+  R.done=true;drawRun();
+}
+function pct(r){return Math.max(0,r.right-r.wrong)/r.total}
+function drawRun(){
+  const S=stations(),box=$('#run');
+  if(R.i>=S.length){return drawSummary()}
+  const [k,name]=S[R.i],d=R.drug,c=cor(d,k),g=G[d.g];
+  let track='';
+  S.forEach((s,i)=>{
+    const r=R.res[i];let cls=i===R.i?'cur':'';
+    if(r&&(i<R.i||R.done)){const p=pct(r);cls=p===1?'ok':p>0?'part':'bad'}
+    track+=(i?'<div class="bar"></div>':'')+'<div class="node '+cls+'" title="'+s[1]+'">'+(i+1)+'</div>';
+  });
+  let chips='';
+  R.opts.forEach(v=>{
+    let cl='chip',at='';
+    if(R.done){const isC=c.includes(v),s=R.sel.has(v);cl+=isC?(s?' ok':' miss'):(s?' bad':'');at='disabled'}
+    else at='aria-pressed="'+R.sel.has(v)+'"';
+    chips+='<button class="'+cl+'" data-v="'+v.replace(/"/g,'&quot;')+'" '+at+'>'+v+'</button>';
+  });
+  let fb='';
+  if(R.done){
+    const r=R.res[R.i];
+    fb='<p class="legend">Xanh = đúng · Gạch đỏ = chọn nhầm · Viền vàng = bạn bỏ sót</p><p><b>'+r.right+'/'+r.total+' ý đúng'+(r.wrong?', '+r.wrong+' ý nhầm':'')+'</b>'+(g.note&&g.note[k]?'<br><span class="hint">'+g.note[k]+'</span>':'')+'</p>';
+  }
+  box.innerHTML='<div class="card"><div class="track">'+track+'</div>'+
+  '<div class="row"><p class="stname">Trạm '+(R.i+1)+': '+name+'</p>'+(R.useTimer&&!R.done?'<span class="timer" id="tm">'+R.t+'s</span>':'')+'</div>'+
+  '<div class="drug">'+d.n+'</div>'+
+  '<p class="hint">'+(R.done?'Nhóm: '+GN[d.g]:'Chọn tất cả ý đúng rồi bấm Kiểm tra. Chọn nhầm sẽ bị trừ điểm.')+'</p>'+
+  '<div class="chips">'+chips+'</div>'+fb+
+  '<div class="row">'+(R.done?'<button class="btn" id="nx">'+(R.i+1<S.length?'Sang trạm '+(R.i+2):'Xem kết quả')+'</button>':'<button class="btn" id="ck">Kiểm tra</button>')+
+  '<label class="opt"><input type="checkbox" id="optT" '+(R.useTimer?'checked':'')+'> Bấm giờ</label>'+
+  '<label class="opt"><input type="checkbox" id="optTd" '+(R.useTd?'checked':'')+'> Có trạm Tác dụng</label></div></div>';
+  box.querySelectorAll('.chip[aria-pressed]').forEach(b=>b.onclick=()=>{const v=b.dataset.v;R.sel.has(v)?R.sel.delete(v):R.sel.add(v);b.setAttribute('aria-pressed',R.sel.has(v))});
+  const ck=$('#ck');if(ck)ck.onclick=checkSt;
+  const nx=$('#nx');if(nx)nx.onclick=()=>{R.i++;R.i>=stations().length?(drawSummary()):startStation()};
+  $('#optT').onchange=e=>{R.useTimer=e.target.checked;if(!R.useTimer)stopTimer();else if(!R.done)startTimer();drawRun()};
+  $('#optTd').onchange=e=>{R.useTd=e.target.checked;nextDrug(true)};
+}
+function drawSummary(){
+  stopTimer();const S=stations(),d=R.drug;
+  const tot=R.res.reduce((a,r)=>a+pct(r),0),p=Math.round(tot/S.length*100);
+  R.hist.push(p);
+  const avg=Math.round(R.hist.reduce((a,b)=>a+b,0)/R.hist.length);
+  const msg=p===100?'Qua trạm hoàn hảo.':p>=70?'Khá chắc, xem lại chỗ vàng/đỏ.':'Cần ôn lại nhóm này ở tab Ôn nhanh.';
+  let rows='';
+  S.forEach(([k,n],i)=>{const r=R.res[i];
+    rows+='<div class="sumrow"><span>'+n+'</span><b>'+r.right+'/'+r.total+(r.wrong?' (nhầm '+r.wrong+')':'')+'</b></div>'+
+    (r.miss.length?'<p class="miss-line">Bỏ sót: '+r.miss.join('; ')+'</p>':'')+(r.bad.length?'<p class="miss-line" style="color:var(--bad)">Chọn nhầm: '+r.bad.join('; ')+'</p>':'');
+  });
+  $('#run').innerHTML='<div class="card"><p class="stname">Kết quả: '+d.n+'</p><p class="score">'+p+'%</p><p class="hint">'+msg+' Đã chạy '+R.hist.length+' thuốc, trung bình '+avg+'%.</p>'+rows+
+  '<div class="row" style="margin-top:14px"><button class="btn" id="nd">Thuốc tiếp theo</button><button class="btn ghost" id="rd">Chạy lại thuốc này</button></div></div>';
+  $('#nd').onclick=()=>nextDrug(false);$('#rd').onclick=()=>nextDrug(true);
+}
+
+/* ===== Đoán nhóm ===== */
+let Q={q:null,ok:0,n:0,streak:0,best:0,ans:false};
+function allItems(g){const o={};ST.forEach(([k])=>{const s=new Set(G[g][k]);DR.filter(d=>d.g===g).forEach(d=>dx(d,k).concat(d.o&&d.o[k]||[]).forEach(v=>s.add(v)));o[k]=s});return o}
+function clues(){
+  const gs=gScope(),cnt={},A={},K=['td','tdp','cd','ccd','cdung'],out=[];
+  gs.forEach(g=>{A[g]=allItems(g);K.forEach(k=>A[g][k].forEach(v=>{const id=k+'|'+v;cnt[id]=(cnt[id]||0)+1}))});
+  gs.forEach(g=>K.forEach(k=>A[g][k].forEach(v=>{if(cnt[k+'|'+v]===1&&!/^Quá mẫn/.test(v))out.push({t:ST.find(s=>s[0]===k)[1]+': '+v,g})})));
+  return out;
+}
+function newQ(){
+  const gs=gScope(),ds=DRS(),cl=clues();let q;
+  if(!cl.length||Math.random()<.5){const d=ds[Math.random()*ds.length|0];q={t:d.n,g:d.g,kind:'Thuốc này thuộc nhóm nào?'}}
+  else{const c=cl[Math.random()*cl.length|0];q={t:c.t,g:c.g,kind:'Đặc điểm này chỉ có ở nhóm nào?'}}
+  q.opts=shuf([q.g].concat(shuf(gs.filter(k=>k!==q.g)).slice(0,3)));
+  Q.q=q;Q.ans=false;drawQ();
+}
+function drawQ(pick){
+  const q=Q.q;let b='';
+  q.opts.forEach(k=>{
+    let cl='gbtn';if(Q.ans){if(k===q.g)cl+=' ok';else if(k===pick)cl+=' bad'}
+    b+='<button class="'+cl+'" data-k="'+k+'" '+(Q.ans?'disabled':'')+'>'+GN[k]+'</button>';
+  });
+  $('#guess').innerHTML='<div class="card"><p class="hint">'+q.kind+' · Đúng '+Q.ok+'/'+Q.n+' · Chuỗi đúng '+Q.streak+' (cao nhất '+Q.best+')</p><p class="q">'+q.t+'</p>'+b+
+  (Q.ans?'<div class="row" style="margin-top:8px"><button class="btn" id="nq">Câu tiếp</button></div>':'')+'</div>';
+  document.querySelectorAll('#guess .gbtn').forEach(x=>x.onclick=()=>{
+    Q.ans=true;Q.n++;if(x.dataset.k===q.g){Q.ok++;Q.streak++;Q.best=Math.max(Q.best,Q.streak)}else Q.streak=0;drawQ(x.dataset.k)});
+  const nq=$('#nq');if(nq)nq.onclick=newQ;
+}
+
+/* ===== Ôn nhanh ===== */
+const MN=[
+[1,"Paracetamol: chỉ hạ sốt – giảm đau, không kháng viêm, và uống quá 4 g/ngày là hại gan."],
+[1,"Không chọn lọc (COX-1 + COX-2): mất COX-1 là mất lớp bảo vệ dạ dày, nên nhớ chữ LOÉT."],
+[1,"Chọn lọc COX-2: dạ dày được tha nhưng tim bị phạt, nên nhớ chữ TIM (tăng HA, suy tim)."],
+[1,"Meloxicam đi với máu (công thức máu), Celecoxib đi với gan (viêm gan, vàng da)."],
+[1,"Glucocorticoid: Cushing, suy tuỷ, sợ nhiễm trùng nặng, và là nhóm duy nhất có đường IV."],
+[1,"Trẻ em dưới 12 tuổi và suy gan là chống chỉ định chung của Paracetamol và 2 nhóm NSAID; suy thận chỉ có ở hai nhóm NSAID."],
+[2,"Antacid: Sucralfate là 'băng dán ổ loét', tác dụng phụ táo bón, ngứa, chóng mặt."],
+[2,"PPI dùng lâu mất 3 thứ: vitamin B12, Magie và xương, nên người hạ Magie hoặc loãng xương né PPI."],
+[2,"Cimetidin (kháng H2) làm vú to ở nam giới và bất lực; kháng H2 mạnh về ban đêm."],
+[2,"Kháng H1 thế hệ 1 gây buồn ngủ nên cấm lái xe và vận hành máy; thế hệ 2 thì cấm suy gan, suy thận."],
+[2,"Tinh dầu ho: né trẻ dưới 3 tuổi, hen suyễn, suy hô hấp, lao."],
+[2,"Dextromethorphan trị ho KHAN, Terpin hydrate trị ho có ĐỜM."],
+[2,"Salbutamol cắt cơn, Salmeterol kiểm soát; cả hai gây tim nhanh, run cơ."],
+[2,"Thuốc trị tiêu chảy gây TÁO BÓN, nên chống chỉ định cho người đang táo bón."],
+[3,"Beta-lactam và Cephalosporin ức chế thành tế bào, Lincosamid ức chế protein 50S, Quinolon ức chế DNA."],
+[3,"Cephalosporin I, II, III đi từ nhẹ đến nặng: da, tiểu → hô hấp, tai giữa → màng não, khớp."],
+[3,"Cephalosporin và Clindamycin cùng gây viêm ruột kết màng giả; Beta-lactam thì nhớ dị ứng, sốc phản vệ."],
+[3,"Quinolon: viêm gân, đứt gân, và cấm trẻ dưới 18 tuổi."],
+[3,"Tobramycin là thuốc NHỎ MẮT, chống chỉ định khi nhiễm nấm hoặc virus."],
+[4,"ACEI (Captopril, Enalapril): ho khan, tăng Kali, phù mạch; cấm hẹp động mạch chủ/thận và PNCT & CCB."],
+[4,"Amlodipine làm tăng sản LỢI, Diltiazem làm chậm nhịp TIM; cả nhóm cấm suy tim, sốc tim."],
+[4,"Bisoprolol chẹn Beta nên co thắt phế quản: cấm hen phế quản nặng, COPD nặng."],
+[4,"Furosemid: mất nước điện giải, tăng acid uric, liều cao gây điếc; cấm vô niệu."],
+[4,"Nitrat (Isosorbide) giải phóng NO nên nhức đầu, đỏ bừng mặt; cấm hạ huyết áp, tăng áp lực nội sọ."]];
+function drawStudy(){
+  let h='';
+  [1,2,3,4].filter(b=>S.has(b)).forEach(b=>{
+    let t='<tr><th>Nhóm / hoạt chất</th>'+ST.map(s=>'<th>'+s[1]+'</th>').join('')+'</tr>';
+    Object.keys(G).filter(k=>G[k].b===b).forEach(k=>{
+      const ds=DR.filter(d=>d.g===k);
+      t+='<tr><td><b>'+G[k].name+'</b><br>'+ds.map(d=>d.n.split(' (')[0]).join(', ')+'</td>'+ST.map(([s])=>{
+        let c=G[k][s].join('; ');
+        ds.forEach(d=>{const e=(d.o&&d.o[s]||[]).concat(dx(d,s));if(e.length)c+=(c?'<br>':'')+'<i>'+d.n.split(' (')[0]+':</i> '+e.join('; ')});
+        return '<td>'+c+'</td>'}).join('')+'</tr>';
+    });
+    h+='<h2'+(h?'':' style="margin-top:0"')+'>Bài '+b+'</h2><div class="scroll"><table>'+t+'</table></div><ul class="mn" style="margin-top:12px">'+MN.filter(m=>m[0]===b).map(m=>'<li>'+m[1]+'</li>').join('')+'</ul>';
+  });
+  $('#study').innerHTML='<div class="card">'+h+'</div>';
+}
+
+/* ===== Phạm vi bài ===== */
+function drawScope(){
+  $('#scope').innerHTML='<span class="opt">Phạm vi ôn:</span>'+[1,2,3,4].map(b=>'<button class="chip" data-b="'+b+'" aria-pressed="'+S.has(b)+'">Bài '+b+'</button>').join('');
+  document.querySelectorAll('#scope .chip').forEach(x=>x.onclick=()=>{
+    const b=+x.dataset.b;if(S.has(b)){if(S.size>1)S.delete(b)}else S.add(b);
+    drawScope();R.queue=[];nextDrug(false);newQ();drawStudy();
+  });
+}
+drawScope();nextDrug(false);newQ();drawStudy();
+</script>
+</body>
+</html>
