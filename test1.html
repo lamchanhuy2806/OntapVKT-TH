@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Học phát âm tiếng Trung: Thanh mẫu – Vận mẫu – Ghép âm</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FBF4EC;--card:#fff;--ink:#2B1D16;--mute:#7A6558;--line:#E8D8C8;--brand:#B3261E;--brandtxt:#fff;--chip:#FAF1E8;--ok:#17805A;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1C1411;--card:#2A1E19;--ink:#F6EADF;--mute:#B9A292;--line:#4A382E;--brand:#FF7A6B;--brandtxt:#2B0A06;--chip:#33251E;--ok:#4CD08F;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1C1411;--card:#2A1E19;--ink:#F6EADF;--mute:#B9A292;--line:#4A382E;--brand:#FF7A6B;--brandtxt:#2B0A06;--chip:#33251E;--ok:#4CD08F;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:18px 14px 40px}
+h1{font-size:1.35rem;margin:0 0 2px;font-weight:800}
+h2{font-size:1rem;margin:16px 0 8px}
+.sub{color:var(--mute);font-size:.9rem;margin:0 0 12px}
+.tabs{display:flex;gap:6px;margin-bottom:12px}
+.tab{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 6px;border-radius:10px;font:inherit;font-weight:700;font-size:.9rem;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--brand);color:var(--brandtxt);border-color:var(--brand)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:.88rem;color:var(--mute);margin-bottom:10px}
+.warn{background:#FFF0D2;color:#6B4400;border-radius:10px;padding:8px 12px;font-size:.84rem;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px}
+.tile{border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:12px;padding:10px 4px;font:inherit;cursor:pointer;text-align:center}
+.tile b{display:block;font-size:1.35rem;line-height:1.2}
+.tile span{display:block;font-size:1.05rem;color:var(--mute)}
+.tile small{display:block;font-size:.68rem;color:var(--brand);font-weight:700}
+.tile.on{border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 20%,transparent)}
+.chip{border:1.5px solid var(--line);background:var(--chip);color:var(--ink);border-radius:10px;padding:7px 12px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--brandtxt);border-color:var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.btn{border:0;background:var(--brand);color:var(--brandtxt);padding:10px 18px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.out{text-align:center;padding:14px 8px;border:1.5px dashed var(--line);border-radius:12px;margin:12px 0}
+.py{font-size:3rem;font-weight:800;line-height:1.1;color:var(--brand)}
+.hz{font-size:1.6rem}
+.note{color:var(--mute);font-size:.84rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.hide{display:none}
+button:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Học phát âm tiếng Trung</h1>
+  <p class="sub">Thanh mẫu (声母) – Vận mẫu (韵母) – Ghép âm. Bấm vào ô để nghe.</p>
+  <div id="vn"></div>
+  <div class="bar"><label><input type="checkbox" id="slow"> Đọc chậm</label><span>Âm thanh dùng giọng tiếng Trung có sẵn trên thiết bị của bạn.</span></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="ini" aria-selected="true">Thanh mẫu</button>
+    <button class="tab" role="tab" data-tab="fin" aria-selected="false">Vận mẫu</button>
+    <button class="tab" role="tab" data-tab="mix" aria-selected="false">Ghép âm</button>
+  </div>
+  <div id="ini" class="card"></div><div id="fin" class="card hide"></div><div id="mix" class="card hide"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+const IG=[["Âm hai môi (b, p, m)",[["b","波"],["p","坡"],["m","摸"]]],["Âm môi răng (f)",[["f","佛"]]],
+["Âm đầu lưỡi (d, t, n, l)",[["d","得"],["t","特"],["n","讷"],["l","勒"]]],["Âm gốc lưỡi (g, k, h)",[["g","哥"],["k","科"],["h","喝"]]],
+["Âm mặt lưỡi (j, q, x)",[["j","基"],["q","欺"],["x","希"]]],["Âm cong lưỡi (zh, ch, sh, r)",[["zh","知"],["ch","蚩"],["sh","诗"],["r","日"]]],
+["Âm bằng lưỡi (z, c, s)",[["z","资"],["c","雌"],["s","思"]]]];
+const ASP=["p","t","k","q","ch","c"];
+const FG=[["Vận mẫu đơn",[["a","啊"],["o","哦"],["e","鹅"],["i","衣"],["u","乌"],["ü","迂"]]],
+["Vận mẫu kép",[["ai","哀"],["ei","诶"],["ao","熬"],["ou","欧"],["ia","呀"],["ie","耶"],["ua","蛙"],["uo","窝"],["üe","约"],["iao","腰"],["iu","优"],["uai","歪"],["ui","威"]]],
+["Vận mẫu mũi trước (-n)",[["an","安"],["en","恩"],["in","因"],["ün","晕"],["ian","烟"],["uan","弯"],["üan","冤"],["un","温"]]],
+["Vận mẫu mũi sau (-ng)",[["ang","昂"],["eng","鞥"],["ing","英"],["ong","轰"],["iang","央"],["uang","汪"],["iong","雍"],["ueng","翁"]]],
+["Vận mẫu cuốn lưỡi",[["er","儿"]]]];
+const flat=g=>g.flatMap(x=>x[1]);
+const IN=flat(IG),FN=flat(FG),IH=Object.fromEntries(IN),FH=Object.fromEntries(FN);
+/* Chữ mẫu cho âm tiết (số cuối là thanh) */
+const D={ba1:"八",ba2:"拔",ba3:"把",ba4:"爸",pa1:"趴",pa2:"爬",pa4:"怕",ma1:"妈",ma2:"麻",ma3:"马",ma4:"骂",ma5:"吗",fa1:"发",fa2:"罚",fa3:"法",
+da1:"搭",da2:"达",da3:"打",da4:"大",ta1:"他",ta3:"塔",ta4:"踏",na2:"拿",na3:"哪",na4:"那",la1:"拉",la4:"辣",ka1:"咖",ka3:"卡",ha1:"哈",
+ni3:"你",hao3:"好",wo3:"我",shi4:"是",de5:"的",bu4:"不",ren2:"人",li3:"里",mi3:"米",ti3:"体",xie4:"谢",xue2:"学",ke4:"课",zhi1:"知",chi1:"吃",shi1:"诗",ri4:"日",zi1:"资",ci2:"词",si1:"思",
+ge4:"个",he2:"河",ne5:"呢",ai4:"爱",an1:"安",ao2:"熬",ou1:"欧",zhong1:"中",guo2:"国",jia1:"家",xiao3:"小",qian2:"钱",xi1:"西",ju2:"局",qu4:"去",lu4:"路",nu3:"努",lan2:"蓝",tian1:"天",ming2:"明",hui4:"会",kan4:"看",tang2:"糖"};
+const TM={a:"āáǎà",o:"ōóǒò",e:"ēéěè",i:"īíǐì",u:"ūúǔù",ü:"ǖǘǚǜ"};
+function spell(i,f){if("jqx".includes(i)&&i&&f[0]==="ü")f="u"+f.slice(1);return i+f}
+function mark(s,t){
+  if(!t||t>4)return s;let k;
+  if(s.includes("a"))k="a";else if(s.includes("o"))k="o";else if(s.includes("e"))k="e";
+  else if(s.includes("iu"))k="u";else if(s.includes("ui"))k="i";else{const m=s.match(/[iuü]/);k=m&&m[0]}
+  return k?s.replace(k,TM[k][t-1]):s;
+}
+/* Âm thanh */
+let voice=null;
+function loadV(){if(!window.speechSynthesis)return;const v=speechSynthesis.getVoices();voice=v.find(x=>/^zh[-_]CN/i.test(x.lang))||v.find(x=>/^zh/i.test(x.lang))||null;
+  $('#vn').innerHTML=(v.length&&!voice)?'<div class="warn">Thiết bị chưa có giọng tiếng Trung. Vào cài đặt Text-to-speech / Giọng nói của máy để thêm giọng "Chinese (Mandarin)", rồi tải lại trang.</div>':''}
+if(window.speechSynthesis){loadV();speechSynthesis.onvoiceschanged=loadV}
+else $('#vn').innerHTML='<div class="warn">Trình duyệt này không hỗ trợ phát âm. Thử Chrome hoặc Safari.</div>';
+function say(list){
+  if(!window.speechSynthesis)return;speechSynthesis.cancel();
+  list.forEach(t=>{const u=new SpeechSynthesisUtterance(t);u.lang="zh-CN";if(voice)u.voice=voice;u.rate=$('#slow').checked?.55:.9;speechSynthesis.speak(u)});
+}
+/* Tabs */
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t===b));
+  ['ini','fin','mix'].forEach(id=>$('#'+id).classList.toggle('hide',id!==b.dataset.tab));
+});
+/* Thanh mẫu & vận mẫu */
+function tiles(el,G,H,asp){
+  $(el).innerHTML=G.map(([n,l])=>'<h2>'+n+'</h2><div class="grid">'+l.map(([p,h])=>'<button class="tile" data-h="'+h+'"><b>'+p+'</b><span>'+h+'</span>'+(asp&&ASP.includes(p)?'<small>bật hơi</small>':'')+'</button>').join('')+'</div>').join('')+
+  (asp?'<p class="note" style="margin-top:12px">Âm bật hơi (p, t, k, q, ch, c) có luồng hơi mạnh bật ra; các âm cặp (b, d, g, j, zh, z) thì không bật hơi. Chữ trong ô là chữ mẫu để máy đọc nguyên âm đi kèm (ví dụ b đọc như 波 bō).</p>':'<p class="note" style="margin-top:12px">Chữ trong ô là chữ mẫu để máy đọc đúng vận mẫu. Quy tắc ghi: iou → iu, uei → ui, uen → un khi ghép với thanh mẫu.</p>');
+  document.querySelectorAll(el+' .tile').forEach(b=>b.onclick=()=>{document.querySelectorAll(el+' .tile').forEach(x=>x.classList.remove('on'));b.classList.add('on');say([b.dataset.h])});
+}
+tiles('#ini',IG,IH,true);tiles('#fin',FG,FH,false);
+/* Ghép âm */
+let M={i:"m",f:"a",t:1};
+function drawMix(){
+  const s=spell(M.i,M.f),py=mark(s,M.t),hz=D[s+M.t];
+  $('#mix').innerHTML='<h2 style="margin-top:0">1. Chọn thanh mẫu</h2><div class="chips">'+IN.map(([p])=>'<button class="chip" data-k="i" data-v="'+p+'" aria-pressed="'+(M.i===p)+'">'+p+'</button>').join('')+'</div>'+
+  '<h2>2. Chọn vận mẫu</h2><div class="chips">'+FN.map(([p])=>'<button class="chip" data-k="f" data-v="'+p+'" aria-pressed="'+(M.f===p)+'">'+p+'</button>').join('')+'</div>'+
+  '<h2>3. Chọn thanh điệu</h2><div class="chips">'+[1,2,3,4,5].map(t=>'<button class="chip" data-k="t" data-v="'+t+'" aria-pressed="'+(M.t===t)+'">'+(t===5?'Nhẹ':t+' '+mark("a",t))+'</button>').join('')+'</div>'+
+  '<div class="out"><div class="py">'+py+'</div><div class="note">'+M.i+' + '+M.f+' + thanh '+(M.t===5?'nhẹ':M.t)+(s!==M.i+M.f?' (ü viết thành u sau j, q, x)':'')+'</div>'+
+  (hz?'<div class="hz">'+hz+'</div>':'<div class="note">Chưa có chữ mẫu cho âm này. Nút "Nghe" sẽ đọc nối thanh mẫu + vận mẫu, và có thể không phải âm tiết có thật.</div>')+
+  '<div class="row"><button class="btn" id="pl">Nghe</button><button class="btn ghost" id="pp">Nghe từng phần</button><button class="btn ghost" id="rd">Ghép ngẫu nhiên</button></div></div>'+
+  '<h2>Thử bốn thanh điệu với ma</h2><div class="chips">'+[1,2,3,4].map(t=>'<button class="chip" data-m="'+t+'">'+mark("ma",t)+' '+D["ma"+t]+'</button>').join('')+'</div>';
+  document.querySelectorAll('#mix .chip[data-k]').forEach(b=>b.onclick=()=>{M[b.dataset.k]=b.dataset.k==='t'?+b.dataset.v:b.dataset.v;drawMix()});
+  document.querySelectorAll('#mix .chip[data-m]').forEach(b=>b.onclick=()=>say([D["ma"+b.dataset.m]]));
+  $('#pl').onclick=()=>say(hz?[hz]:[IH[M.i],FH[M.f]]);
+  $('#pp').onclick=()=>say([IH[M.i],FH[M.f]]);
+  $('#rd').onclick=()=>{M.i=IN[Math.random()*IN.length|0][0];M.f=FN[Math.random()*FN.length|0][0];M.t=1+(Math.random()*4|0);drawMix()};
+}
+drawMix();
+</script>
+</body>
+</html>
