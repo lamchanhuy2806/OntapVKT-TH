@@ -79,11 +79,11 @@ h1{background:linear-gradient(90deg,var(--brand),#E07A2F);-webkit-background-cli
 <body>
 <div class="wrap">
   <div class="hd"><span class="wm" aria-hidden="true">永</span><h1>Học viết chữ Hán</h1>
-  <p class="sub">Từ nét cơ bản đến nét ghép, rồi quy tắc thứ tự nét. Hình vẽ minh hoạ dạng sơ đồ, nét thật có thể hơi khác tuỳ phông chữ.</p></div>
+  <p class="sub">8 nét cơ bản, 23 nét ghép thường gặp (số nét ghép tuỳ giáo trình, thường 20–25), rồi quy tắc thứ tự nét. Hình vẽ minh hoạ dạng sơ đồ, nét thật có thể hơi khác tuỳ phông chữ.</p></div>
   <div class="legend"><span><span class="dot"></span>Chấm xanh = điểm đặt bút</span><span>Số đỏ = thứ tự nét</span><span>Mũi tên đỏ = hướng đi</span><span>Bấm nút loa để nghe cách đọc</span></div>
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" data-tab="b" aria-selected="true">Nét cơ bản</button>
-    <button class="tab" role="tab" data-tab="c" aria-selected="false">Nét ghép</button>
+    <button class="tab" role="tab" data-tab="b" aria-selected="true">Nét cơ bản (8)</button>
+    <button class="tab" role="tab" data-tab="c" aria-selected="false">Nét ghép (23)</button>
     <button class="tab" role="tab" data-tab="r" aria-selected="false">Thứ tự nét</button>
   </div>
   <div id="b" class="list"></div><div id="c" class="list hide"></div><div id="r" class="list hide"></div>
@@ -98,7 +98,9 @@ const BA=[
 {n:"撇",p:"piě",v:"M66 16 Q54 56 24 84",d:"Đặt bút phía trên bên phải, kéo xéo xuống bên trái, nhọn dần.",e:"人 白 千"},
 {n:"捺",p:"nà",v:"M24 22 Q46 58 82 80",d:"Đặt bút phía trên bên trái, kéo xéo xuống bên phải, cuối nét bẻ ra rồi nhấc bút.",e:"人 大 木"},
 {n:"点",p:"diǎn",v:"M42 28 Q52 38 58 60",d:"Đặt bút ở trên, ấn nhẹ chéo xuống phía phải rồi nhấc bút.",e:"六 文 小"},
-{n:"提",p:"tí",v:"M22 72 L76 42",d:"Đặt bút phía dưới bên trái, hất chếch lên phía phải, nhọn dần.",e:"我 打 冰"}];
+{n:"提",p:"tí",v:"M22 72 L76 42",d:"Đặt bút phía dưới bên trái, hất chếch lên phía phải, nhọn dần.",e:"我 打 冰"},
+{n:"折",p:"zhé",v:"M24 28 L74 28 L74 82",d:"Nét gấp khúc: kéo một hướng rồi đổi hướng ở góc. Dạng hay gặp nhất là 横折 và 竖折.",e:"口 日 山"},
+{n:"钩",p:"gōu",v:"M52 16 L52 80 Q52 88 40 82",d:"Móc nhỏ ở cuối nét, không đứng một mình mà gắn vào nét khác (竖钩, 横折钩...). Cuối nét hất nhanh rồi nhấc bút.",e:"小 水 月"}];
 const CO=[
 {n:"横折",p:"héngzhé",v:"M24 28 L74 28 L74 82",d:"Kéo ngang sang phải, đến góc thì gấp xuống, kéo thẳng xuống.",e:"口 日 田"},
 {n:"横撇",p:"héngpiě",v:"M22 32 L70 32 Q58 54 28 76",d:"Kéo ngang sang phải, rồi đổi hướng kéo xéo xuống trái.",e:"又 水 冬"},
@@ -115,7 +117,14 @@ const CO=[
 {n:"卧钩",p:"wògōu",v:"M22 38 Q48 84 78 44",d:"Cong như lòng chảo từ trái sang phải rồi hất lên.",e:"心 必 思"},
 {n:"竖弯钩",p:"shùwāngōu",v:"M32 18 L32 66 Q32 82 50 82 L74 82 L74 68",d:"Kéo xuống, cong ở đáy, kéo ngang sang phải rồi hất móc lên.",e:"七 九 屯"},
 {n:"横折弯钩",p:"héngzhéwāngōu",v:"M22 32 L58 32 Q78 32 74 58 L72 80 Q70 88 60 82",d:"Ngang, cong xuống ở góc, kéo xuống rồi hất móc trái.",e:"九 几 乞"},
-{n:"横斜钩",p:"héngxiégōu",v:"M20 26 L52 26 Q70 52 74 80 Q76 88 66 84",d:"Ngang rồi chuyển sang xiên xuống phải, cuối nét hất móc.",e:"风 飞 气"}];
+{n:"横斜钩",p:"héngxiégōu",v:"M20 26 L52 26 Q70 52 74 80 Q76 88 66 84",d:"Ngang rồi chuyển sang xiên xuống phải, cuối nét hất móc.",e:"风 飞 气"},
+{n:"横折弯",p:"héngzhéwān",v:"M20 28 L56 28 L56 66 Q56 82 72 82 L82 82",d:"Ngang, gấp xuống, rồi cong tròn ở đáy và kéo ngang sang phải.",e:""},
+{n:"横折折折钩",p:"héngzhézhézhégōu",v:"M20 26 L48 26 L48 48 L74 48 L74 80 Q74 88 64 84",d:"Đi như bậc thang: ngang, xuống, ngang, xuống, cuối nét hất móc.",e:"乃 奶 扔"},
+{n:"横折折撇",p:"héngzhézhépiě",v:"M22 22 L50 22 L36 44 L70 44 Q54 60 34 78",d:"Ngang, gấp xiên xuống trái, ngang sang phải rồi phẩy xuống trái.",e:"延 建"},
+{n:"横撇弯钩",p:"héngpiěwāngōu",v:"M24 22 L52 22 Q66 24 60 40 Q54 52 40 54 Q64 52 62 72 L62 82 Q62 90 52 86",d:"Ngang, phẩy cong, vòng lại rồi kéo xuống và hất móc.",e:"那 邦 都"},
+{n:"竖折折",p:"shùzhézhé",v:"M28 20 L28 52 L62 52 L62 82",d:"Kéo xuống, gấp sang phải, rồi gấp xuống lần nữa.",e:""},
+{n:"竖折折钩",p:"shùzhézhégōu",v:"M28 20 L28 52 L62 52 L62 80 Q62 88 52 84",d:"Kéo xuống, gấp sang phải, gấp xuống và hất móc ở cuối.",e:"马 吗 妈"},
+{n:"弯钩",p:"wāngōu",v:"M64 18 Q66 58 58 74 Q52 86 40 80",d:"Kéo xuống theo đường cong rồi hất móc sang trái.",e:"狗 猫 猪"}];
 /* Chữ mẫu: mỗi nét có tên và đường vẽ */
 const CH={
 "十":[["横","M18 50 L82 50"],["竖","M50 18 L50 84"]],
@@ -134,7 +143,7 @@ const RU=[
 ["从左到右","Từ trái sang phải","川"],["先中间后两边","Giữa trước, hai bên sau","小"],["先中间后两边","Giữa trước, hai bên sau (chữ lớn hơn)","山"],
 ["先外后内","Bao ngoài trước, bên trong sau","月"],["先里头后封口","Viết bên trong rồi mới đóng nét đáy","田"],
 ["竖贯穿最后写","Nét sổ xuyên giữa viết sau cùng","中"],["综合","Ngang, phẩy, mác theo thứ tự","大"],["综合","Ngang, sổ, phẩy, mác","木"]];
-const HV={"横":"hoành","竖":"thụ","撇":"phiệt","捺":"nại","点":"điểm","提":"đề","横折":"hoành chiết","横撇":"hoành phiệt","横钩":"hoành câu","竖折":"thụ chiết","竖弯":"thụ loan","竖提":"thụ đề","竖钩":"thụ câu","撇折":"phiệt chiết","撇点":"phiệt điểm","横折钩":"hoành chiết câu","横折提":"hoành chiết đề","斜钩":"tà câu","卧钩":"ngọa câu","竖弯钩":"thụ loan câu","横折弯钩":"hoành chiết loan câu","横斜钩":"hoành tà câu","十":"thập","人":"nhân","三":"tam","川":"xuyên","小":"tiểu","山":"sơn","月":"nguyệt","田":"điền","中":"trung","大":"đại","木":"mộc"};
+const HV={"横":"hoành","竖":"thụ","撇":"phiệt","捺":"nại","点":"điểm","提":"đề","横折":"hoành chiết","横撇":"hoành phiệt","横钩":"hoành câu","竖折":"thụ chiết","竖弯":"thụ loan","竖提":"thụ đề","竖钩":"thụ câu","撇折":"phiệt chiết","撇点":"phiệt điểm","横折钩":"hoành chiết câu","横折提":"hoành chiết đề","斜钩":"tà câu","卧钩":"ngọa câu","竖弯钩":"thụ loan câu","横折弯钩":"hoành chiết loan câu","横斜钩":"hoành tà câu","折":"chiết","钩":"câu","横折弯":"hoành chiết loan","横折折折钩":"hoành chiết chiết chiết câu","横折折撇":"hoành chiết chiết phiệt","横撇弯钩":"hoành phiệt loan câu","竖折折":"thụ chiết chiết","竖折折钩":"thụ chiết chiết câu","弯钩":"loan câu","十":"thập","人":"nhân","三":"tam","川":"xuyên","小":"tiểu","山":"sơn","月":"nguyệt","田":"điền","中":"trung","大":"đại","木":"mộc"};
 const PY={"十":"shí","人":"rén","三":"sān","川":"chuān","小":"xiǎo","山":"shān","月":"yuè","田":"tián","中":"zhōng","大":"dà","木":"mù"};
 const RP={"先横后竖":"xiān héng hòu shù","先撇后捺":"xiān piě hòu nà","从上到下":"cóng shàng dào xià","从左到右":"cóng zuǒ dào yòu","先中间后两边":"xiān zhōngjiān hòu liǎngbiān","先外后内":"xiān wài hòu nèi","先里头后封口":"xiān lǐtou hòu fēngkǒu","竖贯穿最后写":"shù guànchuān zuìhòu xiě","综合":"zōnghé"};
 const spk=t=>'<button class="spk" data-say="'+t+'" aria-label="Nghe cách đọc '+t+'" title="Nghe cách đọc"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="w1" d="M16 9.5a3.5 3.5 0 010 5"/><path class="w2" d="M18.6 6.8a7.5 7.5 0 010 10.4"/></svg></button>';
